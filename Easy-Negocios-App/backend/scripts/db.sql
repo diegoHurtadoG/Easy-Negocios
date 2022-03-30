@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS sales_product_relation(
 
 CREATE TABLE IF NOT EXISTS products(
     id INT NOT NULL AUTO_INCREMENT,
-    product_name VARCHAR(40) NOT NULL,
+    product_name VARCHAR(40) NOT NULL, -- THIS ONE COULD BE BETTER IF WE ASSIGN A UNIQUE CONSTRAINT TO THE NAME + PROJECT (name can be repeated, just not in the same project)
     category_id int,
     product_description VARCHAR(200),
     net_price int NOT NULL,
