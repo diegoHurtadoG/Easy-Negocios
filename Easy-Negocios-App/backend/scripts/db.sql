@@ -2,31 +2,30 @@ CREATE DATABASE IF NOT EXISTS Easy-Negocios;
 
 USE Easy-Negocios;
 
-CREATE TABLE IF NOT EXISTS sales(
+CREATE TABLE IF NOT EXISTS projects(
     id INT NOT NULL AUTO_INCREMENT,
-    project_id INT NOT NULL,
-    total_net_price INT NOT NULL,
-    total_gross_price INT NOT NULL,
-    ticket BOOLEAN,
-    sale_description VARCHAR(200),
-    sale_date DATETIME,
-    creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    project_name VARCHAR(40) NOT NULL,
+    project_description VARCHAR(200),
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS sales_product_relation(
+CREATE TABLE IF NOT EXISTS categories(
     id INT NOT NULL AUTO_INCREMENT,
-    sales_id INT NOT NULL,
-    product_id INT NOT NULL,
-    cuantity INT NOT NULL,
+    project_id INT NOT NULL,
+    category_name VARCHAR(40) NOT NULL,
+    category_description VARCHAR(200),
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 CREATE TABLE IF NOT EXISTS products(
     id INT NOT NULL AUTO_INCREMENT,
+    project_id INT NOT NULL,
     product_name VARCHAR(40) NOT NULL, -- THIS ONE COULD BE BETTER IF WE ASSIGN A UNIQUE CONSTRAINT TO THE NAME + PROJECT (name can be repeated, just not in the same project)
     category_id int,
     product_description VARCHAR(200),
@@ -38,23 +37,32 @@ CREATE TABLE IF NOT EXISTS products(
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
-CREATE TABLE IF NOT EXISTS categories(
+CREATE TABLE IF NOT EXISTS sales(
     id INT NOT NULL AUTO_INCREMENT,
-    category_name VARCHAR(40) NOT NULL,
-    category_description VARCHAR(200),
-    
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS projects(
-    id INT NOT NULL AUTO_INCREMENT,
-    project_name VARCHAR(40) NOT NULL,
-    project_description VARCHAR(200),
-    update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    project_id INT NOT NULL,
+    total_net_price INT NOT NULL,
+    total_gross_price INT NOT NULL,
+    ticket BOOLEAN,
+    sale_description VARCHAR(200),
+    sale_date DATETIME,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
+);
+
+CREATE TABLE IF NOT EXISTS sales_product_relation(
+    id INT NOT NULL AUTO_INCREMENT,
+    sales_id INT NOT NULL,
+    product_id INT NOT NULL,
+    cuantity INT NOT NULL,
     
     PRIMARY KEY (id)
 );
@@ -72,7 +80,9 @@ CREATE TABLE IF NOT EXISTS investments(
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 CREATE TABLE IF NOT EXISTS clients(
@@ -83,7 +93,9 @@ CREATE TABLE IF NOT EXISTS clients(
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 CREATE TABLE IF NOT EXISTS orders(
@@ -96,7 +108,9 @@ CREATE TABLE IF NOT EXISTS orders(
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 CREATE TABLE IF NOT EXISTS order_product_relation(
