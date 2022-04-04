@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS Easy-Negocios;
+CREATE DATABASE IF NOT EXISTS EasyNegocios;
 
-USE Easy-Negocios;
+USE EasyNegocios;
 
 CREATE TABLE IF NOT EXISTS projects(
     id INT NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS categories(
     category_description VARCHAR(200),
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    CONSTRAINT FK_category_project FOREIGN KEY (project_id)
     REFERENCES projects(id)
 );
 
@@ -38,8 +38,10 @@ CREATE TABLE IF NOT EXISTS products(
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
-    REFERENCES projects(id)
+    CONSTRAINT FK_product_project FOREIGN KEY (project_id)
+    REFERENCES projects(id),
+    CONSTRAINT FK_product_category FOREIGN KEY (category_id)
+    REFERENCES categories(id)
 );
 
 CREATE TABLE IF NOT EXISTS sales(
@@ -54,7 +56,7 @@ CREATE TABLE IF NOT EXISTS sales(
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    CONSTRAINT FK_sales_project FOREIGN KEY (project_id)
     REFERENCES projects(id)
 );
 
@@ -64,7 +66,11 @@ CREATE TABLE IF NOT EXISTS sales_product_relation(
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_sales_relation FOREIGN KEY (sales_id)
+    REFERENCES sales(id),
+    CONSTRAINT FK_product_relation FOREIGN KEY (product_id)
+    REFERENCES products(id)
 );
 
 CREATE TABLE IF NOT EXISTS investments(
@@ -81,7 +87,7 @@ CREATE TABLE IF NOT EXISTS investments(
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    CONSTRAINT FK_investments_project FOREIGN KEY (project_id)
     REFERENCES projects(id)
 );
 
@@ -94,7 +100,7 @@ CREATE TABLE IF NOT EXISTS clients(
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    CONSTRAINT FK_clients_project FOREIGN KEY (project_id)
     REFERENCES projects(id)
 );
 
@@ -104,12 +110,12 @@ CREATE TABLE IF NOT EXISTS orders(
     client_id INT,
     delivery_date DATETIME,
     order_description VARCHAR(200),
-    [address] VARCHAR(50),
+    address VARCHAR(50),
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
-    CONSTRAINT FK_ProjectId FOREIGN KEY (project_id)
+    CONSTRAINT FK_orders_project FOREIGN KEY (project_id)
     REFERENCES projects(id)
 );
 
@@ -119,5 +125,9 @@ CREATE TABLE IF NOT EXISTS order_product_relation(
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
     
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_order_relation FOREIGN KEY (order_id)
+    REFERENCES orders(id),
+    CONSTRAINT FK_product_relation_2 FOREIGN KEY (product_id)
+    REFERENCES products(id)
 );
