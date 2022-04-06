@@ -1,3 +1,5 @@
+import {connect} from '../database'
+
 export const getProjects = (req, res) => {
     res.send("Hello World!!")
 }

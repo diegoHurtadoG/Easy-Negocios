@@ -131,3 +131,36 @@ CREATE TABLE IF NOT EXISTS order_product_relation(
     CONSTRAINT FK_product_relation_2 FOREIGN KEY (product_id)
     REFERENCES products(id)
 );
+
+
+-- FROM NOW ON THE QUERIES ARE TO INSERT VALUES TO TEST!
+
+INSERT INTO projects (project_name, project_description)
+VALUES ('Project Test', 'This is a project to test the development of the app');
+
+INSERT INTO clients (project_id, client_name, client_description)
+VALUES (1, 'John Doe', 'This is a test clients description');
+
+INSERT INTO investments (project_id, total_net_price, total_gross_price, ticket, investment_description, owned_product, cuantity)
+VALUES (1, 1337.000, 150.000, TRUE, 'This is a testing investments description', TRUE, 30);
+
+INSERT INTO categories (project_id, category_name, category_description)
+VALUES (1, 'Testing Products', 'This is a test categories description');
+
+INSERT INTO products (project_id, category_id, product_name, product_description, net_price, gross_price, stock, measure_unit)
+VALUES (1, 1, 'Negotiable product', 'This is a test product description', 1000, 850, 20, 'units');
+
+INSERT INTO categories (project_id, category_name, category_description)
+VALUES (1, 'John Doe', 'This is a test clients description');
+
+INSERT INTO sales (project_id, total_net_price, total_gross_price, ticket, sale_description, sale_date)
+VALUES (1, 1000, 850, TRUE, 'This is a test sale description', CURRENT_TIMESTAMP);
+
+INSERT INTO sales_product_relation (sales_id, product_id, cuantity)
+VALUES (1, 1, 10);
+
+INSERT INTO orders (project_id, client_id, delivery_date, order_description, address)
+VALUES (1, 1, CURRENT_TIMESTAMP, 'This is an order test description', 'Calle 13, casa 23, Santiago');
+
+INSERT INTO order_product_relation (order_id, product_id, cuantity)
+VALUES (1, 1, 12);
