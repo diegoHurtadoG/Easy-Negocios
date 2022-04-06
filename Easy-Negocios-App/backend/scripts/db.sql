@@ -150,9 +150,6 @@ VALUES (1, 'Testing Products', 'This is a test categories description');
 INSERT INTO products (project_id, category_id, product_name, product_description, net_price, gross_price, stock, measure_unit)
 VALUES (1, 1, 'Negotiable product', 'This is a test product description', 1000, 850, 20, 'units');
 
-INSERT INTO categories (project_id, category_name, category_description)
-VALUES (1, 'John Doe', 'This is a test clients description');
-
 INSERT INTO sales (project_id, total_net_price, total_gross_price, ticket, sale_description, sale_date)
 VALUES (1, 1000, 850, TRUE, 'This is a test sale description', CURRENT_TIMESTAMP);
 
