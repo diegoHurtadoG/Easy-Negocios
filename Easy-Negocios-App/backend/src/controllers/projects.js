@@ -1,7 +1,9 @@
 import {connect} from '../database'
 
-export const getProjects = (req, res) => {
-    res.send("Hello World!!")
+export const getProjects = async (req, res) => {
+    const connection = await connect()
+    const [rows] = await connection.query('SELECT * FROM projects')
+    res.json(rows)
 }
 
 export const getProject = (req, res) => {
