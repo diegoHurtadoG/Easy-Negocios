@@ -1,3 +1,18 @@
 @api = http://localhost:3000/projects
 
 GET {{api}}
+
+###
+GET {{api}}/1
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+    "project_name": "Req Project",
+    "project_description": "Req Added Project Description"
+}
+
+###
+DELETE {{api}}/3
