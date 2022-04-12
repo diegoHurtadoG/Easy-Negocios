@@ -15,4 +15,13 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/3
+DELETE {{api}}/7
+
+###
+PUT {{api}}/1
+Content-Type: application/json
+
+{
+    "project_name": "An updated Title",
+    "project_description": "An updated Description"
+}
