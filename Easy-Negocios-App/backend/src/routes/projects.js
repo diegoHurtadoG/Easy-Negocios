@@ -5,9 +5,17 @@ const router = Router();
 
 /**
  * @swagger
+ * tags:
+ *  name: Projects
+ *  description: Project Endpoints
+ */
+
+/**
+ * @swagger
  * /projects:
  *  get:
  *      summary: Get all projects
+ *      tags: [Projects]
  */
 router.get('/projects', getProjects)
 
@@ -23,6 +31,7 @@ router.get('/projects', getProjects)
  *            description: Numeric ID of the project to retrieve.
  *            schema:
  *              type: integer
+ *      tags: [Projects]
  */
 router.get('/projects/:id', getProject)
 
@@ -51,6 +60,7 @@ router.get('/projects/:id', getProject)
  *              type: string
  *              description: Brief description of the project
  *              example: Fruit and vegetables marketplace.
+ *      tags: [Projects]
  */
 router.post('/projects', createProject)
 
@@ -66,6 +76,7 @@ router.post('/projects', createProject)
  *            description: Numeric ID of the project to delete.
  *            schema:
  *              type: integer
+ *      tags: [Projects]
  */
 router.delete('/projects/:id', deleteProject)
 
@@ -99,6 +110,7 @@ router.delete('/projects/:id', deleteProject)
  *              type: string
  *              description: Brief description of the project
  *              example: Fruit and vegetables marketplace.
+ *      tags: [Projects]
  */
 router.put('/projects/:id', updateProject)
 

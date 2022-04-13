@@ -2,20 +2,12 @@ import {connect} from '../database'
 
 //console.log(req.params)
 
-/*
-getProjects: route -> /projects
-    GET all projects in the database
-*/
 export const getProjects = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query('SELECT * FROM projects')
     res.json(results)
 }
 
-/*
-getProject: route -> /projects/:id
-    GET an specific project
-*/
 export const getProject = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query("SELECT * FROM projects WHERE id = ?",
@@ -29,12 +21,6 @@ export const getProject = async (req, res) => {
     res.json(results[0])
 }
 
-/*
-createProject: route -> /projects
-    POST a new project to the database, requires a body with
-        project_name - NOT NULL
-        project_description - CAN BE NULL
-*/
 export const createProject = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
@@ -52,10 +38,6 @@ export const createProject = async (req, res) => {
     });
 }
 
-/*
-deleteProjects: route -> /projects/:id
-    DELETE an specific project from the database
-*/
 export const deleteProject = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
