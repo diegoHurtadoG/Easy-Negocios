@@ -352,3 +352,4 @@ MigrationBackup/
 # Files added by me
 **/config.js
 **/.env
+dist/
