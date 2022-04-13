@@ -350,4 +350,5 @@ MigrationBackup/
 .ionide/
 
 # Files added by me
-config.js
+**/config.js
+**/.env
