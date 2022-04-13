@@ -1,7 +1,14 @@
 import express from "express";
-import projectsRoutes from './routes/projects'
-import cors from "cors"
-import morgan from "morgan"
+import cors from "cors";
+import morgan from "morgan";
+
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
+import { options } from "./swaggerOptions";
+const specs = swaggerJSDoc(options);
+
+import projectsRoutes from './routes/projects';
+
 
 const app = express();
 
@@ -10,6 +17,8 @@ app.use(morgan("dev")); // Shows http requests in console when done
 
 app.use(express.json()); // express.json parses incoming requests with JSON and is a body-parser
 
-app.use(projectsRoutes)
+app.use(projectsRoutes);
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 export default app
