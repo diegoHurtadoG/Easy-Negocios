@@ -1,34 +1,30 @@
-import { View, Text, FlatList } from 'react-native'
-import React, {useEffect, useState} from 'react'
-import { getProjects } from '../api'
+import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { getProjects } from '../api';
+
+import ProjectList from '../components/Projects/ProjectList';
 
 const HomeScreen = () => {
 
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState([]);
 
     const loadProjects = async () => {
-        const data = await getProjects()
-        console.log(data)
-    }
+        const data = await getProjects();
+        setProjects(data);
+    };
 
     // Every time the screen loads, the useEffect runs
     useEffect(() => {
 
-        loadProjects()
+        loadProjects();
 
-    }, [])
+    }, []);
 
-  return (
-    <View>
-      <FlatList
-       data={projects}
-       renderItem={() => (
-           <Text>Hello World</Text>
-       )}>
+    return (
+        <View>
+            <ProjectList projects={projects} />
+        </View>
+    );
+};
 
-      </FlatList>
-    </View>
-  )
-}
-
-export default HomeScreen
+export default HomeScreen;

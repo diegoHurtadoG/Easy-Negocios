@@ -10,8 +10,8 @@ POST {{api}}
 Content-Type: application/json
 
 {
-    "project_name": "Req Project",
-    "project_description": "Req Added Project Description"
+    "project_name": "Here is another project",
+    "project_description": "Empty project"
 }
 
 ###
