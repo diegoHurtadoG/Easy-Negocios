@@ -13,6 +13,9 @@ const ProjectList = (props) => {
 
   return (
     <FlatList
+    style={{
+      width: '100%',
+    }}
     data={props.projects}
     keyExtractor={(item) => item.id + ''}
     renderItem={renderItem}

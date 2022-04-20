@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
         padding: 20,
         marginVertical: 8,
         borderRadius: 10,
+        alignSelf: 'center',
     },
 
-    itemTitle:{
+    itemTitle: {
         color: '#ffffff',
+        alignContent: 'center',
     }
 })
 

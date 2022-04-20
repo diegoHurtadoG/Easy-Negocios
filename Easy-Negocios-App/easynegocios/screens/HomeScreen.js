@@ -1,4 +1,5 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react';
 import { getProjects } from '../api';
 
