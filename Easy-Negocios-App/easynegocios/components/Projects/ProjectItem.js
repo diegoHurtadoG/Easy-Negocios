@@ -1,27 +1,41 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 const ProjectItem = (props) => {
     return (
         <View style={styles.itemContainer}>
-            <Text style={styles.itemTitle}>{props.project.project_name}</Text>
-            <Text style={styles.itemTitle}>{props.project.project_description}</Text>
+            <TouchableOpacity style={{
+                borderBottomColor: '#000000',
+                borderWidth: 1,
+                borderColor: '#f2f2f2',
+            }}>
+                <Text style={styles.itemTitle}>{props.project.project_name}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={{ backgroundColor: 'red', borderRadius: 10, padding: 3 }}
+                onPress={() => props.handleDelete(props.project.id)}>
+                <Text style={styles.itemTitle}>Eliminar</Text>
+            </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     itemContainer: {
-        backgroundColor: '#333333',
         padding: 20,
-        marginVertical: 8,
+        marginVertical: 10,
         borderRadius: 10,
-        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
 
     itemTitle: {
-        color: '#ffffff',
+        color: '#000000',
         alignContent: 'center',
+        alignSelf: 'center',
+        fontSize: 20,
     }
 })
 
