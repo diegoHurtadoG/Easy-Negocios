@@ -2,6 +2,7 @@ import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getProjects } from '../api';
 
+import Layout from '../components/Layout';
 import ProjectList from '../components/Projects/ProjectList';
 
 const HomeScreen = () => {
@@ -21,9 +22,9 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <View>
+        <Layout>
             <ProjectList projects={projects} />
-        </View>
+        </Layout>
     );
 };
 

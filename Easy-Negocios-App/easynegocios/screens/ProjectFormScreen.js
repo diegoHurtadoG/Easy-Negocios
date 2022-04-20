@@ -1,11 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
+import Layout from '../components/Layout'
+
 const ProjectFormScreen = () => {
   return (
-    <View>
+    <Layout>
       <Text>Project Form Screen</Text>
-    </View>
+    </Layout>
   )
 }
 
