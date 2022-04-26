@@ -1,5 +1,6 @@
 import { FlatList, RefreshControl } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 
 import { getProjects, deleteProject } from '../../api';
 import ProjectItem from './ProjectItem';
@@ -9,6 +10,8 @@ const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  const isFocused = useIsFocused();
+
   const loadProjects = async () => {
     const data = await getProjects();
     setProjects(data);
@@ -16,10 +19,8 @@ const ProjectList = () => {
 
   // Every time the screen loads, the useEffect runs
   useEffect(() => {
-
     loadProjects();
-
-  }, []);
+  }, [isFocused]);
 
   const handleDelete = async (id) => {
     await deleteProject(id)

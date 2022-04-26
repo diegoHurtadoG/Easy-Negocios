@@ -13,8 +13,8 @@ const ProjectFormScreen = ({navigation}) => {
 
   const handleChange = (key, value) => setProject({ ...project, [key]: value });
 
-  const handleSubmit = () => {
-    saveProject(project);
+  const handleSubmit = async () => {
+    await saveProject(project);
     navigation.navigate('Home')
   }
 

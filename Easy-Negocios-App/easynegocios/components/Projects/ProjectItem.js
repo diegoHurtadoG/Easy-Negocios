@@ -2,14 +2,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
+import { useNavigation } from '@react-navigation/native' 
+
 const ProjectItem = (props) => {
+
+    const navigation = useNavigation()
+
     return (
         <View style={styles.itemContainer}>
-            <TouchableOpacity style={{
-                borderBottomColor: '#000000',
-                borderWidth: 1,
-                borderColor: '#f2f2f2',
-            }}>
+            <TouchableOpacity style={styles.underline} 
+            onPress={() => navigation.navigate('ProjectHomeScreen', { project_id : props.project.id, project_name : props.project.project_name })}>
                 <Text style={styles.itemTitle}>{props.project.project_name}</Text>
             </TouchableOpacity>
 
@@ -36,6 +38,12 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignSelf: 'center',
         fontSize: 20,
+    },
+
+    underline: {
+        borderBottomColor: '#000000',
+        borderWidth: 1,
+        borderColor: '#f2f2f2',
     }
 })
 

@@ -7,7 +7,7 @@ export const getProjects = async () => {
 }
 
 export const saveProject = async (newProject) => {
-    await fetch(API,
+    const res = await fetch(API,
         {
             method: 'POST',
             headers: {

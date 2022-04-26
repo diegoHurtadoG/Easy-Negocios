@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen from './HomeScreen';
 import ProjectFormScreen from './ProjectFormScreen';
+import ProjectHomeScreen from './ProjectHomeScreen';
 import React from 'react';
 
 const Stack = createNativeStackNavigator()
@@ -32,6 +33,15 @@ const Navigation = () => {
                     headerTitleAlign: 'center',
                 })
                 }/>
+                <Stack.Screen 
+                name="ProjectHomeScreen" 
+                component={ProjectHomeScreen}
+                options = {({ navigation }) => ({
+                    title: 'Administracion',
+                    headerTitleAlign: 'center',
+                })
+                }
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
