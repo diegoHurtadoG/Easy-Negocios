@@ -22,6 +22,7 @@ import {
     updateClient } from '../controllers/projects';
 const router = Router();
 
+//#region projects
 
 /////////////////////////// PROJECTS ///////////////////////////
 
@@ -135,6 +136,10 @@ router.delete('/projects/:id', deleteProject)
  *      tags: [Projects]
  */
 router.put('/projects/:id', updateProject)
+
+//#endregion
+
+//#region products
 
 /////////////////////////// PRODUCTS ///////////////////////////
 
@@ -327,6 +332,10 @@ router.delete('/projects/:project_id/products/:product_id', deleteProduct)
  */
 router.put('/projects/:project_id/products/:product_id', updateProduct)
 
+//#endregion
+
+//#region investments
+
 /////////////////////////// INVESTMENTS ///////////////////////////
 
 /**
@@ -514,6 +523,10 @@ router.put('/projects/:project_id/products/:product_id', updateProduct)
   */
  router.put('/projects/:project_id/investments/:investment_id', updateInvestment)
 
+//#endregion
+
+//#region clients
+
 /////////////////////////// CLIENTS ///////////////////////////
 
 /**
@@ -661,22 +674,40 @@ router.put('/projects/:project_id/products/:product_id', updateProduct)
   */
  router.put('/projects/:project_id/clients/:client_id', updateClient)
 
+//#endregion
+
+//#region categories
+
 /////////////////////////// CATEGORIES ///////////////////////////
 
 
+//#endregion
+
+//#region orders
 
 /////////////////////////// ORDERS ///////////////////////////
 
 
+//#endregion
 
+//#region sales
 /////////////////////////// SALES ///////////////////////////
 
 
+//#endregion
+
+//#region order_products
 
 /////////////////////////// ORDER_PRODUCT /////////////////////////// {DONT KNOW IF API IS REQUIRED}
 
 
+//#endregion
+
+//#region sales_products
 
 /////////////////////////// SALES_PRODUCT /////////////////////////// {DONT KNOW IF API IS REQUIRED}
+
+
+//#endregion
 
 export default router

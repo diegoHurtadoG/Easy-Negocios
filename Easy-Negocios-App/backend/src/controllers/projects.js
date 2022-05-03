@@ -2,6 +2,8 @@ import {connect} from '../database'
 
 //console.log(req.params)
 
+//#region projects
+
 /////////////////////////// PROJECTS ///////////////////////////
 
 export const getProjects = async (req, res) => {
@@ -67,6 +69,10 @@ export const updateProject = async (req, res) => {
         ...req.body,
     });
 }
+
+//#endregion
+
+//#region products
 
 /////////////////////////// PRODUCTS ///////////////////////////
 
@@ -166,6 +172,10 @@ export const updateProduct = async (req, res) => {
     });
 }
 
+//#endregion
+
+//#region investments
+
 /////////////////////////// INVESTMENTS ///////////////////////////
 
 export const getInvestments = async (req, res) => {
@@ -264,6 +274,10 @@ export const updateInvestment = async (req, res) => {
     });
 }
 
+//#endregion
+
+//#region clients
+
 /////////////////////////// CLIENTS ///////////////////////////
 
 export const getClients = async (req, res) => {
@@ -356,20 +370,38 @@ export const updateClient = async (req, res) => {
     });
 }
 
+//#endregion
+
+//#region categories
+
 /////////////////////////// CATEGORIES ///////////////////////////
 
 
+//#endregion
+
+//#region orders
 
 /////////////////////////// ORDERS ///////////////////////////
 
 
+//#endregion
+
+//#region sales
 
 /////////////////////////// SALES ///////////////////////////
 
 
+//#endregion
 
-/////////////////////////// ORDER_PRODUCT /////////////////////////// {DONT KNOW IF API IS REQUIRED}
+//#region order_product
+
+/////////////////////////// ORDER_PRODUCT /////////////////////////// 
 
 
+//#endregion
 
-/////////////////////////// SALES_PRODUCT /////////////////////////// {DONT KNOW IF API IS REQUIRED}
+//#region sales_product
+
+/////////////////////////// SALES_PRODUCT /////////////////////////// 
+
+//#endregion
