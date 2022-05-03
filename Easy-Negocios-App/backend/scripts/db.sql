@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS products(
     net_price int NOT NULL,
     gross_price int NOT NULL,
     stock int NOT NULL,
-    measure_unit VARCHAR(10),
+    measure_unit VARCHAR(20),
     stock_update_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

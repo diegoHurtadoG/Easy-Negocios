@@ -1,5 +1,7 @@
 @api = http://localhost:3000/projects
 
+###################################### PROJECTS ######################################
+
 GET {{api}}
 
 ###
@@ -15,13 +17,122 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/8
+DELETE {{api}}/18
 
 ###
-PUT {{api}}/1
+PUT {{api}}/18
 Content-Type: application/json
 
 {
     "project_name": "An updated Title",
     "project_description": "An updated Description"
+}
+
+
+
+###################################### PRODUCTS ######################################
+
+###
+GET {{api}}/1/products
+
+###
+GET {{api}}/1/products/1
+
+###
+POST {{api}}/1/products
+Content-Type: application/json
+
+{
+    "product_name": "Asparragus",
+    "category_id": 1,
+    "product_description": "The green ones with a funny top",
+    "net_price": 1000,
+    "gross_price": 850,
+    "stock": 20,
+    "measure_unit": "units"
+}
+
+###
+DELETE {{api}}/1/products/10
+
+###
+PUT {{api}}/1/products/10
+Content-Type: application/json
+
+{
+    "product_name": "Updated Asparragus",
+    "category_id": 1,
+    "product_description": "The green ones with a funny top, but updated",
+    "net_price": 1111,
+    "gross_price": 888,
+    "stock": 25,
+    "measure_unit": "unitss"
+}
+
+###################################### INVESTMENTS ######################################
+
+###
+GET {{api}}/1/investments
+
+###
+GET {{api}}/1/investments/1
+
+###
+POST {{api}}/1/investments
+Content-Type: application/json
+
+{
+    "total_net_price": 1500,
+    "total_gross_price": 1200,
+    "ticket": 1,
+    "investment_description": "20 carrots, a coffee machine and dog food",
+    "investment_date": "2022-04-16 12:34:20",
+    "owned_product": 0,
+    "cuantity": 5
+}
+
+###
+DELETE {{api}}/1/investments/3
+
+###
+PUT {{api}}/1/investments/3
+Content-Type: application/json
+
+{
+    "total_net_price": 1111,
+    "total_gross_price": 888,
+    "ticket": 1,
+    "investment_description": "20 carrots, a coffee machine and dog food, but updated",
+    "investment_date": "2022-04-16 12:34:20",
+    "owned_product": 0,
+    "cuantity": 5
+}
+
+###################################### CLIENTS ######################################
+
+###
+GET {{api}}/1/clients
+
+###
+GET {{api}}/1/clients/1
+
+###
+POST {{api}}/1/clients
+Content-Type: application/json
+
+{
+    "client_name": "John Doe 2",
+    "client_description": "The blonde one that buys a lot of apples"
+}
+
+###
+DELETE {{api}}/1/clients/2
+
+###
+PUT {{api}}/1/clients/2
+Content-Type: application/json
+
+{
+    "client_name": "John Doe but updated",
+    "client_description": "The brunnette one that buys a lot of apples"
 }
