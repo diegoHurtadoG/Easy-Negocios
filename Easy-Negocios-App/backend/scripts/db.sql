@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS sales(
 
 CREATE TABLE IF NOT EXISTS sales_product_relation(
     id INT NOT NULL AUTO_INCREMENT,
+    project_id INT NOT NULL,
     sales_id INT NOT NULL,
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
@@ -70,7 +71,9 @@ CREATE TABLE IF NOT EXISTS sales_product_relation(
     CONSTRAINT FK_sales_relation FOREIGN KEY (sales_id)
     REFERENCES sales(id),
     CONSTRAINT FK_product_relation FOREIGN KEY (product_id)
-    REFERENCES products(id)
+    REFERENCES products(id),
+    CONSTRAINT FK_sales_relation_project FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 CREATE TABLE IF NOT EXISTS investments(
@@ -121,6 +124,7 @@ CREATE TABLE IF NOT EXISTS orders(
 
 CREATE TABLE IF NOT EXISTS order_product_relation(
     id INT NOT NULL AUTO_INCREMENT,
+    project_id INT NOT NULL,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
@@ -129,7 +133,9 @@ CREATE TABLE IF NOT EXISTS order_product_relation(
     CONSTRAINT FK_order_relation FOREIGN KEY (order_id)
     REFERENCES orders(id),
     CONSTRAINT FK_product_relation_2 FOREIGN KEY (product_id)
-    REFERENCES products(id)
+    REFERENCES products(id),
+    CONSTRAINT FK_orders_relation_project FOREIGN KEY (project_id)
+    REFERENCES projects(id)
 );
 
 
@@ -153,11 +159,11 @@ VALUES (1, 1, 'Negotiable product', 'This is a test product description', 1000, 
 INSERT INTO sales (project_id, total_net_price, total_gross_price, ticket, sale_description, sale_date)
 VALUES (1, 1000, 850, TRUE, 'This is a test sale description', CURRENT_TIMESTAMP);
 
-INSERT INTO sales_product_relation (sales_id, product_id, cuantity)
-VALUES (1, 1, 10);
+INSERT INTO sales_product_relation (project_id, sales_id, product_id, cuantity)
+VALUES (1, 1, 1, 10);
 
 INSERT INTO orders (project_id, client_id, delivery_date, order_description, address)
 VALUES (1, 1, CURRENT_TIMESTAMP, 'This is an order test description', 'Calle 13, casa 23, Santiago');
 
-INSERT INTO order_product_relation (order_id, product_id, cuantity)
-VALUES (1, 1, 12);
+INSERT INTO order_product_relation (project_id, order_id, product_id, cuantity)
+VALUES (1, 1, 1, 12);

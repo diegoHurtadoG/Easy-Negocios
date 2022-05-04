@@ -215,7 +215,7 @@ export const createInvestment = async (req, res) => {
     const [results] = await connection.query(
         "INSERT INTO investments (project_id, total_net_price, total_gross_price, \
             ticket, investment_description, investment_date, owned_product, cuantity) \
-        VALUES (?, ?, ?, ?, ?, ?, ?)",
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
             req.params.project_id,
             req.body.total_net_price,
@@ -370,12 +370,118 @@ export const updateClient = async (req, res) => {
     });
 }
 
+export const getOrdersByClient = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM orders \
+        WHERE project_id = ? \
+        AND client_id = ?",
+    [
+        req.params.project_id,
+        req.params.client_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
 //#endregion
 
 //#region categories
 
 /////////////////////////// CATEGORIES ///////////////////////////
 
+export const getCategories = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM categories \
+        WHERE project_id = ?",
+    [
+        req.params.project_id,
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
+export const getCategory = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM categories \
+        WHERE project_id = ? \
+        AND id = ?",
+    [
+        req.params.project_id,
+        req.params.category_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results[0])
+}
+
+export const createCategory = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO categories (project_id, category_name, category_description) \
+        VALUES (?, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.category_name,
+            req.body.category_description
+        ],
+        function(error,results){
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+export const deleteCategory = async (req, res) => {
+    const connection = await connect();
+    const results = await connection.query(
+        "DELETE FROM categories \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.params.project_id,
+            req.params.category_id,
+        ]
+    )
+    //console.log(results)
+    res.sendStatus(204);
+}
+
+export const updateCategory = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "UPDATE categories SET ? \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.body,
+            req.params.project_id,
+            req.params.category_id,
+        ]);
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        changes_made: results.info,
+        ...req.body,
+    });
+}
 
 //#endregion
 
@@ -383,6 +489,97 @@ export const updateClient = async (req, res) => {
 
 /////////////////////////// ORDERS ///////////////////////////
 
+export const getOrders = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM orders \
+        WHERE project_id = ?",
+    [
+        req.params.project_id,
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
+export const getOrder = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM orders \
+        WHERE project_id = ? \
+        AND id = ?",
+    [
+        req.params.project_id,
+        req.params.order_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results[0])
+}
+
+export const createOrder = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO orders (project_id, client_id, delivery_date, order_description, address) \
+        VALUES (?, ?, ?, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.client_id,
+            req.body.delivery_date,
+            req.body.order_description,
+            req.body.address
+        ],
+        function(error,results){
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+export const deleteOrder = async (req, res) => {
+    const connection = await connect();
+    const results = await connection.query(
+        "DELETE FROM orders \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.params.project_id,
+            req.params.order_id,
+        ]
+    )
+    //console.log(results)
+    res.sendStatus(204);
+}
+
+export const updateOrder = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "UPDATE orders SET ? \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.body,
+            req.params.project_id,
+            req.params.order_id,
+        ]);
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        changes_made: results.info,
+        ...req.body,
+    });
+}
 
 //#endregion
 
@@ -390,6 +587,99 @@ export const updateClient = async (req, res) => {
 
 /////////////////////////// SALES ///////////////////////////
 
+export const getSales = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM sales \
+        WHERE project_id = ?",
+    [
+        req.params.project_id,
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
+export const getSale = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM sales \
+        WHERE project_id = ? \
+        AND id = ?",
+    [
+        req.params.project_id,
+        req.params.sale_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results[0])
+}
+
+export const createSale = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO sales (project_id, total_net_price, total_gross_price, \
+            ticket, sale_description, sale_date) \
+        VALUES (?, ?, ?, ?, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.total_net_price,
+            req.body.total_gross_price,
+            req.body.ticket,
+            req.body.sale_description, 
+            req.body.sale_date
+        ],
+        function(error,results){
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+export const deleteSale = async (req, res) => {
+    const connection = await connect();
+    const results = await connection.query(
+        "DELETE FROM sales \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.params.project_id,
+            req.params.sale_id,
+        ]
+    )
+    //console.log(results)
+    res.sendStatus(204);
+}
+
+export const updateSale = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "UPDATE sales SET ? \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.body,
+            req.params.project_id,
+            req.params.sale_id,
+        ]);
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        changes_made: results.info,
+        ...req.body,
+    });
+}
 
 //#endregion
 
@@ -397,11 +687,192 @@ export const updateClient = async (req, res) => {
 
 /////////////////////////// ORDER_PRODUCT /////////////////////////// 
 
+export const getOrdersList = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM order_product_relation \
+        WHERE project_id = ?",
+    [
+        req.params.project_id,
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
+export const getOrderItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM order_product_relation \
+        WHERE project_id = ? \
+        AND id = ?",
+    [
+        req.params.project_id,
+        req.params.order_product_relation_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results[0])
+}
+
+export const createOrderItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO order_product_relation (project_id,  order_id, product_id, cuantity) \
+        VALUES (?, ?, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.order_id,
+            req.body.product_id,
+            req.body.cuantity
+        ],
+        function(error,results){
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+export const deleteOrderItem = async (req, res) => {
+    const connection = await connect();
+    const results = await connection.query(
+        "DELETE FROM order_product_relation \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.params.project_id,
+            req.params.order_product_relation_id
+        ]
+    )
+    //console.log(results)
+    res.sendStatus(204);
+}
+
+export const updateOrderItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "UPDATE order_product_relation SET ? \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.body,
+            req.params.project_id,
+            req.params.order_product_relation_id,
+        ]);
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        changes_made: results.info,
+        ...req.body,
+    });
+}
 
 //#endregion
 
 //#region sales_product
 
 /////////////////////////// SALES_PRODUCT /////////////////////////// 
+
+export const getSalesList = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM sales_product_relation \
+        WHERE project_id = ?",
+    [
+        req.params.project_id,
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results)
+}
+
+export const getSaleItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT * FROM sales_product_relation \
+        WHERE project_id = ? \
+        AND id = ?",
+    [
+        req.params.project_id,
+        req.params.sale_product_relation_id
+    ],
+    function(error,results){
+        console.log(error)
+        console.log(results)
+    });
+    res.json(results[0])
+}
+
+export const createSaleItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO sales_product_relation (project_id, sales_id, product_id, cuantity) \
+        VALUES (?, ?, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.sales_id,
+            req.body.product_id,
+            req.body.cuantity
+        ],
+        function(error,results){
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+export const deleteSaleItem = async (req, res) => {
+    const connection = await connect();
+    const results = await connection.query(
+        "DELETE FROM sales_product_relation \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.params.project_id,
+            req.params.sale_product_relation_id,
+        ]
+    )
+    //console.log(results)
+    res.sendStatus(204);
+}
+
+export const updateSaleItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "UPDATE sales_product_relation SET ? \
+        WHERE project_id = ? \
+        AND id = ?",
+        [
+            req.body,
+            req.params.project_id,
+            req.params.sale_product_relation_id,
+        ]);
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        changes_made: results.info,
+        ...req.body,
+    });
+}
 
 //#endregion

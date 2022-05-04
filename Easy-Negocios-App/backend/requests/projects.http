@@ -53,10 +53,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/1/products/10
+DELETE {{api}}/1/products/2
 
 ###
-PUT {{api}}/1/products/10
+PUT {{api}}/1/products/2
 Content-Type: application/json
 
 {
@@ -92,10 +92,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/1/investments/3
+DELETE {{api}}/1/investments/2
 
 ###
-PUT {{api}}/1/investments/3
+PUT {{api}}/1/investments/2
 Content-Type: application/json
 
 {
@@ -135,4 +135,163 @@ Content-Type: application/json
 {
     "client_name": "John Doe but updated",
     "client_description": "The brunnette one that buys a lot of apples"
+}
+
+###################################### CATEGORIES ######################################
+
+###
+GET {{api}}/1/categories
+
+###
+GET {{api}}/1/categories/1
+
+###
+POST {{api}}/1/categories
+Content-Type: application/json
+
+{
+    "category_name": "Chocolates",
+    "category_description": "Chocolate items, like brownie or cakes"
+}
+
+###
+DELETE {{api}}/1/categories/2
+
+###
+PUT {{api}}/1/categories/2
+Content-Type: application/json
+
+{
+    "category_name": "Chocolates, but updated",
+    "category_description": "Chocolate items, like brownie or cakes but updated"
+}
+
+###################################### ORDERS ######################################
+
+###
+GET {{api}}/1/orders
+
+###
+GET {{api}}/1/orders/1
+
+###
+POST {{api}}/1/orders
+Content-Type: application/json
+
+{
+    "client_id": 1,
+    "delivery_date": "2022-04-06 13:46:26",
+    "order_description": "20 apples and 15 carrots.",
+    "address": "Main Street 1234, New York"
+}
+
+###
+DELETE {{api}}/1/orders/3
+
+###
+PUT {{api}}/1/orders/2
+Content-Type: application/json
+
+{
+    "client_id": 1,
+    "delivery_date": "2022-04-06 13:46:26",
+    "order_description": "20 apples and 15 carrots. Edit: 5 pears more",
+    "address": "Main Street 1234, New York Manhattan"
+}
+
+###################################### SALES ######################################
+
+###
+GET {{api}}/1/sales
+
+###
+GET {{api}}/1/sales/1
+
+###
+POST {{api}}/1/sales
+Content-Type: application/json
+
+{
+    "total_net_price": 1500,
+    "total_gross_price": 1800,
+    "ticket": 0,
+    "sale_description": "40 potatoes and 25 carrots",
+    "sale_date": "2022-04-06 16:43:55"
+}
+
+###
+DELETE {{api}}/1/sales/2
+
+###
+PUT {{api}}/1/sales/2
+Content-Type: application/json
+
+{
+    "total_net_price": 1200,
+    "total_gross_price": 1600,
+    "ticket": 1,
+    "sale_description": "40 potatoes and 25 carrots but updated",
+    "sale_date": "2022-04-06 16:43:55"
+}
+
+###################################### ORDER-PRODUCT-RELATION ######################################
+
+###
+GET {{api}}/1/orders/list/all
+
+###
+GET {{api}}/1/orders/list/1
+
+###
+POST {{api}}/1/orders/list
+Content-Type: application/json
+
+{
+    "order_id": 1,
+    "product_id": 1,
+    "cuantity": 20
+}
+
+###
+DELETE {{api}}/1/orders/list/2
+
+###
+PUT {{api}}/1/orders/list/2
+Content-Type: application/json
+
+{
+    "order_id": 1,
+    "product_id": 1,
+    "cuantity": 45
+}
+
+###################################### SALES-PRODUCT-RELATION ######################################
+
+###
+GET {{api}}/1/sales/list/all
+
+###
+GET {{api}}/1/sales/list/1
+
+###
+POST {{api}}/1/sales/list
+Content-Type: application/json
+
+{
+    "sales_id": 1,
+    "product_id": 1,
+    "cuantity": 20
+}
+
+###
+DELETE {{api}}/1/sales/list/2
+
+###
+PUT {{api}}/1/sales/list/2
+Content-Type: application/json
+
+{
+    "sales_id": 1,
+    "product_id": 1,
+    "cuantity": 45
 }
