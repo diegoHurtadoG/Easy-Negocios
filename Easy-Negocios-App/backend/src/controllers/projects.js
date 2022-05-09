@@ -45,9 +45,25 @@ export const createProject = async (req, res) => {
 export const deleteProject = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM projects WHERE id = ?",
+        "DELETE FROM order_product_relation WHERE project_id = ?;\
+        DELETE FROM sales_product_relation WHERE project_id = ?;\
+        DELETE FROM orders WHERE project_id = ?;\
+        DELETE FROM sales WHERE project_id = ?;\
+        DELETE FROM products WHERE project_id = ?;\
+        DELETE FROM categories WHERE project_id = ?;\
+        DELETE FROM investments WHERE project_id = ?;\
+        DELETE FROM clients WHERE project_id = ?;\
+        DELETE FROM projects WHERE id = ?",
         [
             req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id,
+            req.params.id
         ]
     )
     //console.log(results)
