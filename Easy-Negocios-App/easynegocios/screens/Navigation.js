@@ -25,22 +25,22 @@ const Navigation = () => {
                         )
                     })}
                 />
-                <Stack.Screen 
-                name="ProjectForm" 
-                component={ProjectFormScreen} 
-                options = {() => ({
-                    title: 'Crea un Proyecto',
-                    headerTitleAlign: 'center',
-                })
-                }/>
-                <Stack.Screen 
-                name="ProjectHomeScreen" 
-                component={ProjectHomeScreen}
-                options = {({ navigation }) => ({
-                    title: 'Administracion',
-                    headerTitleAlign: 'center',
-                })
-                }
+                <Stack.Screen
+                    name="ProjectForm"
+                    component={ProjectFormScreen}
+                    options={() => ({
+                        title: 'Crea un Proyecto',
+                        headerTitleAlign: 'center',
+                    })
+                    } />
+                <Stack.Screen
+                    name="ProjectHomeScreen"
+                    component={ProjectHomeScreen}
+                    options={({ navigation }) => ({
+                        title: 'Administracion',
+                        headerTitleAlign: 'center',
+                    })
+                    }
                 />
             </Stack.Navigator>
         </NavigationContainer>
