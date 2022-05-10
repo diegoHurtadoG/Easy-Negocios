@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS EasyNegocios;
 
 USE EasyNegocios;
 
+-- If anything fails due to the foreigns keys and the delete statement, use ON DELETE CASCADE
+
 CREATE TABLE IF NOT EXISTS projects(
     id INT NOT NULL AUTO_INCREMENT,
     project_name VARCHAR(40) NOT NULL,
