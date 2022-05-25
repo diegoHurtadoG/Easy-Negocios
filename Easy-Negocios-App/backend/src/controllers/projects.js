@@ -96,7 +96,8 @@ export const getProducts = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM products \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -156,7 +157,8 @@ export const createProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM products \
+        "UPDATE products \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -198,7 +200,8 @@ export const getInvestments = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM investments \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -258,7 +261,8 @@ export const createInvestment = async (req, res) => {
 export const deleteInvestment = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM investments \
+        "UPDATE investments \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -300,7 +304,8 @@ export const getClients = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM clients \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -354,7 +359,8 @@ export const createClient = async (req, res) => {
 export const deleteClient = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM clients \
+        "UPDATE clients \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -391,7 +397,8 @@ export const getOrdersByClient = async (req, res) => {
     const [results] = await connection.query(
         "SELECT * FROM orders \
         WHERE project_id = ? \
-        AND client_id = ?",
+        AND client_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
         req.params.client_id
@@ -413,7 +420,8 @@ export const getCategories = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM categories \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -467,7 +475,8 @@ export const createCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM categories \
+        "UPDATE categories \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -509,7 +518,8 @@ export const getOrders = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM orders \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -565,7 +575,8 @@ export const createOrder = async (req, res) => {
 export const deleteOrder = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM orders \
+        "UPDATE orders \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -607,7 +618,8 @@ export const getSales = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM sales \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -665,7 +677,8 @@ export const createSale = async (req, res) => {
 export const deleteSale = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM sales \
+        "UPDATE sales \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -707,7 +720,8 @@ export const getOrdersList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM order_product_relation \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -762,7 +776,8 @@ export const createOrderItem = async (req, res) => {
 export const deleteOrderItem = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM order_product_relation \
+        "UPDATE order_product_relation \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [
@@ -804,7 +819,8 @@ export const getSalesList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
         "SELECT * FROM sales_product_relation \
-        WHERE project_id = ?",
+        WHERE project_id = ? \
+        AND active = 1",
     [
         req.params.project_id,
     ],
@@ -859,7 +875,8 @@ export const createSaleItem = async (req, res) => {
 export const deleteSaleItem = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
-        "DELETE FROM sales_product_relation \
+        "UPDATE sales_product_relation \
+        SET active = 0 \
         WHERE project_id = ? \
         AND id = ?",
         [

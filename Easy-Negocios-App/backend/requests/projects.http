@@ -36,7 +36,7 @@ Content-Type: application/json
 GET {{api}}/1/products
 
 ###
-GET {{api}}/1/products/1
+GET {{api}}/1/products/2
 
 ###
 POST {{api}}/1/products
@@ -56,7 +56,7 @@ Content-Type: application/json
 DELETE {{api}}/1/products/2
 
 ###
-PUT {{api}}/1/products/2
+PUT {{api}}/1/products/1
 Content-Type: application/json
 
 {
@@ -66,7 +66,8 @@ Content-Type: application/json
     "net_price": 1111,
     "gross_price": 888,
     "stock": 25,
-    "measure_unit": "unitss"
+    "measure_unit": "unitss",
+    "active": 1
 }
 
 ###################################### INVESTMENTS ######################################

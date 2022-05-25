@@ -277,7 +277,7 @@ router.post('/projects/:project_id/products', createProduct)
 * @swagger
 * /projects/{project_id}/products/{product_id}:
 *  delete:
-*      summary: Deletes a specific product by id, checking project_id too
+*      summary: Practically deletes a specific product by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -472,7 +472,7 @@ router.post('/projects/:project_id/investments', createInvestment)
 * @swagger
 * /projects/{project_id}/investments/{investment_id}:
 *  delete:
-*      summary: Deletes a specific Investment by id, checking project_id too
+*      summary: Practically delete a specific Investment by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -641,7 +641,7 @@ router.post('/projects/:project_id/clients', createClient)
 * @swagger
 * /projects/{project_id}/clients/{client_id}:
 *  delete:
-*      summary: Deletes a specific client by id, checking project_id too
+*      summary: Practically delete a specific client by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -814,7 +814,7 @@ router.post('/projects/:project_id/categories', createCategory)
 * @swagger
 * /projects/{project_id}/categories/{category_id}:
 *  delete:
-*      summary: Deletes a specific category by id, checking project_id too
+*      summary: Practically delete a specific category by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -975,7 +975,7 @@ router.post('/projects/:project_id/orders', createOrder)
 * @swagger
 * /projects/{project_id}/orders/{order_id}:
 *  delete:
-*      summary: Deletes a specific order by id, checking project_id too
+*      summary: Practically delete a specific order by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -1150,7 +1150,7 @@ router.post('/projects/:project_id/sales', createSale)
 * @swagger
 * /projects/{project_id}/sales/{sale_id}:
 *  delete:
-*      summary: Deletes a specific sale by id, checking project_id too
+*      summary: Practically delete a specific sale by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -1320,7 +1320,7 @@ router.post('/projects/:project_id/orders/list', createOrderItem)
 * @swagger
 * /projects/{project_id}/orders/list/{order_product_relation_id}:
 *  delete:
-*      summary: Deletes a specific relation by id, checking project_id too
+*      summary: Practically delete a specific relation by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id
@@ -1483,7 +1483,7 @@ router.post('/projects/:project_id/sales/list', createSaleItem)
 * @swagger
 * /projects/{project_id}/sales/list/{sale_product_relation_id}:
 *  delete:
-*      summary: Deletes a specific relation by id, checking project_id too
+*      summary: Practically delete a specific relation by id, checking project_id too. Really updates the Active column to 0
 *      parameters:
 *          - in: path
 *            name: project_id

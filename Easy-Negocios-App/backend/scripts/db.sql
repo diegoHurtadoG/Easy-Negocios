@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS categories(
     project_id INT NOT NULL,
     category_name VARCHAR(40) NOT NULL,
     category_description VARCHAR(200),
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_category_project FOREIGN KEY (project_id)
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS products(
     stock_update_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_product_project FOREIGN KEY (project_id)
@@ -56,6 +58,7 @@ CREATE TABLE IF NOT EXISTS sales(
     sale_date DATETIME,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_sales_project FOREIGN KEY (project_id)
@@ -68,6 +71,7 @@ CREATE TABLE IF NOT EXISTS sales_product_relation(
     sales_id INT NOT NULL,
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_sales_relation FOREIGN KEY (sales_id)
@@ -90,6 +94,7 @@ CREATE TABLE IF NOT EXISTS investments(
     cuantity INT,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_investments_project FOREIGN KEY (project_id)
@@ -103,6 +108,7 @@ CREATE TABLE IF NOT EXISTS clients(
     client_description VARCHAR(200),
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_clients_project FOREIGN KEY (project_id)
@@ -118,6 +124,7 @@ CREATE TABLE IF NOT EXISTS orders(
     address VARCHAR(50),
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_orders_project FOREIGN KEY (project_id)
@@ -130,6 +137,7 @@ CREATE TABLE IF NOT EXISTS order_product_relation(
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     cuantity INT NOT NULL,
+    active BOOLEAN DEFAULT TRUE,
     
     PRIMARY KEY (id),
     CONSTRAINT FK_order_relation FOREIGN KEY (order_id)
