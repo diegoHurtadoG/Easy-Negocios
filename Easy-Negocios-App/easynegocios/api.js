@@ -36,8 +36,8 @@ export const getProducts = async (id) => {
     return await res.json()
 }
 
-export const deleteProduct = async (project_id, product_id) => {
-    await fetch(`${API}/${project_id}/products/${product_id}`, {
+export const deleteProduct = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/products/${object_id}`, {
         method: 'DELETE',
 
     })
@@ -47,42 +47,112 @@ export const deleteProduct = async (project_id, product_id) => {
 
 //#region CLIENTS
 
+export const getClients = async (id) => {
+    const res = await fetch(`${API}/${id}/clients`)
+    return await res.json()
+}
 
+export const deleteClient = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/clients/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region SALES
 
+export const getSales = async (id) => {
+    const res = await fetch(`${API}/${id}/sales`)
+    return await res.json()
+}
 
+export const deleteSale = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/sales/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region INVESTMENTS
 
+export const getInvestments = async (id) => {
+    const res = await fetch(`${API}/${id}/investments`)
+    return await res.json()
+}
 
+export const deleteInvestment = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/investments/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region ORDERS
 
+export const getOrders = async (id) => {
+    const res = await fetch(`${API}/${id}/orders`)
+    return await res.json()
+}
 
+export const deleteOrder = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/orders/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region CATEGORIES
 
+export const getCategories = async (id) => {
+    const res = await fetch(`${API}/${id}/categories`)
+    return await res.json()
+}
 
+export const deleteCategory = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/categories/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region ORDER_PRODUCT_RELATION
 
+export const getOrderProductRelations = async (id) => {
+    const res = await fetch(`${API}/${id}/orders/list`)
+    return await res.json()
+}
 
+export const deleteOrderProductRelation = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/orders/list/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion
 
 //#region SALES_PRODUCT_RELATION
 
+export const getSaleProductRelations = async (id) => {
+    const res = await fetch(`${API}/${id}/sales/list`)
+    return await res.json()
+}
 
+export const deleteSaleProductRelation = async (project_id, object_id) => {
+    await fetch(`${API}/${project_id}/sales/list/${object_id}`, {
+        method: 'DELETE',
+
+    })
+}
 
 //#endregion

@@ -19,7 +19,7 @@ const ProductList = (props) => {
 
   // Every time the screen loads, the useEffect runs
   useEffect(() => {
-    loadProducts(props.productData.route.params.project_id);
+    loadProducts(props.data.route.params.project_id);
   }, [isFocused]);
 
   const handleDelete = async (project_id, product_id) => {
@@ -35,7 +35,7 @@ const ProductList = (props) => {
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    await loadProducts(props.productData.route.params.project_id);
+    await loadProducts(props.data.route.params.project_id);
     setRefreshing(false);
   })
 

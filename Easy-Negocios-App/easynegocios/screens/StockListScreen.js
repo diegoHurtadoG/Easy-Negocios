@@ -3,9 +3,9 @@ import React from "react";
 import Layout from '../components/Layout';
 import StockList from '../components/Stock/StockList';
 
-const StockListScreen = () => (
+const StockListScreen = (props) => (
     <Layout>
-        <StockList />
+        <StockList data={props}/>
     </Layout>
 );
 

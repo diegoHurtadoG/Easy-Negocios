@@ -5,7 +5,7 @@ import ProductList from '../components/Products/ProductList';
 
 const ProductListScreen = (props) => (
     <Layout>
-        <ProductList productData={props}/>
+        <ProductList data={props}/>
     </Layout>
 );
 

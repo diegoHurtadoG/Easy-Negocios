@@ -3,9 +3,9 @@ import React from "react";
 import Layout from '../components/Layout';
 import InvestmentList from '../components/Investments/InvestmentList';
 
-const InvestmentListScreen = () => (
+const InvestmentListScreen = (props) => (
     <Layout>
-        <InvestmentList />
+        <InvestmentList data={props}/>
     </Layout>
 );
 

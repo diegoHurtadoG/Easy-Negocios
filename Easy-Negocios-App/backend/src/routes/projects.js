@@ -754,7 +754,7 @@ router.get('/projects/:project_id/categories', getCategories)
 
 /**
 * @swagger
-* /projects/{project_id}/categories/{categorie_id}:
+* /projects/{project_id}/categories/{category_id}:
 *  get:
 *      summary: Get a specific category by id
 *      parameters:
@@ -1503,7 +1503,7 @@ router.delete('/projects/:project_id/sales/list/:sale_product_relation_id', dele
 
 /**
  * @swagger
- * /projects/{project_id}/orders/list/{sale_product_relation_id}:
+ * /projects/{project_id}/sales/list/{sale_product_relation_id}:
  *  put:
  *      summary: Updates a Sale Product relation in the DB
  *      consumes:

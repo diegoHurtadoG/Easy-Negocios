@@ -3,9 +3,9 @@ import React from "react";
 import Layout from '../components/Layout';
 import ClientList from '../components/Clients/ClientList';
 
-const ClientListScreen = () => (
+const ClientListScreen = (props) => (
     <Layout>
-        <ClientList />
+        <ClientList data={props}/>
     </Layout>
 );
 
