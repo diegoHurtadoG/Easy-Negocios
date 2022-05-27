@@ -47,6 +47,7 @@ import {
     deleteSaleItem,
     updateSaleItem
 } from '../controllers/projects';
+
 const router = Router();
 
 //#region projects
@@ -1238,7 +1239,7 @@ router.put('/projects/:project_id/sales/:sale_id', updateSale)
 
 /**
  * @swagger
- * /projects/{project_id}/orders/list:
+ * /projects/{project_id}/orders/list/all:
  *  get:
  *      summary: Get orders list of a specific project
  *      parameters:
@@ -1401,7 +1402,7 @@ router.put('/projects/:project_id/orders/list/:order_product_relation_id', updat
 
 /**
  * @swagger
- * /projects/{project_id}/sales/list:
+ * /projects/{project_id}/sales/list/all:
  *  get:
  *      summary: Get sales list of a specific project
  *      parameters:

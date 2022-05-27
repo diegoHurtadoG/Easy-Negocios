@@ -7,9 +7,9 @@ import ProjectFormScreen from './ProjectFormScreen';
 import ProjectHomeScreen from './ProjectHomeScreen';
 import ProductListScreen from './ProductListScreen';
 import ClientListScreen from './ClientListScreen';
-import SalesListScreen from './SalesListScreen';
+import SaleProductRelationListScreen from './SaleProductRelationListScreen';
 import InvestmentListScreen from './InvestmentListScreen';
-import OrderListScreen from './OrderListScreen';
+import OrderProductRelationListScreen from './OrderProductRelationListScreen';
 import StockListScreen from './StockListScreen';
 import CashFluxScreen from './CashFluxScreen';
 import React from 'react';
@@ -68,8 +68,8 @@ const Navigation = () => {
                     }
                 />
                 <Stack.Screen
-                    name="SalesListScreen"
-                    component={SalesListScreen}
+                    name="SaleProductRelationListScreen"
+                    component={SaleProductRelationListScreen}
                     options={({ navigation }) => ({
                         title: 'Ventas',
                         headerTitleAlign: 'center',
@@ -86,8 +86,8 @@ const Navigation = () => {
                     }
                 />
                 <Stack.Screen
-                    name="OrderListScreen"
-                    component={OrderListScreen}
+                    name="OrderProductRelationListScreen"
+                    component={OrderProductRelationListScreen}
                     options={({ navigation }) => ({
                         title: 'Pedidos',
                         headerTitleAlign: 'center',

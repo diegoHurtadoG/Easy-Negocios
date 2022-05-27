@@ -31,7 +31,7 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('SalesListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('SaleProductRelationListScreen',  {project_id : props.route.params.project_id})}>
                     <Text style={styles.ProjectHomeText}>Ventas</Text>
                 </TouchableOpacity>
 
@@ -43,7 +43,7 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('OrderListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('OrderProductRelationListScreen',  {project_id : props.route.params.project_id})}>
                     <Text style={styles.ProjectHomeText}>Pedidos</Text>
                 </TouchableOpacity>
 
@@ -55,7 +55,7 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.GenerateCashFlux}
-                    onPress={() => navigation.navigate('CashFluxScreen',  {project_id : props.route.params.project.id})}>
+                    onPress={() => navigation.navigate('CashFluxScreen',  {project_id : props.route.params.project_id})}>
                     <Text style={styles.ProjectHomeText}>Generar Flujo de Caja</Text>
                 </TouchableOpacity>
             </View>

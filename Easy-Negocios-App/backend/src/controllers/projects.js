@@ -719,9 +719,19 @@ export const updateSale = async (req, res) => {
 export const getOrdersList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT * FROM order_product_relation \
-        WHERE project_id = ? \
-        AND active = 1",
+        "SELECT order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description \
+        FROM order_product_relation \
+        INNER JOIN \
+        products \
+        ON order_product_relation.product_id=products.id \
+        INNER JOIN \
+        orders \
+        ON order_product_relation.order_id=orders.id \
+        INNER JOIN \
+        clients \
+        ON orders.id=clients.id \
+        WHERE order_product_relation.active=1 \
+        AND order_product_relation.project_id = ?",
     [
         req.params.project_id,
     ],
@@ -818,9 +828,16 @@ export const updateOrderItem = async (req, res) => {
 export const getSalesList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT * FROM sales_product_relation \
-        WHERE project_id = ? \
-        AND active = 1",
+        "SELECT sales_product_relation.id, products.product_name as productName, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price \
+        FROM sales_product_relation \
+        INNER JOIN \
+        products \
+        ON sales_product_relation.product_id=products.id \
+        INNER JOIN \
+        sales \
+        ON sales_product_relation.sales_id=sales.id \
+        WHERE sales_product_relation.active=1 \
+        AND sales_product_relation.project_id = ?", 
     [
         req.params.project_id,
     ],

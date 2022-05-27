@@ -36,7 +36,7 @@ Content-Type: application/json
 GET {{api}}/1/products
 
 ###
-GET {{api}}/1/products/2
+GET {{api}}/1/products/1
 
 ###
 POST {{api}}/1/products
