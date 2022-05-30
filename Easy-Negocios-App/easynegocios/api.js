@@ -36,6 +36,19 @@ export const getProducts = async (id) => {
     return await res.json()
 }
 
+export const saveProduct = async (newProduct) => {
+    const res = await fetch(API,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newProject)
+        });
+    return await res.json;
+}
+
 export const deleteProduct = async (project_id, object_id) => {
     await fetch(`${API}/${project_id}/products/${object_id}`, {
         method: 'DELETE',
