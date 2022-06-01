@@ -3,12 +3,12 @@ import React, { useEffect } from 'react'
 
 import Layout from "../components/Layout"
 
-import { useNavigation } from '@react-navigation/native' 
+import { useNavigation } from '@react-navigation/native'
 
 const ProjectHomeScreen = (props) => {
 
     const navigation = useNavigation()
-    
+
     useEffect(() => {
         if (props.route.params && props.route.params.project_id) {
             props.navigation.setOptions({ title: props.route.params.project_name });
@@ -18,44 +18,46 @@ const ProjectHomeScreen = (props) => {
     return (
         <Layout>
             <View style={styles.itemContainer}>
+                
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('ProductListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('ProductListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Productos</Text>
                 </TouchableOpacity>
 
+
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('ClientListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('ClientListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Clientes</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('SaleProductRelationListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('SaleProductRelationListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Ventas</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('InvestmentListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('InvestmentListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Compras</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('OrderProductRelationListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('OrderProductRelationListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Pedidos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.ProjectHomeButton}
-                    onPress={() => navigation.navigate('StockListScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('StockListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Stock</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.GenerateCashFlux}
-                    onPress={() => navigation.navigate('CashFluxScreen',  {project_id : props.route.params.project_id})}>
+                    onPress={() => navigation.navigate('CashFluxScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Generar Flujo de Caja</Text>
                 </TouchableOpacity>
             </View>

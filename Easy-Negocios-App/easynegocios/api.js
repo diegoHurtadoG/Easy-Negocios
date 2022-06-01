@@ -36,15 +36,15 @@ export const getProducts = async (id) => {
     return await res.json()
 }
 
-export const saveProduct = async (newProduct) => {
-    const res = await fetch(API,
+export const saveProduct = async (newProduct, project_id) => {
+    const res = await fetch(`${API}/${project_id}/products`,
         {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newProject)
+            body: JSON.stringify(newProduct)
         });
     return await res.json;
 }
@@ -68,6 +68,19 @@ export const getProduct = async (project_id, object_id) => {
 export const getClients = async (id) => {
     const res = await fetch(`${API}/${id}/clients`)
     return await res.json()
+}
+
+export const saveClient = async (newClient, project_id) => {
+    const res = await fetch(`${API}/${project_id}/clients`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newClient)
+        });
+    return await res.json;
 }
 
 export const deleteClient = async (project_id, object_id) => {
@@ -110,6 +123,19 @@ export const getSale = async (project_id, object_id) => {
 export const getInvestments = async (id) => {
     const res = await fetch(`${API}/${id}/investments`)
     return await res.json()
+}
+
+export const saveInvestment = async (newInvestment, project_id) => {
+    const res = await fetch(`${API}/${project_id}/investments`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newInvestment)
+        });
+    return await res.json;
 }
 
 export const deleteInvestment = async (project_id, object_id) => {

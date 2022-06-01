@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import { getPathFromState, NavigationContainer, useRoute } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen from './HomeScreen';

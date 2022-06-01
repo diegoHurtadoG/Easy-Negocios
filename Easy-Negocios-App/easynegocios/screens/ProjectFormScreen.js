@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Layout from '../components/Layout'
 import { saveProject } from '../api'
 
-const ProjectFormScreen = ({navigation}) => {
+const ProjectFormScreen = ({ navigation }) => {
 
   const [project, setProject] = useState({
     project_name: null,
@@ -21,11 +21,13 @@ const ProjectFormScreen = ({navigation}) => {
   return (
     <Layout>
       <TextInput
+        autoCapitalize='words'
         style={styles.input}
         placeholder='Nombre de Proyecto'
         onChangeText={(text) => handleChange('project_name', text)}
       />
       <TextInput
+        autoCapitalize='words'
         style={styles.input}
         placeholder='Descripcion del Proyecto (Opcional)'
         onChangeText={(text) => handleChange('project_description', text)}

@@ -1,10 +1,13 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { useIsFocused } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react'
 
 import Layout from '../components/Layout'
 import { saveClient } from '../api'
 
-const ClientFormScreen = ({navigation}) => {
+const ClientFormScreen = ({ navigation }) => {
+
+  const isFocused = useIsFocused();
 
   const [client, setClient] = useState({
     client_name: null,
@@ -13,27 +16,31 @@ const ClientFormScreen = ({navigation}) => {
 
   const handleChange = (key, value) => setClient({ ...client, [key]: value });
 
+  useEffect(() => {
+    //
+  }, [isFocused]);
+
   const handleSubmit = async () => {
-    await saveClient(client);
-    navigation.navigate('Home')
+    await saveClient(client, navigation.getState().routes[1].params.project_id);
+    navigation.navigate('ClientListScreen', {project_id: navigation.getState().routes[1].params.project_id})
   }
 
   return (
     <Layout>
       <TextInput
         style={styles.input}
-        placeholder='Nombre de Proyecto'
+        placeholder='Nombre de Cliente'
         onChangeText={(text) => handleChange('client_name', text)}
       />
       <TextInput
         style={styles.input}
-        placeholder='Descripcion del Proyecto (Opcional)'
+        placeholder='Descripcion del Cliente (Opcional)'
         onChangeText={(text) => handleChange('client_description', text)}
       />
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Guardar Proyecto</Text>
+        <Text style={styles.buttonText}>Guardar Cliente</Text>
       </TouchableOpacity>
     </Layout>
   )
