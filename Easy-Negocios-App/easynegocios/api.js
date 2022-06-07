@@ -17,7 +17,7 @@ export const saveProject = async (newProject) => {
             },
             body: JSON.stringify(newProject)
         });
-    return await res.json;
+    return await res.json();
 }
 
 export const deleteProject = async (id) => {
@@ -46,7 +46,7 @@ export const saveProduct = async (newProduct, project_id) => {
             },
             body: JSON.stringify(newProduct)
         });
-    return await res.json;
+    return await res.json();
 }
 
 export const deleteProduct = async (project_id, object_id) => {
@@ -80,7 +80,7 @@ export const saveClient = async (newClient, project_id) => {
             },
             body: JSON.stringify(newClient)
         });
-    return await res.json;
+    return await res.json();
 }
 
 export const deleteClient = async (project_id, object_id) => {
@@ -135,7 +135,7 @@ export const saveInvestment = async (newInvestment, project_id) => {
             },
             body: JSON.stringify(newInvestment)
         });
-    return await res.json;
+    return await res.json();
 }
 
 export const deleteInvestment = async (project_id, object_id) => {
@@ -152,6 +152,24 @@ export const deleteInvestment = async (project_id, object_id) => {
 export const getOrders = async (id) => {
     const res = await fetch(`${API}/${id}/orders`)
     return await res.json()
+}
+
+export const getLastOrder = async (id) => {
+    const res = await fetch(`${API}/${id}/orders/last`)
+    return await res.json()
+}
+
+export const saveOrder = (newOrder, project_id) => {
+    const res = fetch(`${API}/${project_id}/orders`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOrder)
+        });
+    return res.json;
 }
 
 export const deleteOrder = async (project_id, object_id) => {
@@ -189,6 +207,19 @@ export const deleteCategory = async (project_id, object_id) => {
 export const getOrderProductRelations = async (id) => {
     const res = await fetch(`${API}/${id}/orders/list/all`)
     return await res.json()
+}
+
+export const saveOrderProductRelation = async (newOrderRelation, project_id) => {
+    const res = await fetch(`${API}/${project_id}/orders/list`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOrderRelation)
+        });
+    return await res.json();
 }
 
 export const deleteOrderProductRelation = async (project_id, object_id) => {

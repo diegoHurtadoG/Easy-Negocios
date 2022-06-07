@@ -1,4 +1,4 @@
-import {connect} from '../database'
+import { connect } from '../database'
 
 //console.log(req.params)
 
@@ -15,13 +15,13 @@ export const getProjects = async (req, res) => {
 export const getProject = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query("SELECT * FROM projects WHERE id = ?",
-    [
-        req.params.id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -98,13 +98,13 @@ export const getProducts = async (req, res) => {
         "SELECT * FROM products \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -114,14 +114,14 @@ export const getProduct = async (req, res) => {
         "SELECT * FROM products \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.product_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.product_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -136,12 +136,12 @@ export const createProduct = async (req, res) => {
             req.body.product_name,
             req.body.category_id,
             req.body.product_description,
-            req.body.net_price, 
-            req.body.gross_price, 
-            req.body.stock, 
+            req.body.net_price,
+            req.body.gross_price,
+            req.body.stock,
             req.body.measure_unit
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -202,13 +202,13 @@ export const getInvestments = async (req, res) => {
         "SELECT * FROM investments \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -218,14 +218,14 @@ export const getInvestment = async (req, res) => {
         "SELECT * FROM investments \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.investment_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.investment_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -242,10 +242,10 @@ export const createInvestment = async (req, res) => {
             req.body.ticket,
             req.body.investment_description,
             req.body.investment_date,
-            req.body.owned_product, 
+            req.body.owned_product,
             req.body.cuantity
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -306,13 +306,13 @@ export const getClients = async (req, res) => {
         "SELECT * FROM clients \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -322,14 +322,14 @@ export const getClient = async (req, res) => {
         "SELECT * FROM clients \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.client_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.client_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -343,7 +343,7 @@ export const createClient = async (req, res) => {
             req.body.client_name,
             req.body.client_description
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -399,14 +399,14 @@ export const getOrdersByClient = async (req, res) => {
         WHERE project_id = ? \
         AND client_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-        req.params.client_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.client_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -422,13 +422,13 @@ export const getCategories = async (req, res) => {
         "SELECT * FROM categories \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -438,14 +438,14 @@ export const getCategory = async (req, res) => {
         "SELECT * FROM categories \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.category_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.category_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -459,7 +459,7 @@ export const createCategory = async (req, res) => {
             req.body.category_name,
             req.body.category_description
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -520,14 +520,28 @@ export const getOrders = async (req, res) => {
         "SELECT * FROM orders \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
+}
+
+export const getLastOrder = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT MAX( id ) AS id FROM orders",
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
+    res.json(results[0])
 }
 
 export const getOrder = async (req, res) => {
@@ -536,14 +550,14 @@ export const getOrder = async (req, res) => {
         "SELECT * FROM orders \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.order_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.order_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -559,7 +573,7 @@ export const createOrder = async (req, res) => {
             req.body.order_description,
             req.body.address
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -620,13 +634,13 @@ export const getSales = async (req, res) => {
         "SELECT * FROM sales \
         WHERE project_id = ? \
         AND active = 1",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -636,14 +650,14 @@ export const getSale = async (req, res) => {
         "SELECT * FROM sales \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.sale_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.sale_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -658,10 +672,10 @@ export const createSale = async (req, res) => {
             req.body.total_net_price,
             req.body.total_gross_price,
             req.body.ticket,
-            req.body.sale_description, 
+            req.body.sale_description,
             req.body.sale_date
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });
@@ -719,7 +733,7 @@ export const updateSale = async (req, res) => {
 export const getOrdersList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description \
+        "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description \
         FROM order_product_relation \
         INNER JOIN \
         products \
@@ -729,16 +743,16 @@ export const getOrdersList = async (req, res) => {
         ON order_product_relation.order_id=orders.id \
         INNER JOIN \
         clients \
-        ON orders.id=clients.id \
+        ON orders.client_id=clients.id \
         WHERE order_product_relation.active=1 \
         AND order_product_relation.project_id = ?",
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -748,16 +762,49 @@ export const getOrderItem = async (req, res) => {
         "SELECT * FROM order_product_relation \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.order_product_relation_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.order_product_relation_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
+
+export const createOrderItem = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "INSERT INTO orders (project_id, client_id, delivery_date, order_description, address) \
+        VALUES (?, ?, ?, ?, ?); \
+        SET @last_order_id = LAST_INSERT_ID();\
+        INSERT INTO order_product_relation (project_id, order_id, product_id, cuantity) \
+        VALUES (?, @last_order_id, ?, ?)",
+        [
+            req.params.project_id,
+            req.body.client_id,
+            req.body.delivery_date,
+            req.body.order_description,
+            req.body.address,
+            req.params.project_id,
+            req.body.product_id,
+            req.body.cuantity
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
+    //console.log(results)
+    // This way of returning is in the web response, not console, so we are returning the insertId of the
+    //      new element and the data we sent
+    res.json({
+        id: results.insertId,
+        ...req.body,
+    });
+}
+
+/*
 
 export const createOrderItem = async (req, res) => {
     const connection = await connect();
@@ -782,6 +829,7 @@ export const createOrderItem = async (req, res) => {
         ...req.body,
     });
 }
+*/
 
 export const deleteOrderItem = async (req, res) => {
     const connection = await connect();
@@ -837,14 +885,14 @@ export const getSalesList = async (req, res) => {
         sales \
         ON sales_product_relation.sales_id=sales.id \
         WHERE sales_product_relation.active=1 \
-        AND sales_product_relation.project_id = ?", 
-    [
-        req.params.project_id,
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        AND sales_product_relation.project_id = ?",
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results)
 }
 
@@ -854,14 +902,14 @@ export const getSaleItem = async (req, res) => {
         "SELECT * FROM sales_product_relation \
         WHERE project_id = ? \
         AND id = ?",
-    [
-        req.params.project_id,
-        req.params.sale_product_relation_id
-    ],
-    function(error,results){
-        console.log(error)
-        console.log(results)
-    });
+        [
+            req.params.project_id,
+            req.params.sale_product_relation_id
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
     res.json(results[0])
 }
 
@@ -876,7 +924,7 @@ export const createSaleItem = async (req, res) => {
             req.body.product_id,
             req.body.cuantity
         ],
-        function(error,results){
+        function (error, results) {
             console.log(error)
             console.log(results)
         });

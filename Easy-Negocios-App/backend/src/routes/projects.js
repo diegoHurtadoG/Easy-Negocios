@@ -27,6 +27,7 @@ import {
     deleteCategory,
     updateCategory,
     getOrders,
+    getLastOrder,
     getOrder,
     createOrder,
     deleteOrder,
@@ -905,6 +906,22 @@ router.put('/projects/:project_id/categories/:category_id', updateCategory)
 router.get('/projects/:project_id/orders', getOrders)
 
 /**
+ * @swagger
+ * /projects/{project_id}/orders/last:
+ *  get:
+ *      summary: Get last order ID
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Numeric ID of the project that contains the orders.
+ *            schema:
+ *              type: integer
+ *      tags: [Orders]
+ */
+ router.get('/projects/:project_id/orders/last', getLastOrder)
+
+/**
 * @swagger
 * /projects/{project_id}/orders/{order_id}:
 *  get:
@@ -1298,11 +1315,6 @@ router.get('/projects/:project_id/orders/list/:order_product_relation_id', getOr
  *            schema:
  *              type: object
  *              properties:
- *                  order_id:
- *                      type: integer
- *                      description: The order id to relate.
- *                      example: 2
- *                      required: true
  *                  product_id:
  *                      type: integer
  *                      description: The product id to relate.
@@ -1312,6 +1324,25 @@ router.get('/projects/:project_id/orders/list/:order_product_relation_id', getOr
  *                      type: integer
  *                      description: Cuantity of the product in the order.
  *                      example: 20
+ *                      required: false
+ *                  client_id:
+ *                      type: integer
+ *                      description: ID of the client that made the order.
+ *                      example: 4
+ *                  delivery_date:
+ *                      type: timestamp
+ *                      description: The date and time when to deliver the order
+ *                      example: 2022-04-06 13:46:26
+ *                      required: false
+ *                  order_description:
+ *                      type: string
+ *                      description: Brief description of the order.
+ *                      example: 20 apples and 15 carrots.
+ *                      required: false
+ *                  address:
+ *                      type: string
+ *                      description: The address to deliver.
+ *                      example: Main Street 1234, New York
  *                      required: false
  *      tags: [Order-Product-Relation]
  */

@@ -12,11 +12,11 @@ const OrderProductRelationItem = (props) => {
     <View style={styles.itemContainer}>
 
       <TouchableOpacity>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.client_name}</Text>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.cuantity} {props.orderProductRelation.measure_unit}</Text>
+        <Text style={styles.itemTitle}>{props.orderProductRelation.client_name ? props.orderProductRelation.client_name : 'Default Client'}</Text>
+        <Text style={styles.itemTitle}>{props.orderProductRelation.cuantity} {props.orderProductRelation.measure_unit ? props.orderProductRelation.measure_unit : ''}</Text>
         <Text style={styles.itemTitle}>{props.orderProductRelation.productName}</Text>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date}</Text>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.address}</Text>
+        <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date ? props.orderProductRelation.delivery_date : ''}</Text>
+        <Text style={styles.itemTitle}>{props.orderProductRelation.address ? props.orderProductRelation.address : ''}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

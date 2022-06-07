@@ -26,6 +26,8 @@ const InvestmentFormScreen = ({ navigation }) => {
   }, [isFocused]);
 
   const handleSubmit = async () => {
+    // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+
     investment.cuantity = parseInt(investment.cuantity)
     investment.total_net_price = parseInt(investment.total_net_price)
     investment.total_gross_price = parseInt(investment.total_net_price / 1.19)
@@ -52,9 +54,10 @@ const InvestmentFormScreen = ({ navigation }) => {
         onValueChange={(itemValue, itemIndex) =>
           handleChange('ticket', itemValue)
         }>
-        <Picker.Item label="Omitir" value={null} key={null} />
         <Picker.Item label="Boleta" value={1} key={1} />
         <Picker.Item label="Factura" value={0} key={0} />
+        <Picker.Item label="Omitir" value={null} key={null} />
+        <Picker.Item label="Boleta o Factura" value={null} key={null} />
       </Picker>
       <Picker
         style={{ width: '90%' }}
@@ -62,9 +65,10 @@ const InvestmentFormScreen = ({ navigation }) => {
         onValueChange={(itemValue, itemIndex) =>
           handleChange('owned_product', itemValue)
         }>
-        <Picker.Item label="Omitir" value={null} key={null} />
         <Picker.Item label="Compra y Venta" value={1} key={1} />
         <Picker.Item label="No es compra y venta" value={0} key={0} />
+        <Picker.Item label="Omitir" value={null} key={null} />
+        <Picker.Item label="Tipo de Compra" value={null} key={null} />
       </Picker>
       <TextInput
         style={styles.input}
@@ -72,7 +76,7 @@ const InvestmentFormScreen = ({ navigation }) => {
         keyboardType='number-pad'
         onChangeText={(text) => handleChange('cuantity', text.replace(/[^0-9]/g, ''))}
       />
-      {/* Date Picker Missing, also re-order the fields so the FE is optimal */}
+      {/* TODO: Date Picker Missing, also re-order the fields so the FE is optimal */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>

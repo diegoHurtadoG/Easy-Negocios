@@ -2,7 +2,7 @@ import { FlatList, RefreshControl } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 
-import { getOrderProductRelations, deleteOrderProductRelation, getProduct, getOrder } from '../../api';
+import { getOrderProductRelations, deleteOrderProductRelation } from '../../api';
 import OrderProductRelationItem from './OrderProductRelationItem';
 
 const OrderProductRelationList = (props) => {
@@ -23,6 +23,7 @@ const OrderProductRelationList = (props) => {
   }, [isFocused]);
 
   const handleDelete = async (project_id, orderProductRelation_id) => {
+    console.log(project_id, orderProductRelation_id)
     await deleteOrderProductRelation(project_id, orderProductRelation_id)
     await loadOrderProductRelations(project_id)
   }

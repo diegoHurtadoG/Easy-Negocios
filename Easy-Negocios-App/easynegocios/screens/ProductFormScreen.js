@@ -36,6 +36,8 @@ const ProductFormScreen = ({ navigation, route }) => {
     const handleChange = (key, value) => setProduct({ ...product, [key]: value });
 
     const handleSubmit = async () => {
+        // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+
         product.stock = parseInt(product.stock)
         product.net_price = parseInt(product.net_price)
         product.gross_price = parseInt(product.net_price / 1.19)

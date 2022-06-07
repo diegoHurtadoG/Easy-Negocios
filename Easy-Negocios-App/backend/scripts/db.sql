@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS clients(
 CREATE TABLE IF NOT EXISTS orders(
     id INT NOT NULL AUTO_INCREMENT,
     project_id INT NOT NULL,
-    client_id INT,
+    client_id INT NOT NULL,
     delivery_date DATETIME,
     order_description VARCHAR(200),
     address VARCHAR(50),

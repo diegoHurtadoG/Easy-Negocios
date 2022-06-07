@@ -176,6 +176,9 @@ GET {{api}}/1/orders
 GET {{api}}/1/orders/1
 
 ###
+GET {{api}}/1/orders/last
+
+###
 POST {{api}}/1/orders
 Content-Type: application/json
 
@@ -248,13 +251,16 @@ POST {{api}}/1/orders/list
 Content-Type: application/json
 
 {
-    "order_id": 1,
-    "product_id": 1,
-    "cuantity": 20
+    "product_id": 3,
+    "cuantity": 20,
+    "client_id": 4,
+    "delivery_date": "2022-04-06 13:46:26",
+    "order_description": "20 apples and 15 carrots.",
+    "address": "Main Street 1234, New York"
 }
 
 ###
-DELETE {{api}}/1/orders/list/2
+DELETE {{api}}/1/orders/list/8
 
 ###
 PUT {{api}}/1/orders/list/2

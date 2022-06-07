@@ -21,6 +21,8 @@ const ClientFormScreen = ({ navigation }) => {
   }, [isFocused]);
 
   const handleSubmit = async () => {
+    // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+
     await saveClient(client, navigation.getState().routes[1].params.project_id);
     navigation.navigate('ClientListScreen', {project_id: navigation.getState().routes[1].params.project_id})
   }
