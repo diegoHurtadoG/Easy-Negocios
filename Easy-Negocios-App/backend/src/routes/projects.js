@@ -919,7 +919,7 @@ router.get('/projects/:project_id/orders', getOrders)
  *              type: integer
  *      tags: [Orders]
  */
- router.get('/projects/:project_id/orders/last', getLastOrder)
+router.get('/projects/:project_id/orders/last', getLastOrder)
 
 /**
 * @swagger
@@ -1492,11 +1492,6 @@ router.get('/projects/:project_id/sales/list/:sale_product_relation_id', getSale
  *            schema:
  *              type: object
  *              properties:
- *                  sales_id:
- *                      type: integer
- *                      description: The sale id to relate.
- *                      example: 2
- *                      required: true
  *                  product_id:
  *                      type: integer
  *                      description: The product id to relate.
@@ -1504,8 +1499,33 @@ router.get('/projects/:project_id/sales/list/:sale_product_relation_id', getSale
  *                      required: true
  *                  cuantity:
  *                      type: integer
- *                      description: Cuantity of the product sold in the sale.
+ *                      description: Cuantity of the product in the order.
  *                      example: 20
+ *                      required: false
+ *                  sale_date:
+ *                      type: timestamp
+ *                      description: The date and time you made the sale
+ *                      example: 2022-04-06 13:46:26
+ *                      required: false
+ *                  sale_description:
+ *                      type: string
+ *                      description: Brief description of the sale.
+ *                      example: 20 apples and 15 carrots.
+ *                      required: false
+ *                  ticket:
+ *                      type: bool
+ *                      description: If the sale was made with ticket (true) or invoice (false)
+ *                      example: true
+ *                      required: false
+ *                  total_net_price:
+ *                      type: integer
+ *                      description: Total money adquired without taxes
+ *                      example: 250000
+ *                      required: false
+ *                  total_gross_price:
+ *                      type: integer
+ *                      description: Total money adquired with taxes
+ *                      example: 210084
  *                      required: false
  *      tags: [Sale-Product-Relation]
  */

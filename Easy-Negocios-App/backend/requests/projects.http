@@ -285,9 +285,13 @@ POST {{api}}/1/sales/list
 Content-Type: application/json
 
 {
-    "sales_id": 1,
-    "product_id": 1,
-    "cuantity": 20
+    "product_id": 9,
+    "cuantity": "50",
+    "sale_date": null,
+    "sale_description": "Venta ocho",
+    "ticket": true,
+    "total_gross_price": 210084,
+    "total_net_price": 250000,
 }
 
 ###

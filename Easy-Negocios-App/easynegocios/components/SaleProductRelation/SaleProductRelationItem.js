@@ -13,8 +13,8 @@ const SaleProductRelationItem = (props) => {
 
       <TouchableOpacity>
         <Text style={styles.itemTitle}>{props.saleProductRelation.productName}</Text>
-        <Text style={styles.itemTitle}>{props.saleProductRelation.cuantity} {props.saleProductRelation.measure_unit}</Text>
-        <Text style={styles.itemTitle}>{props.saleProductRelation.sale_description}</Text>
+        <Text style={styles.itemTitle}>{props.saleProductRelation.cuantity} {props.saleProductRelation.measure_unit ? props.saleProductRelation.measure_unit : ''}</Text>
+        <Text style={styles.itemTitle}>{props.saleProductRelation.sale_description ? props.saleProductRelation.sale_description : ''}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

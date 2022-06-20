@@ -61,6 +61,19 @@ export const getProduct = async (project_id, object_id) => {
     return await res.json()
 }
 
+export const updateProduct = async (product_id, newProduct, project_id) => {
+    const res = await fetch(`${API}/${project_id}/products/${product_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newProduct)
+        });
+    return await res.json();
+}
+
 //#endregion
 
 //#region CLIENTS
@@ -93,6 +106,19 @@ export const deleteClient = async (project_id, object_id) => {
 export const getClient = async (project_id, object_id) => {
     const res = await fetch(`${API}/${project_id}/clients/${object_id}`)
     return await res.json()
+}
+
+export const updateClient = async (client_id, newClient, project_id) => {
+    const res = await fetch(`${API}/${project_id}/clients/${client_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newClient)
+        });
+    return await res.json();
 }
 
 //#endregion
@@ -236,6 +262,20 @@ export const deleteOrderProductRelation = async (project_id, object_id) => {
 export const getSaleProductRelations = async (id) => {
     const res = await fetch(`${API}/${id}/sales/list/all`)
     return await res.json()
+}
+
+export const saveSaleProductRelation = async (newSaleRelation, project_id) => {
+    console.log(newSaleRelation)
+    const res = await fetch(`${API}/${project_id}/sales/list`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newSaleRelation)
+        });
+    return await res.json();
 }
 
 export const deleteSaleProductRelation = async (project_id, object_id) => {

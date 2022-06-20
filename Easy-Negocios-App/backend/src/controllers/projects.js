@@ -173,13 +173,24 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "UPDATE products SET ? \
+        "UPDATE products SET active = 0 \
         WHERE project_id = ? \
-        AND id = ?",
+        AND id = ?; \
+        INSERT INTO products (project_id, product_name, category_id, \
+            product_description, net_price, gross_price, stock, measure_unit) \
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            req.body,
             req.params.project_id,
             req.params.product_id,
+            req.params.project_id,
+            req.body.product_name,
+            req.body.category_id,
+            req.body.product_description,
+            req.body.net_price,
+            req.body.gross_price,
+            req.body.stock,
+            req.body.measure_unit
+
         ]);
     //console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the
@@ -876,7 +887,7 @@ export const updateOrderItem = async (req, res) => {
 export const getSalesList = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT sales_product_relation.id, products.product_name as productName, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price \
+        "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price \
         FROM sales_product_relation \
         INNER JOIN \
         products \
@@ -916,11 +927,19 @@ export const getSaleItem = async (req, res) => {
 export const createSaleItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "INSERT INTO sales_product_relation (project_id, sales_id, product_id, cuantity) \
-        VALUES (?, ?, ?, ?)",
+        "INSERT INTO sales (project_id, total_net_price, total_gross_price, ticket, sale_description, sale_date) \
+        VALUES (?, ?, ?, ?, ?, ?); \
+        SET @last_order_id = LAST_INSERT_ID();\
+        INSERT INTO sales_product_relation (project_id, sales_id, product_id, cuantity) \
+        VALUES (?, @last_order_id, ?, ?)",
         [
             req.params.project_id,
-            req.body.sales_id,
+            req.body.total_net_price,
+            req.body.total_gross_price,
+            req.body.ticket,
+            req.body.sale_description,
+            req.body.sale_date,
+            req.params.project_id,
             req.body.product_id,
             req.body.cuantity
         ],

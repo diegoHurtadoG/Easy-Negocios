@@ -23,7 +23,6 @@ const OrderProductRelationList = (props) => {
   }, [isFocused]);
 
   const handleDelete = async (project_id, orderProductRelation_id) => {
-    console.log(project_id, orderProductRelation_id)
     await deleteOrderProductRelation(project_id, orderProductRelation_id)
     await loadOrderProductRelations(project_id)
   }

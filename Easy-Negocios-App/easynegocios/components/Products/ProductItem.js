@@ -11,7 +11,7 @@ const ProductItem = (props) => {
   return (
     <View style={styles.itemContainer}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ProductFormScreen', { object_id: props.product.id })}>
         <Text style={styles.itemTitle}>{props.product.product_name}</Text>
       </TouchableOpacity>
 
