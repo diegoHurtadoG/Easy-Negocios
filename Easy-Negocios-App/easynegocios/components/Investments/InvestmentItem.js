@@ -11,7 +11,7 @@ const InvestmentItem = (props) => {
   return (
     <View style={styles.itemContainer}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('InvestmentFormScreen', { object_id: props.investment.id })}>
         <Text style={styles.itemTitle}>{props.investment.investment_description}</Text>
       </TouchableOpacity>
 

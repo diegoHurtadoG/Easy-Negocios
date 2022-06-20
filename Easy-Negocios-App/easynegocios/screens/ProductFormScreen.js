@@ -20,7 +20,7 @@ const ProductFormScreen = ({ navigation, route }) => {
 
     const isFocused = useIsFocused();
 
-    const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(false);
 
     const [categories, setCategories] = useState([]);
 
@@ -34,7 +34,7 @@ const ProductFormScreen = ({ navigation, route }) => {
         loadCategories(navigation.getState().routes[1].params.project_id);
 
         if (route.params && route.params.object_id) {
-            navigation.setOptions({ headerTitle: "Updating Product" });
+            navigation.setOptions({ headerTitle: "Actualizando Producto" });
 
             setEditing(true);
 
@@ -58,9 +58,9 @@ const ProductFormScreen = ({ navigation, route }) => {
     const handleChange = (key, value) => setProduct({ ...product, [key]: value });
 
     const handleSubmit = async () => {
-        // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+        
         try {
-
+            // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
             product.stock = parseInt(product.stock)
             product.net_price = parseInt(product.net_price)
             product.gross_price = parseInt(product.net_price / 1.19)

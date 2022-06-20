@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Picker } from '@react-native-picker/picker'
 
 import Layout from '../components/Layout'
-import { saveInvestment } from '../api'
+import { saveInvestment, getInvestment, updateInvestment } from '../api'
 
-const InvestmentFormScreen = ({ navigation }) => {
+const InvestmentFormScreen = ({ navigation, route }) => {
 
   const isFocused = useIsFocused();
+
+  const [editing, setEditing] = useState(false);
 
   const [investment, setInvestment] = useState({
     total_net_price: null,
@@ -22,17 +24,47 @@ const InvestmentFormScreen = ({ navigation }) => {
   const handleChange = (key, value) => setInvestment({ ...investment, [key]: value });
 
   useEffect(() => {
-    //
+    if (route.params && route.params.object_id) {
+      navigation.setOptions({ headerTitle: "Actualizando Compra" });
+
+      setEditing(true);
+
+      (async () => {
+        const object = await getInvestment(navigation.getState().routes[1].params.project_id, route.params.object_id)
+        setInvestment({
+          total_net_price: object.total_net_price.toString(),
+          total_gross_price: object.total_gross_price.toString(),
+          ticket: object.ticket,
+          investment_description: object.investment_description,
+          owned_product: object.owned_product,
+          cuantity: object.cuantity.toString()
+        })
+      })();
+    }
   }, [isFocused]);
 
   const handleSubmit = async () => {
-    // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
 
-    investment.cuantity = parseInt(investment.cuantity)
-    investment.total_net_price = parseInt(investment.total_net_price)
-    investment.total_gross_price = parseInt(investment.total_net_price / 1.19)
-    await saveInvestment(investment, navigation.getState().routes[1].params.project_id);
-    navigation.navigate('InvestmentListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+    try {
+      // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+
+      investment.cuantity = parseInt(investment.cuantity)
+      investment.total_net_price = parseInt(investment.total_net_price)
+      investment.total_gross_price = parseInt(investment.total_net_price / 1.19)
+
+      console.log(investment)
+
+      if (editing) {
+        await updateInvestment(route.params.object_id, investment, navigation.getState().routes[1].params.project_id)
+      } else {
+        await saveInvestment(investment, navigation.getState().routes[1].params.project_id);
+      }
+      navigation.navigate('InvestmentListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+
+    } catch (error) {
+
+    }
+
   }
 
   return (
@@ -42,11 +74,13 @@ const InvestmentFormScreen = ({ navigation }) => {
         placeholder='Monto (neto) de compra'
         keyboardType='number-pad'
         onChangeText={(text) => handleChange('total_net_price', text.replace(/[^0-9]/g, ''))}
+        value={investment.total_net_price}
       />
       <TextInput
         style={styles.input}
         placeholder='Descripcion de la compra (opcional)'
         onChangeText={(text) => handleChange('investment_description', text)}
+        value={investment.investment_description}
       />
       <Picker
         style={{ width: '90%' }}
@@ -67,20 +101,21 @@ const InvestmentFormScreen = ({ navigation }) => {
         }>
         <Picker.Item label="Compra y Venta" value={1} key={1} />
         <Picker.Item label="No es compra y venta" value={0} key={0} />
-        <Picker.Item label="Omitir" value={null} key={null} />
-        <Picker.Item label="Tipo de Compra" value={null} key={null} />
+        <Picker.Item label="Omitir" value={0} key={null} />
+        <Picker.Item label="Tipo de Compra" value={0} key={null} />
       </Picker>
       <TextInput
         style={styles.input}
         placeholder='Cantidad'
         keyboardType='number-pad'
         onChangeText={(text) => handleChange('cuantity', text.replace(/[^0-9]/g, ''))}
+        value={investment.cuantity}
       />
       {/* TODO: Date Picker Missing, also re-order the fields so the FE is optimal */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Guardar Compra</Text>
+        <Text style={styles.buttonText}>{editing ? "Actualizar Compra" : "Guardar Compra"}</Text>
       </TouchableOpacity>
     </Layout>
   )

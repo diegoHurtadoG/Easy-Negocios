@@ -11,7 +11,7 @@ const ClientItem = (props) => {
   return (
     <View style={styles.itemContainer}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ClientFormScreen', { object_id: props.client.id })}>
         <Text style={styles.itemTitle}>{props.client.client_name}</Text>
       </TouchableOpacity>
 

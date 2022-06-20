@@ -171,6 +171,24 @@ export const deleteInvestment = async (project_id, object_id) => {
     })
 }
 
+export const getInvestment = async (project_id, object_id) => {
+    const res = await fetch(`${API}/${project_id}/investments/${object_id}`)
+    return await res.json()
+}
+
+export const updateInvestment = async (investment_id, newInvestment, project_id) => {
+    const res = await fetch(`${API}/${project_id}/investments/${investment_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newInvestment)
+        });
+    return await res.json();
+}
+
 //#endregion
 
 //#region ORDERS
