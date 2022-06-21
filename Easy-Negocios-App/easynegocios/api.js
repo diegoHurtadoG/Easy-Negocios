@@ -253,6 +253,11 @@ export const getOrderProductRelations = async (id) => {
     return await res.json()
 }
 
+export const getOrderProductRelation = async (id, object_id) => {
+    const res = await fetch(`${API}/${id}/orders/list/${object_id}`)
+    return await res.json()
+}
+
 export const saveOrderProductRelation = async (newOrderRelation, project_id) => {
     const res = await fetch(`${API}/${project_id}/orders/list`,
         {
@@ -271,6 +276,19 @@ export const deleteOrderProductRelation = async (project_id, object_id) => {
         method: 'DELETE',
 
     })
+}
+
+export const updateOrderProductRelation = async (orderRelation_id, newOrderRelation, project_id) => {
+    const res = await fetch(`${API}/${project_id}/orders/list/${orderRelation_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOrderRelation)
+        });
+    return await res.json();
 }
 
 //#endregion
@@ -301,6 +319,24 @@ export const deleteSaleProductRelation = async (project_id, object_id) => {
         method: 'DELETE',
 
     })
+}
+
+export const getSaleProductRelation = async (project_id, object_id) => {
+    const res = await fetch(`${API}/${project_id}/sales/list/${object_id}`)
+    return await res.json()
+}
+
+export const updateSaleProductRelation = async (saleRelation_id, newSaleRelation, project_id) => {
+    const res = await fetch(`${API}/${project_id}/sales/list/${saleRelation_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newSaleRelation)
+        });
+    return await res.json();
 }
 
 //#endregion

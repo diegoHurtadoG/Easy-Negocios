@@ -770,9 +770,20 @@ export const getOrdersList = async (req, res) => {
 export const getOrderItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT * FROM order_product_relation \
-        WHERE project_id = ? \
-        AND id = ?",
+        "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description, clients.id as client_id, products.id as product_id \
+        FROM order_product_relation \
+        INNER JOIN \
+        products \
+        ON order_product_relation.product_id=products.id \
+        INNER JOIN \
+        orders \
+        ON order_product_relation.order_id=orders.id \
+        INNER JOIN \
+        clients \
+        ON orders.client_id=clients.id \
+        WHERE order_product_relation.active = 1 \
+        AND order_product_relation.project_id = ? \
+        AND order_product_relation.id = ?",
         [
             req.params.project_id,
             req.params.order_product_relation_id
@@ -815,41 +826,20 @@ export const createOrderItem = async (req, res) => {
     });
 }
 
-/*
-
-export const createOrderItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
-        "INSERT INTO order_product_relation (project_id,  order_id, product_id, cuantity) \
-        VALUES (?, ?, ?, ?)",
-        [
-            req.params.project_id,
-            req.body.order_id,
-            req.body.product_id,
-            req.body.cuantity
-        ],
-        function(error,results){
-            console.log(error)
-            console.log(results)
-        });
-    //console.log(results)
-    // This way of returning is in the web response, not console, so we are returning the insertId of the
-    //      new element and the data we sent
-    res.json({
-        id: results.insertId,
-        ...req.body,
-    });
-}
-*/
-
 export const deleteOrderItem = async (req, res) => {
     const connection = await connect();
     const results = await connection.query(
         "UPDATE order_product_relation \
         SET active = 0 \
         WHERE project_id = ? \
-        AND id = ?",
+        AND id = ?; \
+        SET @order_relation_id = (SELECT order_id FROM order_product_relation WHERE project_id = ? AND id = ?); \
+        UPDATE orders \
+        SET active = 0 \
+        WHERE id = @order_relation_id;",
         [
+            req.params.project_id,
+            req.params.order_product_relation_id,
             req.params.project_id,
             req.params.order_product_relation_id
         ]
@@ -861,15 +851,31 @@ export const deleteOrderItem = async (req, res) => {
 export const updateOrderItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "UPDATE order_product_relation SET ? \
+        "UPDATE order_product_relation \
+        SET product_id = ?, \
+        cuantity = ? \
         WHERE project_id = ? \
-        AND id = ?",
+        AND id = ?; \
+        SET @order_relation_id = (SELECT order_id FROM order_product_relation WHERE project_id = ? AND id = ?); \
+        UPDATE orders \
+        SET client_id = ?, \
+        delivery_date = ?, \
+        order_description = ?, \
+        address = ? \
+        WHERE id = @order_relation_id ",
         [
-            req.body,
+            req.body.product_id,
+            req.body.cuantity,
             req.params.project_id,
-            req.params.order_product_relation_id,
+            req.params.sale_product_relation_id,
+            req.params.project_id,
+            req.params.sale_product_relation_id,
+            req.body.client_id,
+            req.body.delivery_date,
+            req.body.order_description,
+            req.body.address
         ]);
-    //console.log(results)
+    console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the
     //      new element and the data we sent
     res.json({
@@ -910,9 +916,17 @@ export const getSalesList = async (req, res) => {
 export const getSaleItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT * FROM sales_product_relation \
-        WHERE project_id = ? \
-        AND id = ?",
+        "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.id as product_id, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price, sales.ticket as ticket \
+        FROM sales_product_relation \
+        INNER JOIN \
+        products \
+        ON sales_product_relation.product_id=products.id \
+        INNER JOIN \
+        sales \
+        ON sales_product_relation.sales_id=sales.id \
+        WHERE sales_product_relation.active=1 \
+        AND sales_product_relation.project_id = ? \
+        AND sales_product_relation.id = ?",
         [
             req.params.project_id,
             req.params.sale_product_relation_id
@@ -962,8 +976,14 @@ export const deleteSaleItem = async (req, res) => {
         "UPDATE sales_product_relation \
         SET active = 0 \
         WHERE project_id = ? \
-        AND id = ?",
+        AND id = ?; \
+        SET @sale_relation_id = (SELECT sales_id FROM sales_product_relation WHERE project_id = ? AND id = ?); \
+        UPDATE sales \
+        SET active = 0 \
+        WHERE id = @sale_relation_id;",
         [
+            req.params.project_id,
+            req.params.sale_product_relation_id,
             req.params.project_id,
             req.params.sale_product_relation_id,
         ]
@@ -975,15 +995,33 @@ export const deleteSaleItem = async (req, res) => {
 export const updateSaleItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "UPDATE sales_product_relation SET ? \
+        "UPDATE sales_product_relation \
+        SET product_id = ?, \
+        cuantity = ? \
         WHERE project_id = ? \
-        AND id = ?",
+        AND id = ?; \
+        SET @sale_relation_id = (SELECT sales_id FROM sales_product_relation WHERE project_id = ? AND id = ?); \
+        UPDATE sales \
+        SET total_net_price = ?, \
+        total_gross_price = ?, \
+        ticket = ?, \
+        sale_description = ?, \
+        sale_date = ? \
+        WHERE id = @sale_relation_id ",
         [
-            req.body,
+            req.body.product_id,
+            req.body.cuantity,
             req.params.project_id,
             req.params.sale_product_relation_id,
+            req.params.project_id,
+            req.params.sale_product_relation_id,
+            req.body.total_net_price,
+            req.body.total_gross_price,
+            req.body.ticket,
+            req.body.sale_description,
+            req.body.sale_date
         ]);
-    //console.log(results)
+    console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the
     //      new element and the data we sent
     res.json({

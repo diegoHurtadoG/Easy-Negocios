@@ -4,11 +4,13 @@ import { useIsFocused } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 
 import Layout from '../components/Layout'
-import { saveSaleProductRelation, getProducts } from '../api'
+import { saveSaleProductRelation, getProducts, getSaleProductRelation, updateSaleProductRelation } from '../api'
 
-const SaleProductRelationFormScreen = ({navigation}) => {
-  
+const SaleProductRelationFormScreen = ({ navigation, route }) => {
+
   const isFocused = useIsFocused();
+
+  const [editing, setEditing] = useState(false);
 
   const [saleProductRelation, setSaleProductRelation] = useState({
     product_id: null,
@@ -29,23 +31,56 @@ const SaleProductRelationFormScreen = ({navigation}) => {
 
   useEffect(() => {
     loadProducts(navigation.getState().routes[1].params.project_id)
+
+    if (route.params && route.params.object_id) {
+      navigation.setOptions({ headerTitle: "Actualizando Venta" });
+
+      setEditing(true);
+
+      (async () => {
+        const object = await getSaleProductRelation(navigation.getState().routes[1].params.project_id, route.params.object_id)
+        setSaleProductRelation({
+          product_id: object.product_id,
+          cuantity: object.cuantity.toString(),
+          total_net_price: object.total_net_price.toString(),
+          total_gross_price: object.total_gross_price.toString(),
+          ticket: object.ticket,
+          sale_description: object.sale_description,
+          sale_date: null
+        })
+      })();
+    }
   }, [isFocused]);
 
   const handleChange = (key, value) => setSaleProductRelation({ ...saleProductRelation, [key]: value });
 
   const handleSubmit = async () => {
-    // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
 
-    // This forEach might need a change when adding multiple relations to a sale. For may be used in the saleProductRelation
-    products.forEach(product => {
-      if (product.id == saleProductRelation.product_id) {
-        saleProductRelation.total_net_price = product.net_price * saleProductRelation.cuantity
-        saleProductRelation.total_gross_price = parseInt(saleProductRelation.total_net_price / 1.19)
+    try {
+      // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+
+      saleProductRelation.cuantity = parseInt(saleProductRelation.cuantity);
+
+      // This forEach might need a change when adding multiple relations to a sale. For may be used in the saleProductRelation
+      products.forEach(product => {
+        if (product.id == saleProductRelation.product_id) {
+          saleProductRelation.total_net_price = product.net_price * saleProductRelation.cuantity
+          saleProductRelation.total_gross_price = parseInt(saleProductRelation.total_net_price / 1.19)
+        }
+      });
+
+      if (editing) {
+        await updateSaleProductRelation(route.params.object_id, saleProductRelation, navigation.getState().routes[1].params.project_id);
+      } else {
+        await saveSaleProductRelation(saleProductRelation, navigation.getState().routes[1].params.project_id);
       }
-    });
 
-    await saveSaleProductRelation(saleProductRelation, navigation.getState().routes[1].params.project_id);
-    navigation.navigate('SaleProductRelationListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+      navigation.navigate('SaleProductRelationListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   return (
@@ -70,6 +105,7 @@ const SaleProductRelationFormScreen = ({navigation}) => {
         placeholder="Cantidad"
         keyboardType='number-pad'
         onChangeText={(text) => handleChange('cuantity', text.replace(/[^0-9]/g, ''))}
+        value={saleProductRelation.cuantity}
       />
       {/* TODO: Date Picker con fecha de entrega */}
       <Picker
@@ -85,13 +121,14 @@ const SaleProductRelationFormScreen = ({navigation}) => {
         style={styles.input}
         placeholder='Descripcion de venta'
         onChangeText={(text) => handleChange('sale_description', text)}
+        value={saleProductRelation.sale_description}
       />
       {/* TODO: Separar lo que es una sale (ticket, descripcion) de la relacion (producto, cantidad) para guardar bien en la BDD */}
 
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Guardar Venta</Text>
+        <Text style={styles.buttonText}>{editing ? "Actualizar Venta" : "Guardar Venta"}</Text>
       </TouchableOpacity>
     </Layout>
   )

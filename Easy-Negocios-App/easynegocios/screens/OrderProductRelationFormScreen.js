@@ -4,32 +4,16 @@ import { useIsFocused } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker'
 
 import Layout from '../components/Layout'
-import { saveOrderProductRelation, getClients, getProducts } from '../api'
+import { saveOrderProductRelation, getClients, getProducts, getOrderProductRelation, updateOrderProductRelation } from '../api'
 
-const OrderProductRelationFormScreen = ({ navigation }) => {
+const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   const isFocused = useIsFocused();
 
-/*
-  const [orderProductRelation, setOrderProductRelation] = useState({
-    order_id: null,
-    product_id: null,
-    cuantity: null
-  });
-*/
+  const [editing, setEditing] = useState(false);
 
-/*
-  const [order, setOrder] = useState({
-    client_id: null,
-    delivery_date: null,
-    order_description: null,
-    address: null
-  });
-*/
-
-
-/* TODO: Add multiple Relations to one Order, to do this, a change in the query must be needed
-            a change in the information structure too and also a change in mentality. */
+  /* TODO: Add multiple Relations to one Order, to do this, a change in the query must be needed
+              a change in the information structure too and also a change in mentality. */
   const [orderProductRelation, setOrderProductRelation] = useState({
     product_id: null,
     cuantity: null,
@@ -54,21 +38,52 @@ const OrderProductRelationFormScreen = ({ navigation }) => {
   };
 
   const handleChangeRelation = (key, value) => setOrderProductRelation({ ...orderProductRelation, [key]: value });
-  
-  //const handleChange = (key, value) => setOrder({ ...order, [key]: value });
 
   useEffect(() => {
     loadClients(navigation.getState().routes[1].params.project_id)
     loadProducts(navigation.getState().routes[1].params.project_id)
+
+    if (route.params && route.params.object_id) {
+      navigation.setOptions({ headerTitle: "Actualizando Pedido" });
+
+      setEditing(true);
+
+      (async () => {
+        const object = await getOrderProductRelation(navigation.getState().routes[1].params.project_id, route.params.object_id)
+        setOrderProductRelation({
+          product_id: object.product_id,
+          cuantity: object.cuantity.toString(),
+          client_id: object.client_id,
+          delivery_date: object.delivery_date,
+          order_description: object.order_description,
+          address: object.address
+        })
+      })();
+    }
+
   }, [isFocused]);
 
 
 
   const handleSubmit = async () => {
-    // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
 
-    saveOrderProductRelation(orderProductRelation, navigation.getState().routes[1].params.project_id);
-    navigation.navigate('OrderProductRelationListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+    try {
+
+      // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
+      orderProductRelation.cuantity = parseInt(orderProductRelation.cuantity);
+
+      if (editing) {
+        await updateOrderProductRelation(route.params.object_id, orderProductRelation, navigation.getState().routes[1].params.project_id);
+      } else {
+        await saveOrderProductRelation(orderProductRelation, navigation.getState().routes[1].params.project_id);
+      }
+
+      navigation.navigate('OrderProductRelationListScreen', { project_id: navigation.getState().routes[1].params.project_id })
+
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
   return (
@@ -93,11 +108,13 @@ const OrderProductRelationFormScreen = ({ navigation }) => {
         style={styles.input}
         placeholder='Descripcion de pedido'
         onChangeText={(text) => handleChangeRelation('order_description', text)}
+        value={orderProductRelation.order_description}
       />
       <TextInput
         style={styles.input}
         placeholder='Direccion de pedido'
         onChangeText={(text) => handleChangeRelation('address', text)}
+        value={orderProductRelation.address}
       />
       {/* TODO: De aqui para arriba es una order, de aqui para abajo son mas order_product_relations (hacer un boton "+" para agregar) */}
       <Picker
@@ -120,11 +137,12 @@ const OrderProductRelationFormScreen = ({ navigation }) => {
         placeholder="Cantidad"
         keyboardType='number-pad'
         onChangeText={(text) => handleChangeRelation('cuantity', text.replace(/[^0-9]/g, ''))}
+        value={orderProductRelation.cuantity}
       />
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Guardar Pedido</Text>
+        <Text style={styles.buttonText}>{editing ? "Actualizar Pedido" : "Guardar Pedido"}</Text>
       </TouchableOpacity>
     </Layout>
   )

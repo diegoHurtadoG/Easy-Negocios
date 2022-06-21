@@ -11,7 +11,7 @@ const SaleProductRelationItem = (props) => {
   return (
     <View style={styles.itemContainer}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('SaleProductRelationFormScreen', { object_id: props.saleProductRelation.id })}>
         <Text style={styles.itemTitle}>{props.saleProductRelation.productName}</Text>
         <Text style={styles.itemTitle}>{props.saleProductRelation.cuantity} {props.saleProductRelation.measure_unit ? props.saleProductRelation.measure_unit : ''}</Text>
         <Text style={styles.itemTitle}>{props.saleProductRelation.sale_description ? props.saleProductRelation.sale_description : ''}</Text>

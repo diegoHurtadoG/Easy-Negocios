@@ -1389,21 +1389,16 @@ router.delete('/projects/:project_id/orders/list/:order_product_relation_id', de
  *          - in: "path"
  *            name: order_product_relation_id
  *            required: true
- *            description: Numeric ID of the relation to update.
+ *            description: Numeric ID of the order relation to select.
  *            schema:
  *              type: integer
  *          - in: "body"
  *            name: "body"
- *            description: "Order product relation object that needs to be added to the DB"
+ *            description: "Order product relation object that needs to be updated in the DB"
  *            required: true
  *            schema:
  *              type: object
  *              properties:
- *                  order_id:
- *                      type: integer
- *                      description: The order id to relate.
- *                      example: 2
- *                      required: true
  *                  product_id:
  *                      type: integer
  *                      description: The product id to relate.
@@ -1413,6 +1408,25 @@ router.delete('/projects/:project_id/orders/list/:order_product_relation_id', de
  *                      type: integer
  *                      description: Cuantity of the product in the order.
  *                      example: 20
+ *                      required: false
+ *                  client_id:
+ *                      type: integer
+ *                      description: ID of the client that made the order.
+ *                      example: 4
+ *                  delivery_date:
+ *                      type: timestamp
+ *                      description: The date and time when to deliver the order
+ *                      example: 2022-04-06 13:46:26
+ *                      required: false
+ *                  order_description:
+ *                      type: string
+ *                      description: Brief description of the order.
+ *                      example: 20 apples and 15 carrots.
+ *                      required: false
+ *                  address:
+ *                      type: string
+ *                      description: The address to deliver.
+ *                      example: Main Street 1234, New York
  *                      required: false
  *      tags: [Order-Product-Relation]
  */
@@ -1570,23 +1584,18 @@ router.delete('/projects/:project_id/sales/list/:sale_product_relation_id', dele
  *            schema:
  *              type: integer
  *          - in: "path"
- *            name: order_product_relation_id
+ *            name: sale_product_relation_id
  *            required: true
- *            description: Numeric ID of the relation to update.
+ *            description: Numeric ID of the sale relation to select.
  *            schema:
  *              type: integer
  *          - in: "body"
  *            name: "body"
- *            description: "Sale product relation object that needs to be added to the DB"
+ *            description: "Sale product relation object that needs to be updated in the DB"
  *            required: true
  *            schema:
  *              type: object
  *              properties:
- *                  sales_id:
- *                      type: integer
- *                      description: The sale id to relate.
- *                      example: 2
- *                      required: true
  *                  product_id:
  *                      type: integer
  *                      description: The product id to relate.
@@ -1594,8 +1603,33 @@ router.delete('/projects/:project_id/sales/list/:sale_product_relation_id', dele
  *                      required: true
  *                  cuantity:
  *                      type: integer
- *                      description: Cuantity of the product sold in the sale.
+ *                      description: Cuantity of the product in the order.
  *                      example: 20
+ *                      required: false
+ *                  sale_date:
+ *                      type: timestamp
+ *                      description: The date and time you made the sale
+ *                      example: 2022-04-06 13:46:26
+ *                      required: false
+ *                  sale_description:
+ *                      type: string
+ *                      description: Brief description of the sale.
+ *                      example: 20 apples and 15 carrots.
+ *                      required: false
+ *                  ticket:
+ *                      type: bool
+ *                      description: If the sale was made with ticket (true) or invoice (false)
+ *                      example: true
+ *                      required: false
+ *                  total_net_price:
+ *                      type: integer
+ *                      description: Total money adquired without taxes
+ *                      example: 250000
+ *                      required: false
+ *                  total_gross_price:
+ *                      type: integer
+ *                      description: Total money adquired with taxes
+ *                      example: 210084
  *                      required: false
  *      tags: [Sale-Product-Relation]
  */

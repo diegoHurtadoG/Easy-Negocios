@@ -11,7 +11,7 @@ const OrderProductRelationItem = (props) => {
   return (
     <View style={styles.itemContainer}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('OrderProductRelationFormScreen', { object_id: props.orderProductRelation.id })}>
         <Text style={styles.itemTitle}>{props.orderProductRelation.client_name ? props.orderProductRelation.client_name : 'Default Client'}</Text>
         <Text style={styles.itemTitle}>{props.orderProductRelation.cuantity} {props.orderProductRelation.measure_unit ? props.orderProductRelation.measure_unit : ''}</Text>
         <Text style={styles.itemTitle}>{props.orderProductRelation.productName}</Text>
