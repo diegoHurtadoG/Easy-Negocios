@@ -862,14 +862,14 @@ export const updateOrderItem = async (req, res) => {
         delivery_date = ?, \
         order_description = ?, \
         address = ? \
-        WHERE id = @order_relation_id ",
+        WHERE id = @order_relation_id",
         [
             req.body.product_id,
             req.body.cuantity,
             req.params.project_id,
-            req.params.sale_product_relation_id,
+            req.params.order_product_relation_id,
             req.params.project_id,
-            req.params.sale_product_relation_id,
+            req.params.order_product_relation_id,
             req.body.client_id,
             req.body.delivery_date,
             req.body.order_description,

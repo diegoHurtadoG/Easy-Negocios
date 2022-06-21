@@ -54,7 +54,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
           product_id: object.product_id,
           cuantity: object.cuantity.toString(),
           client_id: object.client_id,
-          delivery_date: object.delivery_date,
+          delivery_date: null, //TODO: Change when date picker is available
           order_description: object.order_description,
           address: object.address
         })
@@ -71,6 +71,8 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
       // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
       orderProductRelation.cuantity = parseInt(orderProductRelation.cuantity);
+
+      console.log(orderProductRelation);
 
       if (editing) {
         await updateOrderProductRelation(route.params.object_id, orderProductRelation, navigation.getState().routes[1].params.project_id);

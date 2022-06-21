@@ -15,12 +15,23 @@ const OrderProductRelationItem = (props) => {
         <Text style={styles.itemTitle}>{props.orderProductRelation.client_name ? props.orderProductRelation.client_name : 'Default Client'}</Text>
         <Text style={styles.itemTitle}>{props.orderProductRelation.cuantity} {props.orderProductRelation.measure_unit ? props.orderProductRelation.measure_unit : ''}</Text>
         <Text style={styles.itemTitle}>{props.orderProductRelation.productName}</Text>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date ? props.orderProductRelation.delivery_date : ''}</Text>
-        <Text style={styles.itemTitle}>{props.orderProductRelation.address ? props.orderProductRelation.address : ''}</Text>
+        {
+          (props.orderProductRelation.delivery_date) ? (
+            <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date}</Text>
+          ) :
+            (null)
+        }
+        {
+          (props.orderProductRelation.address) ? (
+            <Text style={styles.itemTitle}>{props.orderProductRelation.address}</Text>
+          ) :
+            (null)
+        }
+
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={{ backgroundColor: 'red', borderRadius: 100, padding: 3}}
+        style={{ backgroundColor: 'red', borderRadius: 100, padding: 3 }}
         onPress={() => props.handleDelete(props.orderProductRelation.project_id, props.orderProductRelation.id)}>
         <Text style={styles.itemTitle}> X </Text>
       </TouchableOpacity>
@@ -31,7 +42,7 @@ const OrderProductRelationItem = (props) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    backgroundColor: '#e0e0e0' ,
+    backgroundColor: '#e0e0e0',
     padding: 20,
     marginVertical: 10,
     borderRadius: 10,
