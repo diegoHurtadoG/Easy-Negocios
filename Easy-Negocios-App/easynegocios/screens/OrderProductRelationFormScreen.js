@@ -72,8 +72,6 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
       // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
       orderProductRelation.cuantity = parseInt(orderProductRelation.cuantity);
 
-      console.log(orderProductRelation);
-
       if (editing) {
         await updateOrderProductRelation(route.params.object_id, orderProductRelation, navigation.getState().routes[1].params.project_id);
       } else {

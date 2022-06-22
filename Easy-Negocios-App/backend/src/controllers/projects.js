@@ -875,7 +875,6 @@ export const updateOrderItem = async (req, res) => {
             req.body.order_description,
             req.body.address
         ]);
-    console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the
     //      new element and the data we sent
     res.json({
