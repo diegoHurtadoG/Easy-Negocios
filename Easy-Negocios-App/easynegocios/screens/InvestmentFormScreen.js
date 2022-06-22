@@ -52,8 +52,6 @@ const InvestmentFormScreen = ({ navigation, route }) => {
       investment.total_net_price = parseInt(investment.total_net_price)
       investment.total_gross_price = parseInt(investment.total_net_price / 1.19)
 
-      console.log(investment)
-
       if (editing) {
         await updateInvestment(route.params.object_id, investment, navigation.getState().routes[1].params.project_id)
       } else {

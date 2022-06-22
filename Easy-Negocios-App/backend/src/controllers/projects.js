@@ -1020,7 +1020,6 @@ export const updateSaleItem = async (req, res) => {
             req.body.sale_description,
             req.body.sale_date
         ]);
-    console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the
     //      new element and the data we sent
     res.json({
