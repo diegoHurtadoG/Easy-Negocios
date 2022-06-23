@@ -1,7 +1,8 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker'
+import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Layout from '../components/Layout'
 import { saveOrderProductRelation, getClients, getProducts, getOrderProductRelation, updateOrderProductRelation } from '../api'
@@ -37,7 +38,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
     setProducts(data);
   };
 
-  const handleChangeRelation = (key, value) => setOrderProductRelation({ ...orderProductRelation, [key]: value });
+  const handleChange = (key, value) => setOrderProductRelation({ ...orderProductRelation, [key]: value });
 
   useEffect(() => {
     loadClients(navigation.getState().routes[1].params.project_id)
@@ -54,7 +55,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
           product_id: object.product_id,
           cuantity: object.cuantity.toString(),
           client_id: object.client_id,
-          delivery_date: null, //TODO: Change when date picker is available
+          delivery_date: object.delivery_date ? new Date(object.delivery_date.slice(0, 19)) : null,
           order_description: object.order_description,
           address: object.address
         })
@@ -72,6 +73,12 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
       // TODO: VALIDATE INFORMATION (nulls, empties, types, etc)
       orderProductRelation.cuantity = parseInt(orderProductRelation.cuantity);
 
+      if (orderProductRelation.delivery_date) {
+        orderProductRelation.delivery_date = orderProductRelation.delivery_date.toISOString().slice(0, 19).replace('T', ' ')
+      } else { // In this case it can be null (valid) or undefined, if its undefined, we need it to be null.
+        orderProductRelation.delivery_date = null
+      }
+
       if (editing) {
         await updateOrderProductRelation(route.params.object_id, orderProductRelation, navigation.getState().routes[1].params.project_id);
       } else {
@@ -86,13 +93,37 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   }
 
+  // Date Time picker from here below
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    setShow(false);
+    selectedDate && handleChange('delivery_date', selectedDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   return (
     <Layout>
+
       <Picker
         style={{ width: '90%' }}
         selectedValue={orderProductRelation.client_id}
         onValueChange={(itemValue, itemIndex) =>
-          handleChangeRelation('client_id', itemValue)
+          handleChange('client_id', itemValue)
         }>
         <Picker.Item label="Seleccione Cliente" value={null} key="None" />
         {clients !== "" ? (
@@ -103,25 +134,59 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
           <Picker.Item label="Cargando..." value={null} />
         )}
       </Picker>
-      {/* TODO: Date Picker con fecha de entrega */}
+
+      {/** DATE TIME BEGINS */}
+      <View style={styles.itemContainer}>
+
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={showDatepicker}>
+          <Text style={styles.buttonText}>Selecciona Fecha</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={showTimepicker}>
+          <Text style={styles.buttonText}>Selecciona Hora</Text>
+        </TouchableOpacity>
+
+      </View>
+
+      <View>
+
+        <Text>Fecha: {orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toLocaleString() : "No seleccionada"}</Text>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePickerORDER"
+            value={orderProductRelation.delivery_date ? orderProductRelation.delivery_date : new Date()}
+            mode={mode}
+            is24Hour={true}
+            onChange={onChange}
+          />
+        )}
+      </View>
+      {/** DATE TIME ENDS */}
+
       <TextInput
         style={styles.input}
         placeholder='Descripcion de pedido'
-        onChangeText={(text) => handleChangeRelation('order_description', text)}
+        onChangeText={(text) => handleChange('order_description', text)}
         value={orderProductRelation.order_description}
       />
+
       <TextInput
         style={styles.input}
         placeholder='Direccion de pedido'
-        onChangeText={(text) => handleChangeRelation('address', text)}
+        onChangeText={(text) => handleChange('address', text)}
         value={orderProductRelation.address}
       />
+
       {/* TODO: De aqui para arriba es una order, de aqui para abajo son mas order_product_relations (hacer un boton "+" para agregar) */}
       <Picker
         style={{ width: '90%' }}
         selectedValue={orderProductRelation.product_id}
         onValueChange={(itemValue, itemIndex) =>
-          handleChangeRelation('product_id', itemValue)
+          handleChange('product_id', itemValue)
         }>
         <Picker.Item label="Seleccione Producto" value={null} key="None" />
         {products !== "" ? (
@@ -132,18 +197,21 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
           <Picker.Item label="Cargando..." value={null} />
         )}
       </Picker>
+
       <TextInput
         style={styles.input}
         placeholder="Cantidad"
         keyboardType='number-pad'
-        onChangeText={(text) => handleChangeRelation('cuantity', text.replace(/[^0-9]/g, ''))}
+        onChangeText={(text) => handleChange('cuantity', text.replace(/[^0-9]/g, ''))}
         value={orderProductRelation.cuantity}
       />
+
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit}>
         <Text style={styles.buttonText}>{editing ? "Actualizar Pedido" : "Guardar Pedido"}</Text>
       </TouchableOpacity>
+
     </Layout>
   )
 }
@@ -171,6 +239,14 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000000',
     textAlign: 'center',
+  },
+  itemContainer: {
+    padding: 15,
+    marginVertical: 30,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
   }
 })
 

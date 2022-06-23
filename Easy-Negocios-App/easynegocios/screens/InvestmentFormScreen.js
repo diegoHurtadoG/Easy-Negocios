@@ -62,10 +62,21 @@ const InvestmentFormScreen = ({ navigation, route }) => {
       }
 
       if (editing) {
+
+        if (investment.owned_product) {
+          // await updateStock() // Warning here to add more than needed when updating, maybe a sum or diff between the original and the updated
+        }
+
         await updateInvestment(route.params.object_id, investment, navigation.getState().routes[1].params.project_id)
       } else {
+
+        if (investment.owned_product) {
+          // await updateStock()
+        }
+
         await saveInvestment(investment, navigation.getState().routes[1].params.project_id);
       }
+
       navigation.navigate('InvestmentListScreen', { project_id: navigation.getState().routes[1].params.project_id })
 
     } catch (error) {
@@ -147,6 +158,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
         value={investment.cuantity}
       />
 
+      {/** DATE TIME BEGINS */}
       <View style={styles.itemContainer}>
 
         <TouchableOpacity
@@ -168,7 +180,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
         <Text>Fecha: {investment.investment_date ? investment.investment_date.toLocaleString() : "No seleccionada"}</Text>
         {show && (
           <DateTimePicker
-            testID="dateTimePicker"
+            testID="dateTimePickerINVESTMENT"
             value={investment.investment_date ? investment.investment_date : new Date()}
             mode={mode}
             is24Hour={true}
@@ -176,6 +188,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
           />
         )}
       </View>
+      {/** DATE TIME ENDS */}
 
       <TouchableOpacity
         style={styles.button}
@@ -218,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
-  },
+  }
 })
 
 export default InvestmentFormScreen

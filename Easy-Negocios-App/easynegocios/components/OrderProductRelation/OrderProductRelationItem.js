@@ -17,7 +17,7 @@ const OrderProductRelationItem = (props) => {
         <Text style={styles.itemTitle}>{props.orderProductRelation.productName}</Text>
         {
           (props.orderProductRelation.delivery_date) ? (
-            <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date}</Text>
+            <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date.slice(0, 19).replace('T', ' ')}</Text>
           ) :
             (null)
         }

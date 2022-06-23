@@ -770,7 +770,7 @@ export const getOrdersList = async (req, res) => {
 export const getOrderItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description, clients.id as client_id, products.id as product_id \
+        "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date as delivery_date, orders.address, clients.client_name, clients.client_description, clients.id as client_id, products.id as product_id \
         FROM order_product_relation \
         INNER JOIN \
         products \
@@ -915,7 +915,7 @@ export const getSalesList = async (req, res) => {
 export const getSaleItem = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.id as product_id, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price, sales.ticket as ticket \
+        "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.id as product_id, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price, sales.ticket as ticket, sales.sale_date as sale_date \
         FROM sales_product_relation \
         INNER JOIN \
         products \

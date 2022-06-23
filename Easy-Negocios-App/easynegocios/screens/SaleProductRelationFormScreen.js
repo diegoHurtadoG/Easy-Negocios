@@ -2,6 +2,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Layout from '../components/Layout'
 import { saveSaleProductRelation, getProducts, getSaleProductRelation, updateSaleProductRelation } from '../api'
@@ -46,7 +47,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
           total_gross_price: object.total_gross_price.toString(),
           ticket: object.ticket,
           sale_description: object.sale_description,
-          sale_date: null
+          sale_date: object.sale_date ? new Date(object.sale_date.slice(0, 19)) : null
         })
       })();
     }
@@ -69,6 +70,12 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
         }
       });
 
+      if (saleProductRelation.sale_date) {
+        saleProductRelation.sale_date = saleProductRelation.sale_date.toISOString().slice(0, 19).replace('T', ' ')
+      } else { // In this case it can be null (valid) or undefined, if its undefined, we need it to be null.
+        saleProductRelation.sale_date = null
+      }
+
       if (editing) {
         await updateSaleProductRelation(route.params.object_id, saleProductRelation, navigation.getState().routes[1].params.project_id);
       } else {
@@ -83,8 +90,32 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
 
   }
 
+  // Date Time picker from here below
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    setShow(false);
+    selectedDate && handleChange('sale_date', selectedDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   return (
     <Layout>
+
       <Picker
         style={{ width: '90%' }}
         selectedValue={saleProductRelation.product_id}
@@ -100,6 +131,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
           <Picker.Item label="Cargando..." value={null} />
         )}
       </Picker>
+
       <TextInput
         style={styles.input}
         placeholder="Cantidad"
@@ -107,7 +139,39 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
         onChangeText={(text) => handleChange('cuantity', text.replace(/[^0-9]/g, ''))}
         value={saleProductRelation.cuantity}
       />
-      {/* TODO: Date Picker con fecha de entrega */}
+
+      {/** DATE TIME BEGINS */}
+      <View style={styles.itemContainer}>
+
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={showDatepicker}>
+          <Text style={styles.buttonText}>Selecciona Fecha</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={showTimepicker}>
+          <Text style={styles.buttonText}>Selecciona Hora</Text>
+        </TouchableOpacity>
+
+      </View>
+
+      <View>
+
+        <Text>Fecha: {saleProductRelation.sale_date ? saleProductRelation.sale_date.toLocaleString() : "No seleccionada"}</Text>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePickerSALE"
+            value={saleProductRelation.sale_date ? saleProductRelation.sale_date : new Date()}
+            mode={mode}
+            is24Hour={true}
+            onChange={onChange}
+          />
+        )}
+      </View>
+      {/** DATE TIME ENDS */}
+
       <Picker
         style={{ width: '90%' }}
         selectedValue={saleProductRelation.ticket}
@@ -117,6 +181,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
         <Picker.Item label="Boleta" value={true} key="1" />
         <Picker.Item label="Factura" value={false} key="0" />
       </Picker>
+
       <TextInput
         style={styles.input}
         placeholder='Descripcion de venta'
@@ -130,6 +195,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
         onPress={handleSubmit}>
         <Text style={styles.buttonText}>{editing ? "Actualizar Venta" : "Guardar Venta"}</Text>
       </TouchableOpacity>
+
     </Layout>
   )
 }
@@ -157,6 +223,14 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000000',
     textAlign: 'center',
+  },
+  itemContainer: {
+    padding: 15,
+    marginVertical: 30,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
   }
 })
 
