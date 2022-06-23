@@ -313,3 +313,14 @@ Content-Type: application/json
     "total_gross_price": 93361,
     "total_net_price": 111100
 }
+
+###################################### CASH-FLUX ######################################
+
+###
+GET {{api}}/1/cashflux/investments
+
+###
+GET {{api}}/1/cashflux/orders
+
+###
+GET {{api}}/1/cashflux/sales

@@ -1029,3 +1029,67 @@ export const updateSaleItem = async (req, res) => {
 }
 
 //#endregion
+
+//#region cash_flux
+
+export const getCashInfoInvestments = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT investments.total_net_price as investment_total_net_price, investments.total_gross_price as investment_total_gross_price, investments.ticket as investment_ticket, investments.investment_date as investment_date \
+        FROM investments \
+        WHERE investments.project_id = ? \
+        AND investments.active = 1",
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
+    res.json(results)
+}
+
+export const getCashInfoOrders = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT order_product_relation.product_id as order_product_id, products.net_price as product_net_price, products.gross_price as product_gross_price, order_product_relation.cuantity as order_cuantity, order_product_relation.order_id as order_id, orders.delivery_date as order_delivery_date  \
+        FROM order_product_relation \
+        INNER JOIN \
+        products \
+        ON order_product_relation.product_id = products.id \
+        INNER JOIN \
+        orders \
+        ON order_product_relation.order_id = orders.id \
+        WHERE order_product_relation.project_id = ? \
+        AND order_product_relation.active = 1",
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
+    res.json(results)
+}
+
+export const getCashInfoSales = async (req, res) => {
+    const connection = await connect();
+    const [results] = await connection.query(
+        "SELECT sales_product_relation.sales_id as sales_id, sales.total_net_price as sales_total_net_price, sales.total_gross_price as sales_total_gross_price, sales.ticket as sales_ticket, sales.sale_date as sale_date \
+        FROM sales_product_relation \
+        INNER JOIN \
+        sales \
+        ON sales_product_relation.sales_id = sales.id \
+        WHERE sales_product_relation.project_id = ? \
+        AND sales_product_relation.active = 1",
+        [
+            req.params.project_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        });
+    res.json(results)
+}
+
+//#endregion

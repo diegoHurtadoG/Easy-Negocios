@@ -46,7 +46,10 @@ import {
     getSaleItem,
     createSaleItem,
     deleteSaleItem,
-    updateSaleItem
+    updateSaleItem,
+    getCashInfoInvestments,
+    getCashInfoOrders,
+    getCashInfoSales
 } from '../controllers/projects';
 
 const router = Router();
@@ -1634,6 +1637,67 @@ router.delete('/projects/:project_id/sales/list/:sale_product_relation_id', dele
  *      tags: [Sale-Product-Relation]
  */
 router.put('/projects/:project_id/sales/list/:sale_product_relation_id', updateSaleItem)
+
+//#endregion
+
+//#region cash_flux
+
+/////////////////////////// CASH_FLUX ///////////////////////////
+
+/**
+ * @swagger
+ * tags:
+ *  name: Cash-Flux
+ *  description: Cash-Flux management Endpoints, general to a whole project
+ */
+
+/**
+ * @swagger
+ * /projects/{project_id}/cashflux/investments:
+ *  get:
+ *      summary: Get all cash info of the project that was made in investments
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Numeric ID of the project that contains the info to get.
+ *            schema:
+ *              type: integer
+ *      tags: [Cash-Flux]
+ */
+ router.get('/projects/:project_id/cashflux/investments', getCashInfoInvestments)
+
+ /**
+ * @swagger
+ * /projects/{project_id}/cashflux/orders:
+ *  get:
+ *      summary: Get all cash info of the project that was made in orders
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Numeric ID of the project that contains the info to get.
+ *            schema:
+ *              type: integer
+ *      tags: [Cash-Flux]
+ */
+  router.get('/projects/:project_id/cashflux/orders', getCashInfoOrders)
+
+  /**
+ * @swagger
+ * /projects/{project_id}/cashflux/sales:
+ *  get:
+ *      summary: Get all cash info of the project that was made in sales
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: Numeric ID of the project that contains the info to get.
+ *            schema:
+ *              type: integer
+ *      tags: [Cash-Flux]
+ */
+ router.get('/projects/:project_id/cashflux/sales', getCashInfoSales)
 
 //#endregion
 
