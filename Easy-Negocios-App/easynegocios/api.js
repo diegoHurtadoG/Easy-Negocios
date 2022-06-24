@@ -340,3 +340,22 @@ export const updateSaleProductRelation = async (saleRelation_id, newSaleRelation
 }
 
 //#endregion
+
+//#region cashflux
+
+export const getCashInfoInvestments = async (id) => {
+    const res = await fetch(`${API}/${id}/cashflux/investments`)
+    return await res.json()
+}
+
+export const getCashInfoOrders = async (id) => {
+    const res = await fetch(`${API}/${id}/cashflux/orders`)
+    return await res.json()
+}
+
+export const getCashInfoSales = async (id) => {
+    const res = await fetch(`${API}/${id}/cashflux/sales`)
+    return await res.json()
+}
+
+//#endregion
