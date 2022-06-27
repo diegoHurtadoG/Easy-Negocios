@@ -28,7 +28,10 @@ export const getProject = async (req, res) => {
 export const createProject = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "INSERT INTO projects (project_name, project_description) VALUES (?, ?)",
+        "INSERT INTO projects (project_name, project_description) VALUES (?, ?); \
+        SET @last_project_id = LAST_INSERT_ID(); \
+        INSERT INTO clients (project_id, client_name, client_description) \
+        VALUES (@last_project_id, 'Default Client', 'Cliente general');",
         [
             req.body.project_name,
             req.body.project_description,
@@ -1035,7 +1038,7 @@ export const updateSaleItem = async (req, res) => {
 export const getCashInfoInvestments = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT investments.total_net_price as investment_total_net_price, investments.total_gross_price as investment_total_gross_price, investments.ticket as investment_ticket, investments.investment_date as investment_date \
+        "SELECT investments.id as id, investments.total_net_price as investment_total_net_price, investments.total_gross_price as investment_total_gross_price, investments.ticket as investment_ticket, investments.investment_date as investment_date \
         FROM investments \
         WHERE investments.project_id = ? \
         AND investments.active = 1",
@@ -1052,7 +1055,7 @@ export const getCashInfoInvestments = async (req, res) => {
 export const getCashInfoOrders = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT order_product_relation.product_id as order_product_id, products.net_price as product_net_price, products.gross_price as product_gross_price, order_product_relation.cuantity as order_cuantity, order_product_relation.order_id as order_id, orders.delivery_date as order_delivery_date  \
+        "SELECT order_product_relation.id as id, order_product_relation.product_id as order_product_id, products.net_price as product_net_price, products.gross_price as product_gross_price, order_product_relation.cuantity as order_cuantity, order_product_relation.order_id as order_id, orders.delivery_date as order_delivery_date  \
         FROM order_product_relation \
         INNER JOIN \
         products \
@@ -1075,7 +1078,7 @@ export const getCashInfoOrders = async (req, res) => {
 export const getCashInfoSales = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "SELECT sales_product_relation.sales_id as sales_id, sales.total_net_price as sales_total_net_price, sales.total_gross_price as sales_total_gross_price, sales.ticket as sales_ticket, sales.sale_date as sale_date \
+        "SELECT sales_product_relation.id as id, sales_product_relation.sales_id as sales_id, sales.total_net_price as sales_total_net_price, sales.total_gross_price as sales_total_gross_price, sales.ticket as sales_ticket, sales.sale_date as sale_date \
         FROM sales_product_relation \
         INNER JOIN \
         sales \

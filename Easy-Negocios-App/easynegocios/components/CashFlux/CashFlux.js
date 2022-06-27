@@ -7,6 +7,8 @@ import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../
 
 const CashFlux = (props) => {
 
+  // Obtain cash info
+
   const [investmentInfo, setInvestmentInfo] = useState([]);
   const [ordersInfo, setOrdersInfo] = useState([]);
   const [salesInfo, setSalesInfo] = useState([]);
@@ -41,21 +43,13 @@ const CashFlux = (props) => {
   // Date Time Picker
 
   const [dates, setDates] = useState({
-    investmentInitial: null,
-    investmentFinal: null,
-    ordersInitial: null,
-    ordersFinal: null,
-    salesInitial: null,
-    salesFinal: null
+    dateInitial: new Date(2022, 0, 1),
+    dateFinal: new Date()
   });
 
   const [show, setShow] = useState({
-    investmentInitial: false,
-    investmentFinal: false,
-    ordersInitial: false,
-    ordersFinal: false,
-    salesInitial: false,
-    salesFinal: false,
+    dateInitial: false,
+    dateFinal: false
   });
 
   const showDatepicker = (key) => {
@@ -67,54 +61,186 @@ const CashFlux = (props) => {
     selectedDate && setDates({ ...dates, [key]: selectedDate });
   }
 
+  // Proccess Cash info
+
+
+  const [inDateInvestmentInfo, setInDateInvestmentInfo] = useState([]);
+  const [inDateOrdersInfo, setInDateOrdersInfo] = useState([]);
+  const [inDateSalesInfo, setInDateSalesInfo] = useState([]);
+
+
+  /* Investment Info Structure
+
+  Array [
+    Object {
+      "id": 1,
+      "investment_date": "2022-05-25T19:17:30.000Z",
+      "investment_ticket": 1,
+      "investment_total_gross_price": 150,
+      "investment_total_net_price": 1337,
+    },
+    Object {
+      "id": 2,
+      "investment_date": "2022-04-16T16:34:20.000Z",
+      "investment_ticket": 1,
+      "investment_total_gross_price": 1200,
+      "investment_total_net_price": 1500,
+    },
+  ] 
+
+  */
+
+  /* Order Info Structure 
+
+  Array [
+    Object {
+      "id": 1,
+      "order_cuantity": 12,
+      "order_delivery_date": "2022-05-25T19:17:30.000Z",
+      "order_id": 1,
+      "order_product_id": 1,
+      "product_gross_price": 888,
+      "product_net_price": 1111,
+    },
+    Object {
+      "id": 9,
+      "order_cuantity": 50,
+      "order_delivery_date": "2022-06-07T00:46:51.000Z",
+      "order_id": 30,
+      "order_product_id": 9,
+      "product_gross_price": 4201,
+      "product_net_price": 5000,
+    },
+  ]
+  
+  */
+
+  /* Sale Info Structure 
+  
+  Array [
+    Object {
+      "id": 1,
+      "sale_date": "2022-05-25T19:17:30.000Z",
+      "sales_id": 1,
+      "sales_ticket": 1,
+      "sales_total_gross_price": 850,
+      "sales_total_net_price": 1000,
+    },
+  ]
+  
+  */
+
+
+  const filterInvestmentsByDate = (dates) => {
+    investmentInfo.forEach(element => {
+
+      if (element['investment_date']) {
+
+        const elementDate = new Date(element['investment_date']);
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateInvestmentInfo(prevArray => [...prevArray, element]) : null
+
+        }
+      }
+    })
+  }
+
+  const filterOrdersByDate = (dates) => {
+
+    ordersInfo.forEach(element => {
+
+      if (element['order_delivery_date']) {
+
+        const elementDate = new Date(element['order_delivery_date']);
+
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateOrdersInfo(prevArray => [...prevArray, element]) : null
+
+        }
+      }
+    })
+  }
+
+  const filterSalesByDate = (dates) => {
+    salesInfo.forEach(element => {
+
+      if (element['sale_date']) {
+
+        const elementDate = new Date(element['sale_date']);
+
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateSalesInfo(prevArray => [...prevArray, element]) : null
+
+        }
+      }
+    })
+  }
+
+  useEffect(() => { //This can be optimized to run only when show changes to false, but and if (!show) {...} is not working
+
+    setInDateInvestmentInfo([]);
+    setInDateOrdersInfo([]);
+    setInDateSalesInfo([]);
+
+    filterInvestmentsByDate(dates);
+    filterOrdersByDate(dates);
+    filterSalesByDate(dates);
+
+  }, [show]);
+
 
   return (
 
     <View>
 
-      <View> {/** Investments View */}
+      {/* <INVESTMENTS> */}
+      <View style={styles.itemContainer}>
 
-        <View style={styles.itemContainer}>
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={() => showDatepicker('dateInitial')}>
+          <Text style={styles.buttonText}>{dates.dateInitial ? dates.dateInitial.toDateString() : "Fecha Inicial"}</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            styles={styles.button}
-            onPress={() => showDatepicker('investmentInitial')}>
-            <Text style={styles.buttonText}>{dates.investmentInitial ? dates.investmentInitial.toDateString() : "Fecha Inicial"}</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={() => showDatepicker('dateFinal')}>
+          <Text style={styles.buttonText}>{dates.dateFinal ? dates.dateFinal.toDateString() : "Fecha Final"}</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            styles={styles.button}
-            onPress={() => showDatepicker('investmentFinal')}>
-            <Text style={styles.buttonText}>{dates.investmentFinal ? dates.investmentFinal.toDateString() : "Fecha Final"}</Text>
-          </TouchableOpacity>
+        {show.dateInitial ? (
+          <DateTimePicker
+            testID="dateTimePickerInvestmentInitial"
+            value={dates.dateInitial ? dates.dateInitial : new Date()}
+            mode={'date'}
+            is24Hour={true}
+            onChange={(event, selectedDate) => handleChange(event, selectedDate, 'dateInitial')}
+          />
+        ) : null}
 
-          {show.investmentInitial && (
-            <DateTimePicker
-              testID="dateTimePickerInvestmentInitial"
-              value={dates.investmentInitial ? dates.investmentInitial : new Date()}
-              mode={'date'}
-              is24Hour={true}
-              onChange={(event, selectedDate) => handleChange(event, selectedDate, 'investmentInitial')}
-            />
-          )}
-
-          {show.investmentFinal && (
-            <DateTimePicker
-              testID="dateTimePickerInvestmentFinal"
-              value={dates.investmentFinal ? dates.investmentFinal : new Date()}
-              mode={'date'}
-              is24Hour={true}
-              onChange={(event, selectedDate) => handleChange(event, selectedDate, 'investmentFinal')}
-            />
-          )}
-
-        </View>
-
-        <View>
-          <Text>Investments</Text>
-        </View>
+        {show.dateFinal ? (
+          <DateTimePicker
+            testID="dateTimePickerInvestmentFinal"
+            value={dates.dateFinal ? dates.dateFinal : new Date()}
+            mode={'date'}
+            is24Hour={true}
+            onChange={(event, selectedDate) => handleChange(event, selectedDate, 'dateFinal')}
+          />
+        ) : null}
 
       </View>
+
+
+      <View>
+        {console.log(inDateInvestmentInfo)}
+        <Text>Investments</Text>
+      </View>
+
+      {/* <INVESTMENTS/> */}
+
 
     </View>
 
