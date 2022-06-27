@@ -179,15 +179,21 @@ const CashFlux = (props) => {
     })
   }
 
-  useEffect(() => { //This can be optimized to run only when show changes to false, but and if (!show) {...} is not working
+  useEffect(() => {
 
-    setInDateInvestmentInfo([]);
-    setInDateOrdersInfo([]);
-    setInDateSalesInfo([]);
+    // Only runs when closing date modal
+    if (!(show.dateFinal || show.dateInitial)) {
+      
+      setInDateInvestmentInfo([]);
+      setInDateOrdersInfo([]);
+      setInDateSalesInfo([]);
 
-    filterInvestmentsByDate(dates);
-    filterOrdersByDate(dates);
-    filterSalesByDate(dates);
+      filterInvestmentsByDate(dates);
+      filterOrdersByDate(dates);
+      filterSalesByDate(dates);
+    }
+
+
 
   }, [show]);
 
@@ -235,7 +241,7 @@ const CashFlux = (props) => {
 
 
       <View>
-        {console.log(inDateInvestmentInfo)}
+        {/* console.log(inDateInvestmentInfo) */}
         <Text>Investments</Text>
       </View>
 
