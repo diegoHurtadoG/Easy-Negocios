@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../../api'
+import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../../api';
+
 
 const CashFlux = (props) => {
 
-  // Obtain cash info
+  //#region Load main cash info
 
   const [investmentInfo, setInvestmentInfo] = useState([]);
   const [ordersInfo, setOrdersInfo] = useState([]);
@@ -39,9 +40,11 @@ const CashFlux = (props) => {
 
   }, [isFocused]);
 
+  //#endregion
 
-  // Date Time Picker
+  //#region Date Picker
 
+  // NOTE: rango de fechas inicial puede ser 1 mes
   const [dates, setDates] = useState({
     dateInitial: new Date(2022, 0, 1),
     dateFinal: new Date()
@@ -61,13 +64,13 @@ const CashFlux = (props) => {
     selectedDate && setDates({ ...dates, [key]: selectedDate });
   }
 
-  // Proccess Cash info
+  //#endregion
 
+  //#region Filter In-Date info
 
   const [inDateInvestmentInfo, setInDateInvestmentInfo] = useState([]);
   const [inDateOrdersInfo, setInDateOrdersInfo] = useState([]);
   const [inDateSalesInfo, setInDateSalesInfo] = useState([]);
-
 
   /* Investment Info Structure
 
@@ -183,7 +186,7 @@ const CashFlux = (props) => {
 
     // Only runs when closing date modal
     if (!(show.dateFinal || show.dateInitial)) {
-      
+
       setInDateInvestmentInfo([]);
       setInDateOrdersInfo([]);
       setInDateSalesInfo([]);
@@ -193,16 +196,74 @@ const CashFlux = (props) => {
       filterSalesByDate(dates);
     }
 
-
-
   }, [show]);
+
+  //#endregion
+
+
+  //#region Define values to show
+
+  const [investmentTicketTotalNetPrice, setInvestmentTicketTotalNetPrice] = useState(0);
+  const [investmentInvoiceTotalNetPrice, setInvestmentInvoiceTotalNetPrice] = useState(0);
+  const [ordersTotalNetPrice, setOrderTotalNetPrice] = useState(0);
+  const [salesTicketTotalNetPrice, setSalesTicketTotalNetPrice] = useState(0);
+  const [salesInvoiceTotalNetPrice, setSalesInvoiceTotalNetPrice] = useState(0);
+
+  const setInvestmentCashInfo = (infoArray) => {
+    let sumTicket = 0;
+    let sumInvoice = 0;
+    infoArray.forEach(element => {
+      if (element["investment_ticket"]) {
+        sumTicket += element["investment_total_net_price"]
+      } else {
+        sumInvoice += element["investment_total_net_price"]
+      }
+    });
+    setInvestmentTicketTotalNetPrice(sumTicket);
+    setInvestmentInvoiceTotalNetPrice(sumInvoice);
+  }
+
+  const setOrdersCashInfo = (infoArray) => {
+    let sumValue = 0;
+    infoArray.forEach(element => {
+      if (element["product_net_price"] && element["order_cuantity"]) {
+        sumValue += (element["product_net_price"] * element["order_cuantity"])
+      }
+    });
+    setOrderTotalNetPrice(sumValue);
+  }
+
+  const setSalesCashInfo = (infoArray) => {
+    let sumTicket = 0;
+    let sumInvoice = 0;
+    infoArray.forEach(element => {
+      if (element["sales_ticket"]) {
+        sumTicket += element["sales_total_net_price"]
+      } else {
+        sumInvoice += element["sales_total_net_price"]
+      }
+    });
+    setSalesTicketTotalNetPrice(sumTicket);
+    setSalesInvoiceTotalNetPrice(sumInvoice);
+  }
+
+
+  // NOTE: Probar con async/await como el de editar
+  useEffect(() => {
+
+    setInvestmentCashInfo(inDateInvestmentInfo);
+    setOrdersCashInfo(inDateOrdersInfo);
+    setSalesCashInfo(inDateSalesInfo);
+
+  }, [inDateInvestmentInfo]);
+
+  //#endregion
 
 
   return (
 
     <View>
 
-      {/* <INVESTMENTS> */}
       <View style={styles.itemContainer}>
 
         <TouchableOpacity
@@ -219,7 +280,7 @@ const CashFlux = (props) => {
 
         {show.dateInitial ? (
           <DateTimePicker
-            testID="dateTimePickerInvestmentInitial"
+            testID="dateTimePickerDateInitial"
             value={dates.dateInitial ? dates.dateInitial : new Date()}
             mode={'date'}
             is24Hour={true}
@@ -229,7 +290,7 @@ const CashFlux = (props) => {
 
         {show.dateFinal ? (
           <DateTimePicker
-            testID="dateTimePickerInvestmentFinal"
+            testID="dateTimePickerDateFinal"
             value={dates.dateFinal ? dates.dateFinal : new Date()}
             mode={'date'}
             is24Hour={true}
@@ -239,14 +300,45 @@ const CashFlux = (props) => {
 
       </View>
 
+      {/* INVESTMENT */}
+      <View> 
 
-      <View>
-        {/* console.log(inDateInvestmentInfo) */}
-        <Text>Investments</Text>
+        <View style={styles.itemContainer}>
+          <Text>Gasto neto compras con boleta:</Text>
+          <Text>{investmentTicketTotalNetPrice}</Text>
+        </View>
+
+        <View style={styles.itemContainer}>
+          <Text>Gasto neto compras con Factura:</Text>
+          <Text>{investmentInvoiceTotalNetPrice}</Text>
+        </View>
+
       </View>
 
-      {/* <INVESTMENTS/> */}
+      {/* ORDERS */}
+      <View>
 
+        <View style={styles.itemContainer}>
+          <Text>Ingreso neto pedidos:</Text>
+          <Text>{ordersTotalNetPrice}</Text>
+        </View>
+
+      </View>
+
+      {/* SALES */}
+      <View>
+
+        <View style={styles.itemContainer}>
+          <Text>Ingreso neto ventas con boleta:</Text>
+          <Text>{salesTicketTotalNetPrice}</Text>
+        </View>
+
+        <View style={styles.itemContainer}>
+          <Text>Ingreso neto ventas con factura:</Text>
+          <Text>{salesInvoiceTotalNetPrice}</Text>
+        </View>
+
+      </View>
 
     </View>
 

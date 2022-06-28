@@ -134,8 +134,6 @@ const InvestmentFormScreen = ({ navigation, route }) => {
         }>
         <Picker.Item label="Boleta" value={1} key={1} />
         <Picker.Item label="Factura" value={0} key={0} />
-        <Picker.Item label="Omitir" value={null} key={null} />
-        <Picker.Item label="Boleta o Factura" value={null} key={null} />
       </Picker>
 
       <Picker
