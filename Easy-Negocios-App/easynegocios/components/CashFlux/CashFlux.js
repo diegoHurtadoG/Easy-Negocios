@@ -341,7 +341,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
             <View style={styles.itemContainer}>
-              <Text>Gasto neto compras con boleta: </Text>
+              <Text style={{fontWeight: "bold"}}>Gasto neto compras con boleta: </Text>
               <Text>{investmentTicketTotalNetPrice}</Text>
             </View>
 
@@ -350,7 +350,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
 
             <View style={styles.itemContainer}>
-              <Text>Gasto neto compras con factura: </Text>
+              <Text style={{fontWeight: "bold"}}>Gasto neto compras con factura: </Text>
               <Text>{investmentInvoiceTotalNetPrice}</Text>
             </View>
 
@@ -365,7 +365,7 @@ const CashFlux = (props) => {
         <View>
 
           <View style={styles.itemContainer}>
-            <Text>Ingreso neto pedidos: </Text>
+            <Text style={{fontWeight: "bold"}}>Ingreso neto pedidos: </Text>
             <Text>{ordersTotalNetPrice}</Text>
           </View>
 
@@ -380,7 +380,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
             <View style={styles.itemContainer}>
-              <Text>Ingreso neto ventas con boleta: </Text>
+              <Text style={{fontWeight: "bold"}}>Ingreso neto ventas con boleta: </Text>
               <Text>{salesTicketTotalNetPrice}</Text>
             </View>
 
@@ -389,7 +389,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
 
             <View style={styles.itemContainer}>
-              <Text>Ingreso neto ventas con factura: </Text>
+              <Text style={{fontWeight: "bold"}}>Ingreso neto ventas con factura: </Text>
               <Text>{salesInvoiceTotalNetPrice}</Text>
             </View>
 
