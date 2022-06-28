@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../../api';
@@ -200,7 +201,6 @@ const CashFlux = (props) => {
 
   //#endregion
 
-
   //#region Define values to show
 
   const [investmentTicketTotalNetPrice, setInvestmentTicketTotalNetPrice] = useState(0);
@@ -259,12 +259,45 @@ const CashFlux = (props) => {
 
   //#endregion
 
+  //#region Filters
+
+  const [ticketFilter, setTicketFilter] = useState("all") // Posible values "all", "ticket", "invoice"
+  const [InfoFilter, setInfoFilter] = useState("all") // Possible values "all", "investments", "orders", "sales"
+
+  //#endregion
 
   return (
 
     <View>
 
       <View style={styles.itemContainer}>
+
+        <Picker
+          style={{ width: '50%' }}
+          selectedValue={ticketFilter}
+          onValueChange={(itemValue, itemIndex) =>
+            setTicketFilter(itemValue)
+          }>
+          <Picker.Item label="Todos" value="all" key="0" />
+          <Picker.Item label="Boleta" value="ticket" key="1" />
+          <Picker.Item label="Factura" value="invoice" key="2" />
+        </Picker>
+
+        <Picker
+          style={{ width: '50%' }}
+          selectedValue={InfoFilter}
+          onValueChange={(itemValue, itemIndex) =>
+            setInfoFilter(itemValue)
+          }>
+          <Picker.Item label="Todos" value="all" key="0" />
+          <Picker.Item label="Compras" value="investments" key="1" />
+          <Picker.Item label="Pedidos" value="orders" key="2" />
+          <Picker.Item label="Ventas" value="sales" key="3" />
+        </Picker>
+
+      </View>
+
+      <View style={styles.datePickerContainer}>
 
         <TouchableOpacity
           styles={styles.button}
@@ -301,44 +334,68 @@ const CashFlux = (props) => {
       </View>
 
       {/* INVESTMENT */}
-      <View> 
+      {((InfoFilter == "all") || (InfoFilter == "investments")) ? (
 
-        <View style={styles.itemContainer}>
-          <Text>Gasto neto compras con boleta:</Text>
-          <Text>{investmentTicketTotalNetPrice}</Text>
-        </View>
+        <View>
 
-        <View style={styles.itemContainer}>
-          <Text>Gasto neto compras con Factura:</Text>
-          <Text>{investmentInvoiceTotalNetPrice}</Text>
-        </View>
+          {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
-      </View>
+            <View style={styles.itemContainer}>
+              <Text>Gasto neto compras con boleta: </Text>
+              <Text>{investmentTicketTotalNetPrice}</Text>
+            </View>
+
+          ) : null}
+
+          {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
+
+            <View style={styles.itemContainer}>
+              <Text>Gasto neto compras con factura: </Text>
+              <Text>{investmentInvoiceTotalNetPrice}</Text>
+            </View>
+
+          ) : null}
+
+        </View>) : null}
+
 
       {/* ORDERS */}
-      <View>
+      {((InfoFilter == "all") || (InfoFilter == "orders")) ? (
 
-        <View style={styles.itemContainer}>
-          <Text>Ingreso neto pedidos:</Text>
-          <Text>{ordersTotalNetPrice}</Text>
-        </View>
+        <View>
 
-      </View>
+          <View style={styles.itemContainer}>
+            <Text>Ingreso neto pedidos: </Text>
+            <Text>{ordersTotalNetPrice}</Text>
+          </View>
+
+        </View>) : null}
+
 
       {/* SALES */}
-      <View>
+      {((InfoFilter == "all") || (InfoFilter == "sales")) ? (
 
-        <View style={styles.itemContainer}>
-          <Text>Ingreso neto ventas con boleta:</Text>
-          <Text>{salesTicketTotalNetPrice}</Text>
-        </View>
+        <View>
 
-        <View style={styles.itemContainer}>
-          <Text>Ingreso neto ventas con factura:</Text>
-          <Text>{salesInvoiceTotalNetPrice}</Text>
-        </View>
+          {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
-      </View>
+            <View style={styles.itemContainer}>
+              <Text>Ingreso neto ventas con boleta: </Text>
+              <Text>{salesTicketTotalNetPrice}</Text>
+            </View>
+
+          ) : null}
+
+          {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
+
+            <View style={styles.itemContainer}>
+              <Text>Ingreso neto ventas con factura: </Text>
+              <Text>{salesInvoiceTotalNetPrice}</Text>
+            </View>
+
+          ) : null}
+
+        </View>) : null}
 
     </View>
 
@@ -370,13 +427,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   itemContainer: {
-    padding: 15,
-    marginVertical: 30,
+    padding: 10,
+    marginVertical: 18,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  datePickerContainer: {
+    padding: 10,
+    marginVertical: 10,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
-  }
+  },
 })
 
 export default CashFlux
