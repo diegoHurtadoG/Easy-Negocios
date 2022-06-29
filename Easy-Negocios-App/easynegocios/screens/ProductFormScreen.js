@@ -97,7 +97,7 @@ const ProductFormScreen = ({ navigation, route }) => {
                 onValueChange={(itemValue, itemIndex) =>
                     handleChange('category_id', itemValue)
                 }>
-                <Picker.Item label="Ninguna" value={null} key="None" />
+                <Picker.Item label="Categoría" value={null} key="None" />
                 {categories !== "" ? (
                     categories.map(category => {
                         return <Picker.Item label={category.category_name} value={category.id} key={category.id} />;

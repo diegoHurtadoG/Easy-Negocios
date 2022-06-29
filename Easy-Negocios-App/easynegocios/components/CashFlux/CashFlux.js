@@ -5,7 +5,6 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../../api';
-import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 const CashFlux = (props) => {
@@ -252,9 +251,11 @@ const CashFlux = (props) => {
   // NOTE: Probar con async/await como el de editar
   useEffect(() => {
 
-    setInvestmentCashInfo(inDateInvestmentInfo);
-    setOrdersCashInfo(inDateOrdersInfo);
-    setSalesCashInfo(inDateSalesInfo);
+    (async () => {
+      setInvestmentCashInfo(inDateInvestmentInfo);
+      setOrdersCashInfo(inDateOrdersInfo);
+      setSalesCashInfo(inDateSalesInfo);
+    })()
 
   }, [inDateInvestmentInfo]);
 
@@ -343,6 +344,7 @@ const CashFlux = (props) => {
 
             <View style={styles.itemContainer}>
               <Text style={{ fontWeight: "bold" }}>Gasto neto compras con boleta: </Text>
+              {console.log('Changed')}
               <Text>{investmentTicketTotalNetPrice}</Text>
             </View>
 

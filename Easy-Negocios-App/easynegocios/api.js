@@ -237,11 +237,42 @@ export const getCategories = async (id) => {
     return await res.json()
 }
 
+export const saveCategory = async (newCategory, project_id) => {
+    const res = await fetch(`${API}/${project_id}/categories`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCategory)
+        });
+    return await res.json();
+}
+
 export const deleteCategory = async (project_id, object_id) => {
     await fetch(`${API}/${project_id}/categories/${object_id}`, {
         method: 'DELETE',
 
     })
+}
+
+export const getCategory = async (project_id, object_id) => {
+    const res = await fetch(`${API}/${project_id}/categories/${object_id}`)
+    return await res.json()
+}
+
+export const updateCategory = async (category_id, newCategory, project_id) => {
+    const res = await fetch(`${API}/${project_id}/categories/${category_id}`,
+        {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCategory)
+        });
+    return await res.json();
 }
 
 //#endregion

@@ -1,7 +1,5 @@
 import { connect } from '../database'
 
-//console.log(req.params)
-
 //#region projects
 
 /////////////////////////// PROJECTS ///////////////////////////

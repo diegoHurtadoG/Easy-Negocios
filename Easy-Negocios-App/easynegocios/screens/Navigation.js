@@ -17,6 +17,8 @@ import OrderProductRelationListScreen from './OrderProductRelationListScreen';
 import OrderProductRelationFormScreen from './OrderProductRelationFormScreen';
 import StockListScreen from './StockListScreen';
 import CashFluxScreen from './CashFluxScreen';
+import CategoryListScreen from './CategoryListScreen';
+import CategoryFormScreen from './CategoryFormScreen';
 import React from 'react';
 
 const Stack = createNativeStackNavigator()
@@ -183,6 +185,29 @@ const Navigation = () => {
                     component={CashFluxScreen}
                     options={({ navigation }) => ({
                         title: 'Flujo de Caja',
+                        headerTitleAlign: 'center',
+                    })
+                    }
+                />
+                <Stack.Screen
+                    name="CategoryListScreen"
+                    component={CategoryListScreen}
+                    options={({ navigation }) => ({
+                        title: 'Categorías',
+                        headerTitleAlign: 'center',
+                        headerRight: () => (
+                            <TouchableOpacity onPress={() => navigation.navigate('CategoryFormScreen')}>
+                                <Text>Agregar</Text>
+                            </TouchableOpacity>
+                        )
+                    })
+                    }
+                />
+                <Stack.Screen
+                    name="CategoryFormScreen"
+                    component={CategoryFormScreen}
+                    options={({ navigation }) => ({
+                        title: 'Nueva Categoría',
                         headerTitleAlign: 'center',
                     })
                     }
