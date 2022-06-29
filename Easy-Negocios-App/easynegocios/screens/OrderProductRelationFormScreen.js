@@ -19,7 +19,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
     product_id: null,
     cuantity: null,
     client_id: null,
-    delivery_date: null,
+    delivery_date: new Date(),
     order_description: null,
     address: null
   });
@@ -55,7 +55,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
           product_id: object.product_id,
           cuantity: object.cuantity.toString(),
           client_id: object.client_id,
-          delivery_date: object.delivery_date ? new Date(object.delivery_date.slice(0, 19)) : null,
+          delivery_date: object.delivery_date ? new Date(object.delivery_date.slice(0, 19)) : new Date(),
           order_description: object.order_description,
           address: object.address
         })

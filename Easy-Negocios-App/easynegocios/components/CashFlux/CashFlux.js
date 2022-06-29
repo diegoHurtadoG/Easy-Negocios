@@ -5,6 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { getCashInfoInvestments, getCashInfoOrders, getCashInfoSales } from '../../api';
+import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 const CashFlux = (props) => {
@@ -47,7 +48,7 @@ const CashFlux = (props) => {
 
   // NOTE: rango de fechas inicial puede ser 1 mes
   const [dates, setDates] = useState({
-    dateInitial: new Date(2022, 0, 1),
+    dateInitial: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     dateFinal: new Date()
   });
 
@@ -270,10 +271,10 @@ const CashFlux = (props) => {
 
     <View>
 
-      <View style={styles.itemContainer}>
+      <View style={styles.itemPickerContainer}>
 
         <Picker
-          style={{ width: '50%' }}
+          style={styles.picker}
           selectedValue={ticketFilter}
           onValueChange={(itemValue, itemIndex) =>
             setTicketFilter(itemValue)
@@ -284,7 +285,7 @@ const CashFlux = (props) => {
         </Picker>
 
         <Picker
-          style={{ width: '50%' }}
+          style={styles.picker}
           selectedValue={InfoFilter}
           onValueChange={(itemValue, itemIndex) =>
             setInfoFilter(itemValue)
@@ -341,7 +342,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
             <View style={styles.itemContainer}>
-              <Text style={{fontWeight: "bold"}}>Gasto neto compras con boleta: </Text>
+              <Text style={{ fontWeight: "bold" }}>Gasto neto compras con boleta: </Text>
               <Text>{investmentTicketTotalNetPrice}</Text>
             </View>
 
@@ -350,7 +351,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
 
             <View style={styles.itemContainer}>
-              <Text style={{fontWeight: "bold"}}>Gasto neto compras con factura: </Text>
+              <Text style={{ fontWeight: "bold" }}>Gasto neto compras con factura: </Text>
               <Text>{investmentInvoiceTotalNetPrice}</Text>
             </View>
 
@@ -365,7 +366,7 @@ const CashFlux = (props) => {
         <View>
 
           <View style={styles.itemContainer}>
-            <Text style={{fontWeight: "bold"}}>Ingreso neto pedidos: </Text>
+            <Text style={{ fontWeight: "bold" }}>Ingreso neto pedidos: </Text>
             <Text>{ordersTotalNetPrice}</Text>
           </View>
 
@@ -380,7 +381,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'ticket')) ? (
 
             <View style={styles.itemContainer}>
-              <Text style={{fontWeight: "bold"}}>Ingreso neto ventas con boleta: </Text>
+              <Text style={{ fontWeight: "bold" }}>Ingreso neto ventas con boleta: </Text>
               <Text>{salesTicketTotalNetPrice}</Text>
             </View>
 
@@ -389,7 +390,7 @@ const CashFlux = (props) => {
           {((ticketFilter == "all") || (ticketFilter == 'invoice')) ? (
 
             <View style={styles.itemContainer}>
-              <Text style={{fontWeight: "bold"}}>Ingreso neto ventas con factura: </Text>
+              <Text style={{ fontWeight: "bold" }}>Ingreso neto ventas con factura: </Text>
               <Text>{salesInvoiceTotalNetPrice}</Text>
             </View>
 
@@ -415,12 +416,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   button: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 5,
-    marginBottom: 3,
     backgroundColor: '#e0e0e0',
-    width: '50%',
+    borderRadius: 2,
+    padding: 20,
+    width: '45%'
   },
   buttonText: {
     color: '#000000',
@@ -437,6 +436,18 @@ const styles = StyleSheet.create({
   datePickerContainer: {
     padding: 10,
     marginVertical: 10,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
+  },
+  picker: {
+    width: '45%',
+    backgroundColor: '#e0e0e0',
+  },
+  itemPickerContainer: {
+    padding: 10,
+    marginVertical: 18,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-evenly',

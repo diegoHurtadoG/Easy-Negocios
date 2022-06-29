@@ -20,7 +20,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
     total_gross_price: null,
     ticket: true,
     sale_description: null,
-    sale_date: null
+    sale_date: new Date()
   });
 
   const [products, setProducts] = useState([]);
@@ -47,7 +47,7 @@ const SaleProductRelationFormScreen = ({ navigation, route }) => {
           total_gross_price: object.total_gross_price.toString(),
           ticket: object.ticket,
           sale_description: object.sale_description,
-          sale_date: object.sale_date ? new Date(object.sale_date.slice(0, 19)) : null
+          sale_date: object.sale_date ? new Date(object.sale_date.slice(0, 19)) : new Date()
         })
       })();
     }

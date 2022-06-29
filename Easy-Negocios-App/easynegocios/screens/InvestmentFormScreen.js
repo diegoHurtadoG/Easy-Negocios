@@ -20,7 +20,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
     investment_description: null,
     owned_product: null,
     cuantity: null,
-    investment_date: null
+    investment_date: new Date()
   });
 
   const handleChange = (key, value) => setInvestment({ ...investment, [key]: value });
@@ -40,7 +40,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
           investment_description: object.investment_description,
           owned_product: object.owned_product,
           cuantity: object.cuantity.toString(),
-          investment_date: object.investment_date ? new Date(object.investment_date.slice(0, 19)) : null
+          investment_date: object.investment_date ? new Date(object.investment_date.slice(0, 19)) : new Date()
         })
       })();
     }
