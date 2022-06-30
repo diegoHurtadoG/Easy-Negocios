@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -67,140 +67,6 @@ const CashFlux = (props) => {
 
   //#endregion
 
-  //#region Filter In-Date info
-
-  const [inDateInvestmentInfo, setInDateInvestmentInfo] = useState([]);
-  const [inDateOrdersInfo, setInDateOrdersInfo] = useState([]);
-  const [inDateSalesInfo, setInDateSalesInfo] = useState([]);
-
-  /* Investment Info Structure
-
-  Array [
-    Object {
-      "id": 1,
-      "investment_date": "2022-05-25T19:17:30.000Z",
-      "investment_ticket": 1,
-      "investment_total_gross_price": 150,
-      "investment_total_net_price": 1337,
-    },
-    Object {
-      "id": 2,
-      "investment_date": "2022-04-16T16:34:20.000Z",
-      "investment_ticket": 1,
-      "investment_total_gross_price": 1200,
-      "investment_total_net_price": 1500,
-    },
-  ] 
-
-  */
-
-  /* Order Info Structure 
-
-  Array [
-    Object {
-      "id": 1,
-      "order_cuantity": 12,
-      "order_delivery_date": "2022-05-25T19:17:30.000Z",
-      "order_id": 1,
-      "order_product_id": 1,
-      "product_gross_price": 888,
-      "product_net_price": 1111,
-    },
-    Object {
-      "id": 9,
-      "order_cuantity": 50,
-      "order_delivery_date": "2022-06-07T00:46:51.000Z",
-      "order_id": 30,
-      "order_product_id": 9,
-      "product_gross_price": 4201,
-      "product_net_price": 5000,
-    },
-  ]
-  
-  */
-
-  /* Sale Info Structure 
-  
-  Array [
-    Object {
-      "id": 1,
-      "sale_date": "2022-05-25T19:17:30.000Z",
-      "sales_id": 1,
-      "sales_ticket": 1,
-      "sales_total_gross_price": 850,
-      "sales_total_net_price": 1000,
-    },
-  ]
-  
-  */
-
-
-  const filterInvestmentsByDate = (dates) => {
-    investmentInfo.forEach(element => {
-
-      if (element['investment_date']) {
-
-        const elementDate = new Date(element['investment_date']);
-        if (dates.dateInitial && dates.dateFinal) {
-
-          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateInvestmentInfo(prevArray => [...prevArray, element]) : null
-
-        }
-      }
-    })
-  }
-
-  const filterOrdersByDate = (dates) => {
-
-    ordersInfo.forEach(element => {
-
-      if (element['order_delivery_date']) {
-
-        const elementDate = new Date(element['order_delivery_date']);
-
-        if (dates.dateInitial && dates.dateFinal) {
-
-          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateOrdersInfo(prevArray => [...prevArray, element]) : null
-
-        }
-      }
-    })
-  }
-
-  const filterSalesByDate = (dates) => {
-    salesInfo.forEach(element => {
-
-      if (element['sale_date']) {
-
-        const elementDate = new Date(element['sale_date']);
-
-        if (dates.dateInitial && dates.dateFinal) {
-
-          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? setInDateSalesInfo(prevArray => [...prevArray, element]) : null
-
-        }
-      }
-    })
-  }
-
-  useEffect(() => {
-
-    // Only runs when closing date modal
-    if (!(show.dateFinal || show.dateInitial)) {
-
-      setInDateInvestmentInfo([]);
-      setInDateOrdersInfo([]);
-      setInDateSalesInfo([]);
-
-      filterInvestmentsByDate(dates);
-      filterOrdersByDate(dates);
-      filterSalesByDate(dates);
-    }
-
-  }, [show]);
-
-  //#endregion
-
   //#region Define values to show
 
   const [investmentTicketTotalNetPrice, setInvestmentTicketTotalNetPrice] = useState(0);
@@ -213,10 +79,19 @@ const CashFlux = (props) => {
     let sumTicket = 0;
     let sumInvoice = 0;
     infoArray.forEach(element => {
-      if (element["investment_ticket"]) {
-        sumTicket += element["investment_total_net_price"]
-      } else {
-        sumInvoice += element["investment_total_net_price"]
+
+      if (element['investment_date']) {
+        const elementDate = new Date(element['investment_date']);
+
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ?
+            ((element["investment_ticket"]) ?
+              (sumTicket += element["investment_total_net_price"]) :
+              (sumInvoice += element["investment_total_net_price"])) :
+            null
+
+        }
       }
     });
     setInvestmentTicketTotalNetPrice(sumTicket);
@@ -226,10 +101,19 @@ const CashFlux = (props) => {
   const setOrdersCashInfo = (infoArray) => {
     let sumValue = 0;
     infoArray.forEach(element => {
-      if (element["product_net_price"] && element["order_cuantity"]) {
-        sumValue += (element["product_net_price"] * element["order_cuantity"])
+      if (element["product_net_price"] && element["order_cuantity"] && element['order_delivery_date']) {
+        const elementDate = new Date(element['order_delivery_date']);
+
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ?
+            (sumValue += (element["product_net_price"] * element["order_cuantity"])) :
+            null
+
+        }
       }
-    });
+    }
+    );
     setOrderTotalNetPrice(sumValue);
   }
 
@@ -237,10 +121,18 @@ const CashFlux = (props) => {
     let sumTicket = 0;
     let sumInvoice = 0;
     infoArray.forEach(element => {
-      if (element["sales_ticket"]) {
-        sumTicket += element["sales_total_net_price"]
-      } else {
-        sumInvoice += element["sales_total_net_price"]
+      if (element['sale_date']) {
+        const elementDate = new Date(element['sale_date']);
+
+        if (dates.dateInitial && dates.dateFinal) {
+
+          ((elementDate >= dates.dateInitial) && (elementDate <= dates.dateFinal)) ? (
+            (element["sales_ticket"]) ?
+              (sumTicket += element["sales_total_net_price"]) :
+              (sumInvoice += element["sales_total_net_price"])) :
+            null
+
+        }
       }
     });
     setSalesTicketTotalNetPrice(sumTicket);
@@ -248,16 +140,14 @@ const CashFlux = (props) => {
   }
 
 
-  // NOTE: Probar con async/await como el de editar
   useEffect(() => {
 
-    (async () => {
-      setInvestmentCashInfo(inDateInvestmentInfo);
-      setOrdersCashInfo(inDateOrdersInfo);
-      setSalesCashInfo(inDateSalesInfo);
-    })()
+    setInvestmentCashInfo(investmentInfo);
+    setOrdersCashInfo(ordersInfo);
+    setSalesCashInfo(salesInfo);
 
-  }, [inDateInvestmentInfo]);
+  }, [investmentInfo, ordersInfo, salesInfo, dates]);
+
 
   //#endregion
 
@@ -271,7 +161,6 @@ const CashFlux = (props) => {
   return (
 
     <View>
-
       <View style={styles.itemPickerContainer}>
 
         <Picker
@@ -336,6 +225,7 @@ const CashFlux = (props) => {
       </View>
 
       {/* INVESTMENT */}
+      {console.log(investmentTicketTotalNetPrice)}
       {((InfoFilter == "all") || (InfoFilter == "investments")) ? (
 
         <View>
@@ -344,7 +234,6 @@ const CashFlux = (props) => {
 
             <View style={styles.itemContainer}>
               <Text style={{ fontWeight: "bold" }}>Gasto neto compras con boleta: </Text>
-              {console.log('Changed')}
               <Text>{investmentTicketTotalNetPrice}</Text>
             </View>
 
