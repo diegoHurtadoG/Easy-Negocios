@@ -18,7 +18,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
     total_gross_price: null,
     ticket: null,
     investment_description: null,
-    owned_product: null,
+    owned_product: 0,
     cuantity: null,
     investment_date: new Date()
   });
@@ -131,8 +131,9 @@ const InvestmentFormScreen = ({ navigation, route }) => {
       <Picker
         style={{ width: '90%' }}
         selectedValue={investment.owned_product}
-        onValueChange={(itemValue, itemIndex) =>
+        onValueChange={(itemValue, itemIndex) =>{
           handleChange('owned_product', itemValue)
+        console.log(investment.owned_product)}
         }>
         <Picker.Item label="Compra y Venta" value={1} key={1} />
         <Picker.Item label="No es compra y venta" value={0} key={0} />
