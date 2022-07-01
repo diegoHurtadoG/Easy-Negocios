@@ -95,7 +95,6 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   // Date Time picker from here below
 
-  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -105,16 +104,8 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   const showMode = (currentMode) => {
     setShow(true);
-    setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
 
   return (
     <Layout>
@@ -140,26 +131,19 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
         <TouchableOpacity
           styles={styles.button}
-          onPress={showDatepicker}>
-          <Text style={styles.buttonText}>Selecciona Fecha</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          styles={styles.button}
-          onPress={showTimepicker}>
-          <Text style={styles.buttonText}>Selecciona Hora</Text>
+          onPress={showMode}>
+          <Text style={styles.buttonText}>{orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toDateString() : "No seleccionada"}</Text>
         </TouchableOpacity>
 
       </View>
 
       <View>
 
-        <Text>Fecha: {orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toLocaleString() : "No seleccionada"}</Text>
         {show && (
           <DateTimePicker
             testID="dateTimePickerORDER"
             value={orderProductRelation.delivery_date ? orderProductRelation.delivery_date : new Date()}
-            mode={mode}
+            mode={'date'}
             is24Hour={true}
             onChange={onChange}
           />
