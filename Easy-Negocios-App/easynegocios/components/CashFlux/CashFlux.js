@@ -225,7 +225,6 @@ const CashFlux = (props) => {
       </View>
 
       {/* INVESTMENT */}
-      {console.log(investmentTicketTotalNetPrice)}
       {((InfoFilter == "all") || (InfoFilter == "investments")) ? (
 
         <View>

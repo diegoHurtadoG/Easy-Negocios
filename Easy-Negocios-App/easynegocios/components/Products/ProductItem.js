@@ -1,32 +1,72 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native'
 
 const ProductItem = (props) => {
 
+  const [modalShow, setModalShow] = useState(false);
   const navigation = useNavigation()
 
   return (
-    <View style={styles.itemContainer}>
+    <View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalShow}
+          onRequestClose={() => {
+            setModalShow(!modalShow);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.itemTitle}> Confirma la eliminacion de '{props.product.product_name}'  </Text>
+              <View style={styles.modalContainer}>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => {
+                    props.handleDelete(props.product.project_id, props.product.id)
+                    setModalShow(!modalShow)
+                  }}
+                >
+                  <Text style={styles.textStyle}>Confirmar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => {
+                    setModalShow(!modalShow)
+                  }}
+                >
+                  <Text style={styles.textStyle}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('ProductFormScreen', { object_id: props.product.id })}>
-        <Text style={styles.itemTitle}>{props.product.product_name}</Text>
-      </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
 
-      <TouchableOpacity
-        style={{ backgroundColor: 'red', borderRadius: 100, padding: 3}}
-        onPress={() => props.handleDelete(props.product.project_id, props.product.id)}>
-        <Text style={styles.itemTitle}> X </Text>
-      </TouchableOpacity>
+      <View style={styles.itemContainer}>
 
+        <TouchableOpacity onPress={() => navigation.navigate('ProductFormScreen', { object_id: props.product.id })}>
+          <Text style={styles.itemTitle}>{props.product.product_name}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ backgroundColor: 'red', borderRadius: 100, padding: 3 }}
+          onPress={() => setModalShow(true)}>
+          <Text style={styles.itemTitle}> X </Text>
+        </TouchableOpacity>
+
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
-    backgroundColor: '#e0e0e0' ,
+    backgroundColor: '#e0e0e0',
     padding: 20,
     marginVertical: 10,
     borderRadius: 10,
@@ -40,6 +80,45 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignSelf: 'center',
     fontSize: 20,
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 25,
+    alignItems: 'stretch',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalButton: {
+    fontWeight: 'bold',
+    backgroundColor: '#e0e0e0',
+    borderRadius: 10,
+    padding: 5,
+    alignContent: 'center',
+    alignSelf: 'center',
+    fontSize: 20,
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 5,
+    marginVertical: 5,
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 })
 

@@ -87,7 +87,6 @@ const InvestmentFormScreen = ({ navigation, route }) => {
 
   // Date Time picker from here below
 
-  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -95,18 +94,11 @@ const InvestmentFormScreen = ({ navigation, route }) => {
     selectedDate && handleChange('investment_date', selectedDate);
   };
 
-  const showMode = (currentMode) => {
+  const showMode = () => {
     setShow(true);
-    setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    showMode('date');
-  };
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
 
   return (
     <Layout>
@@ -161,26 +153,19 @@ const InvestmentFormScreen = ({ navigation, route }) => {
 
         <TouchableOpacity
           styles={styles.button}
-          onPress={showDatepicker}>
-          <Text style={styles.buttonText}>Selecciona Fecha</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          styles={styles.button}
-          onPress={showTimepicker}>
-          <Text style={styles.buttonText}>Selecciona Hora</Text>
+          onPress={showMode}>
+          <Text style={styles.buttonText}>Fecha: {investment.investment_date ? investment.investment_date.toDateString() : "No seleccionada"}</Text>
         </TouchableOpacity>
 
       </View>
 
       <View>
 
-        <Text>Fecha: {investment.investment_date ? investment.investment_date.toLocaleString() : "No seleccionada"}</Text>
         {show && (
           <DateTimePicker
             testID="dateTimePickerINVESTMENT"
             value={investment.investment_date ? investment.investment_date : new Date()}
-            mode={mode}
+            mode={'date'}
             is24Hour={true}
             onChange={onChange}
           />
