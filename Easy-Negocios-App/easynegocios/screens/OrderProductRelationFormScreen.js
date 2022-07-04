@@ -19,7 +19,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
     product_id: null,
     cuantity: null,
     client_id: null,
-    delivery_date: new Date(),
+    delivery_date: null,
     order_description: null,
     address: null
   });
@@ -51,6 +51,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
       (async () => {
         const object = await getOrderProductRelation(navigation.getState().routes[1].params.project_id, route.params.object_id)
+        //console.log(object.delivery_date)
         setOrderProductRelation({
           product_id: object.product_id,
           cuantity: object.cuantity.toString(),
@@ -76,7 +77,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
       if (orderProductRelation.delivery_date) {
         orderProductRelation.delivery_date = orderProductRelation.delivery_date.toISOString().slice(0, 19).replace('T', ' ')
       } else { // In this case it can be null (valid) or undefined, if its undefined, we need it to be null.
-        orderProductRelation.delivery_date = null
+        orderProductRelation.delivery_date = new Date();
       }
 
       if (editing) {
@@ -95,6 +96,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   // Date Time picker from here below
 
+  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -104,8 +106,16 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
   const showMode = (currentMode) => {
     setShow(true);
+    setMode(currentMode);
   };
 
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
   return (
     <Layout>
@@ -128,22 +138,28 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
 
       {/** DATE TIME BEGINS */}
       <View style={styles.itemContainer}>
+        {console.log(orderProductRelation.delivery_date)}
 
         <TouchableOpacity
           styles={styles.button}
-          onPress={showMode}>
-          <Text style={styles.buttonText}>Fecha: {orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toDateString() : "No seleccionada"}</Text>
+          onPress={showDatepicker}>
+          <Text style={styles.buttonText}>{orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toDateString() : "Fecha"}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          styles={styles.button}
+          onPress={showTimepicker}>
+          <Text style={styles.buttonText}>{orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toTimeString().slice(0,8) : "Hora"}</Text>
         </TouchableOpacity>
 
       </View>
 
       <View>
-
         {show && (
           <DateTimePicker
             testID="dateTimePickerORDER"
             value={orderProductRelation.delivery_date ? orderProductRelation.delivery_date : new Date()}
-            mode={'date'}
+            mode={mode}
             is24Hour={true}
             onChange={onChange}
           />

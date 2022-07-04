@@ -54,6 +54,7 @@ const OrderProductRelationItem = (props) => {
           <Text style={styles.itemTitle}>{props.orderProductRelation.client_name ? props.orderProductRelation.client_name : 'Default Client'}</Text>
           <Text style={styles.itemTitle}>{props.orderProductRelation.cuantity} {props.orderProductRelation.measure_unit ? props.orderProductRelation.measure_unit : ''}</Text>
           <Text style={styles.itemTitle}>{props.orderProductRelation.productName}</Text>
+          {/*console.log(props.orderProductRelation.delivery_date)*/}
           {
             (props.orderProductRelation.delivery_date) ? (
               <Text style={styles.itemTitle}>{props.orderProductRelation.delivery_date.slice(0, 19).replace('T', ' ')}</Text>

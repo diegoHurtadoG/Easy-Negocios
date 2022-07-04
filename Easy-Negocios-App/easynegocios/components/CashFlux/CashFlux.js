@@ -35,10 +35,18 @@ const CashFlux = (props) => {
   // Every time the screen loads, the useEffect runs
   useEffect(() => {
 
-    loadInvestmentInfo(props.data.route.params.project_id);
-    loadOrdersInfo(props.data.route.params.project_id);
-    loadSalesInfo(props.data.route.params.project_id);
+    if (investmentInfo.length === 0) {
+      loadInvestmentInfo(props.data.route.params.project_id);
+    }
 
+    if (ordersInfo.length === 0) {
+      loadOrdersInfo(props.data.route.params.project_id);
+    }
+    
+    if (salesInfo.length === 0) {
+      loadSalesInfo(props.data.route.params.project_id);
+    }
+    
   }, [isFocused]);
 
   //#endregion

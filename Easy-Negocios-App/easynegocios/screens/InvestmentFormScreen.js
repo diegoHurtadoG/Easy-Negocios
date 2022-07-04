@@ -132,8 +132,7 @@ const InvestmentFormScreen = ({ navigation, route }) => {
         style={{ width: '90%' }}
         selectedValue={investment.owned_product}
         onValueChange={(itemValue, itemIndex) =>{
-          handleChange('owned_product', itemValue)
-        console.log(investment.owned_product)}
+          handleChange('owned_product', itemValue)}
         }>
         <Picker.Item label="Compra y Venta" value={1} key={1} />
         <Picker.Item label="No es compra y venta" value={0} key={0} />
