@@ -332,7 +332,6 @@ export const getSaleProductRelations = async (id) => {
 }
 
 export const saveSaleProductRelation = async (newSaleRelation, project_id) => {
-    console.log(newSaleRelation)
     const res = await fetch(`${API}/${project_id}/sales/list`,
         {
             method: 'POST',

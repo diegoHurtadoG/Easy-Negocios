@@ -132,7 +132,7 @@ const OrderProductRelationFormScreen = ({ navigation, route }) => {
         <TouchableOpacity
           styles={styles.button}
           onPress={showMode}>
-          <Text style={styles.buttonText}>{orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toDateString() : "No seleccionada"}</Text>
+          <Text style={styles.buttonText}>Fecha: {orderProductRelation.delivery_date ? orderProductRelation.delivery_date.toDateString() : "No seleccionada"}</Text>
         </TouchableOpacity>
 
       </View>
