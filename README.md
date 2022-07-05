@@ -1,7 +1,7 @@
 # Easy-Negocios
 Mobile App to manage small businesses. Work in progress.
 
-For testing, first open XAMPP and turn on apache, so the SQL Database turns on.
+For testing, first turn on the SQL port. Then setup the db credentials at the env file to open a connection.
 Then open a cmd at "Easy-Negocios-App/backend/" and type
 ```
 npm run dev
