@@ -11,6 +11,9 @@ npm-debug.*
 web-build/
 
 TODO.txt
+*.plist
+google-services.json
+.env
 
 # macOS
 .DS_Store
