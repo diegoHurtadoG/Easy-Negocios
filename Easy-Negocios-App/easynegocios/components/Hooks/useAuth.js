@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import * as Google from "expo-google-app-auth";
 import { androidClientId, iosClientId } from '@env';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 
@@ -17,14 +15,13 @@ const config = {
 export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
-    const [loadingInitial, setLoadingInitial] = useState(true);
+    const [loadingInitial, setLoadingInitial] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(
         () =>
-            onAuthStateChanged(auth, (user) => {
+            auth.onAuthStateChanged(user => {
                 if (user) {
-                    // Logged In
                     setUser(user);
                 } else {
                     setUser(null);
@@ -36,37 +33,63 @@ export const AuthProvider = ({ children }) => {
 
     )
 
-    const singInWithGoogle = async () => {
+
+    const signInWithGoogle = async () => {
         setLoading(true);
-
-        await Google.logInAsync(config).then(async (logInResult) => {
-            if (logInResult.type === "success") {
-                // login
-                const { idToken, accesToken } = logInResult;
-                const credential = GoogleAuthProvider.credential(idToken, accesToken);
-
-                await signInWithCredential(auth, credential);
-            }
-
-            return Promise.reject();
-        })
-            .catch(error => setError(error))
-            .finally(() => setLoading(false));
+        /*
+                await Google.logInAsync(config).then(async (logInResult) => {
+                    if (logInResult.type === "success") {
+                        // login
+                        const { idToken, accesToken } = logInResult;
+                        const credential = GoogleAuthProvider.credential(idToken, accesToken);
+        
+                        await signInWithCredential(auth, credential);
+                    }
+        
+                    return Promise.reject();
+                })
+                    .catch(error => setError(error))
+                    .finally(() => setLoading(false)); */
     };
+
 
     const logout = () => {
         setLoading(true);
-
-        signOut(auth)
+        auth.signOut()
+            .then(() => {
+                console.log("Logged Out")
+            })
             .catch(error => setError(error))
             .finally(setLoading(false))
+
+    }
+
+    const handleEmailSignUp = (email, password) => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user();
+                console.log('Registered as: ', user.email);
+            })
+            .catch(error => setError(error))
+    }
+
+    const handleEmailLogin = (email, password) => {
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user();
+                console.log('Logged as: ', user.email);
+            })
+            .catch(error => setError(error))
     }
 
     const memoedValue = useMemo(() => ({
         user,
         loading,
         error,
-        singInWithGoogle,
+        handleEmailSignUp,
+        handleEmailLogin,
         logout,
     }), [user, loading, error])
 
