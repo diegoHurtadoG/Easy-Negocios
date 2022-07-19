@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
     )
 
-    const singInWithGoogle = async () => {
+    const signInWithGoogle = async () => {
         setLoading(true);
 
         await Google.logInAsync(config).then(async (logInResult) => {
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         error,
-        singInWithGoogle,
+        signInWithGoogle,
         logout,
     }), [user, loading, error])
 
