@@ -224,6 +224,7 @@ const Navigation = () => {
                     component={LoginScreen}
                     options={() => ({
                         title: 'Easy - Negocios',
+                        headerTitleAlign: 'center',
                     })}
                 />
             )}
