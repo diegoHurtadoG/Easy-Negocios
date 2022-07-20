@@ -20,7 +20,7 @@ import CategoryListScreen from './CategoryListScreen';
 import CategoryFormScreen from './CategoryFormScreen';
 import React from 'react';
 import LoginScreen from './LoginScreen';
-import useAuth, { AuthProvider } from '../components/Hooks/useAuth';
+import useAuth from '../components/Hooks/useAuth';
 
 const Stack = createNativeStackNavigator()
 

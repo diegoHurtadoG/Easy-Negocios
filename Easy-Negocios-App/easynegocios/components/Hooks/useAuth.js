@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import * as Google from "expo-google-app-auth";
 import { androidClientId, iosClientId } from '@env';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 
@@ -50,15 +50,37 @@ export const AuthProvider = ({ children }) => {
 
             return Promise.reject();
         })
-            .catch(error => setError(error))
+            .catch((error) => setError(error))
             .finally(() => setLoading(false));
     };
+
+    const registerWithEmailAndPassword = async (auth, email, password) => {
+        setLoading(true);
+
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+            })
+            .catch((error) => setError(error))
+            .finally(() => setLoading(false));
+
+    }
+
+    const loginWithEmailAndPassword = async (auth, email, password) => {
+        setLoading(true);
+
+        await signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+            })
+            .catch((error) => setError(error))
+            .finally(() => setLoading(false));
+
+    }
 
     const logout = () => {
         setLoading(true);
 
         signOut(auth)
-            .catch(error => setError(error))
+            .catch((error) => setError(error))
             .finally(setLoading(false))
     }
 
@@ -67,6 +89,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         error,
         signInWithGoogle,
+        registerWithEmailAndPassword,
+        loginWithEmailAndPassword,
         logout,
     }), [user, loading, error])
 
