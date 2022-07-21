@@ -2,7 +2,7 @@
 
 ###################################### PROJECTS ######################################
 
-GET {{api}}
+GET {{api}}/all/K5lXKzgDiPgAF3RCiZmuBR3tf4P2
 
 ###
 GET {{api}}/1

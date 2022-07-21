@@ -53,7 +53,7 @@ const LoginScreen = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                 <View>
-                    <Text style={{ width: 100, textAlign: 'center' }}> Google </Text>
+                    <Text style={{ width: 150, textAlign: 'center' }}> Ingreso con Google </Text>
                 </View>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
             </View>

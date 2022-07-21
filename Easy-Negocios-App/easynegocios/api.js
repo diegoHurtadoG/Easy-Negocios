@@ -2,8 +2,8 @@ const API = "http://10.0.2.2:3000/projects"
 
 //#region PROJECTS
 
-export const getProjects = async () => {
-    const res = await fetch(API)
+export const getProjects = async (user_uid) => {
+    const res = await fetch(`${API}/all/${user_uid}`)
     return await res.json()
 }
 

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS projects(
     id INT NOT NULL AUTO_INCREMENT,
     project_name VARCHAR(40) NOT NULL,
     project_description VARCHAR(200),
+    user_uid VARCHAR(100) NOT NULL,
     update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     
@@ -151,8 +152,8 @@ CREATE TABLE IF NOT EXISTS order_product_relation(
 
 -- FROM NOW ON THE QUERIES ARE TO INSERT VALUES TO TEST!
 
-INSERT INTO projects (project_name, project_description)
-VALUES ('Project Test', 'This is a project to test the development of the app');
+INSERT INTO projects (project_name, project_description, user_uid)
+VALUES ('Project Test', 'This is a project to test the development of the app', 'K5lXKzgDiPgAF3RCiZmuBR3tf4P2');
 
 INSERT INTO clients (project_id, client_name, client_description)
 VALUES (1, 'John Doe', 'This is a test clients description');

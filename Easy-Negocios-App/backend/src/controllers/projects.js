@@ -6,7 +6,14 @@ import { connect } from '../database'
 
 export const getProjects = async (req, res) => {
     const connection = await connect();
-    const [results] = await connection.query('SELECT * FROM projects')
+    const [results] = await connection.query('SELECT * FROM projects WHERE user_uid = ?',
+        [
+            req.params.user_id,
+        ],
+        function (error, results) {
+            console.log(error)
+            console.log(results)
+        })
     res.json(results)
 }
 
@@ -26,13 +33,14 @@ export const getProject = async (req, res) => {
 export const createProject = async (req, res) => {
     const connection = await connect();
     const [results] = await connection.query(
-        "INSERT INTO projects (project_name, project_description) VALUES (?, ?); \
+        "INSERT INTO projects (project_name, project_description, user_uid) VALUES (?, ?, ?); \
         SET @last_project_id = LAST_INSERT_ID(); \
         INSERT INTO clients (project_id, client_name, client_description) \
         VALUES (@last_project_id, 'Default Client', 'Cliente general');",
         [
             req.body.project_name,
             req.body.project_description,
+            req.body.user_uid
         ]);
     //console.log(results)
     // This way of returning is in the web response, not console, so we are returning the insertId of the

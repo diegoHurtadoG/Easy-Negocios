@@ -67,12 +67,12 @@ const router = Router();
 
 /**
  * @swagger
- * /projects:
+ * /projects/all/{user_uid}:
  *  get:
- *      summary: Get all projects
+ *      summary: Get all projects from a user
  *      tags: [Projects]
  */
-router.get('/projects', getProjects)
+router.get('/projects/all/:user_id', getProjects)
 
 /**
  * @swagger

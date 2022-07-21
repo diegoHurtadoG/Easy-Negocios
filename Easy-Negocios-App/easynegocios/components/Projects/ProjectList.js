@@ -4,16 +4,21 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { getProjects, deleteProject } from '../../api';
 import ProjectItem from './ProjectItem';
+import useAuth from '../Hooks/useAuth';
+
+
 
 const ProjectList = () => {
 
   const [projects, setProjects] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  const { user } = useAuth();
+
   const isFocused = useIsFocused();
 
   const loadProjects = async () => {
-    const data = await getProjects();
+    const data = await getProjects(user?.uid);
     setProjects(data);
   };
 

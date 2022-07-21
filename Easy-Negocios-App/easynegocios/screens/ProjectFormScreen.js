@@ -1,17 +1,25 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Layout from '../components/Layout'
 import { saveProject } from '../api'
+import useAuth from '../components/Hooks/useAuth'
 
 const ProjectFormScreen = ({ navigation }) => {
 
   const [project, setProject] = useState({
     project_name: null,
     project_description: null,
+    user_uid: null,
   });
 
+  const { user } = useAuth();
+
   const handleChange = (key, value) => setProject({ ...project, [key]: value });
+
+  useEffect(() => {
+    handleChange('user_uid', user.uid);
+  }, [user]);
 
   const handleSubmit = async () => {
     await saveProject(project);
