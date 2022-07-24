@@ -20,5 +20,8 @@ app.use(express.json()); // express.json parses incoming requests with JSON and 
 app.use(projectsRoutes);
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
+app.get('/', async (req, res) => {
+    res.json({status: "EasyNegocios Backend"});
+});
 
 export default app

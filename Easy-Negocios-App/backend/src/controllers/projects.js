@@ -1,3 +1,5 @@
+// THIS FILE IS FOR MYSQL2 LIBRARY (Name must be project.js to work)
+
 import { connect } from '../database'
 
 //#region projects
@@ -5,7 +7,10 @@ import { connect } from '../database'
 /////////////////////////// PROJECTS ///////////////////////////
 
 export const getProjects = async (req, res) => {
-    const connection = await connect();
+    const connection = await connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+    });
     const [results] = await connection.query('SELECT * FROM projects WHERE user_uid = ?',
         [
             req.params.user_id,
