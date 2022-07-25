@@ -1,4 +1,5 @@
-const API = "http://10.0.2.2:3000/projects"
+const API = "https://backend-uav5mgm6ia-uc.a.run.app/projects"
+//const API = "http://10.0.2.2:8080/projects"
 
 //#region PROJECTS
 
