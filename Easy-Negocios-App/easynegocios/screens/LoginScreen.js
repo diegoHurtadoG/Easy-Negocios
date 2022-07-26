@@ -60,7 +60,7 @@ const LoginScreen = () => {
 
             <View style={{ padding: 30 }}>
                 <TouchableOpacity onPress={signInWithGoogle} style={styles.ProjectHomeButton}>
-                    <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}> Ingresar Con Google </Text>
+                    <Text style={{ fontWeight: 'bold', alignSelf: 'center', textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}> Ingresar Con Google </Text>
                 </TouchableOpacity>
             </View>
 
@@ -106,7 +106,7 @@ const LoginScreen = () => {
             </View>
 
             <View>
-                <Text style={styles.descriptionText}>Enviar sugerencias y feedback a:</Text>
+                <Text style={styles.descriptionText}>Enviar sugerencias y feedback a: diegohurtadog98@gmail.com</Text>
             </View>
 
         </View>

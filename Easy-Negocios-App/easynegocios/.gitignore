@@ -14,6 +14,8 @@ TODO.txt
 *.plist
 google-services.json
 .env
+ExpoClientsCreds/
+DeployClientCred/
 
 # macOS
 .DS_Store
