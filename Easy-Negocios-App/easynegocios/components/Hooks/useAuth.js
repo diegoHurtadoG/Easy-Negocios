@@ -9,7 +9,7 @@ const AuthContext = createContext({});
 
 const config = {
     androidClientId: androidClientId,
-    iosClientId: iosClientId,
+    //iosClientId: iosClientId,
     scopes: ["profile", "email"],
     permissions: ["public_profile", "email"]
 }
@@ -71,7 +71,10 @@ export const AuthProvider = ({ children }) => {
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
             })
-            .catch((error) => setError(error))
+            .catch((error) => {
+                setError(error)
+                console.log(error)
+            })
             .finally(() => setLoading(false));
 
     }

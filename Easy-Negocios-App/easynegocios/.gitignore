@@ -16,6 +16,7 @@ google-services.json
 .env
 ExpoClientsCreds/
 DeployClientCred/
+pc-api-*
 
 # macOS
 .DS_Store
