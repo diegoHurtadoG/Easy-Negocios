@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { View, Text} from 'react-native'
 import * as Google from "expo-google-app-auth";
 import { androidClientId, iosClientId } from '@env';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
@@ -9,7 +10,7 @@ const AuthContext = createContext({});
 
 const config = {
     androidClientId: androidClientId,
-    //iosClientId: iosClientId,
+    iosClientId: iosClientId,
     scopes: ["profile", "email"],
     permissions: ["public_profile", "email"]
 }
@@ -71,10 +72,8 @@ export const AuthProvider = ({ children }) => {
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
             })
-            .catch((error) => {
-                setError(error)
-                console.log(error)
-            })
+            .catch((error) => setError(error)
+            )
             .finally(() => setLoading(false));
 
     }
@@ -99,7 +98,9 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={memoedValue}>
-            {loadingInitial ? null : children}
+            {loadingInitial ? 
+            <View><Text>Cargando ...</Text></View> : 
+            children}
         </AuthContext.Provider>
     );
 }

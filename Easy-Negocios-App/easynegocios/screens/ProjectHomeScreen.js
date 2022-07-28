@@ -18,14 +18,18 @@ const ProjectHomeScreen = (props) => {
     return (
         <Layout>
             <View style={styles.itemContainer}>
-                
+
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Productos"
+                    accessibilityHint="Ir a pantalla de productos"
                     onPress={() => navigation.navigate('ProductListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Productos</Text>
                 </TouchableOpacity>
 
 
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Clientes"
+                    accessibilityHint="Ir a pantalla de clientes"
                     onPress={() => navigation.navigate('ClientListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Clientes</Text>
                 </TouchableOpacity>
@@ -33,11 +37,15 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Ventas"
+                    accessibilityHint="Ir a pantalla de Ventas"
                     onPress={() => navigation.navigate('SaleProductRelationListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Ventas</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Compras"
+                    accessibilityHint="Ir a pantalla de Compras"
                     onPress={() => navigation.navigate('InvestmentListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Compras</Text>
                 </TouchableOpacity>
@@ -45,11 +53,15 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Pedidos"
+                    accessibilityHint="Ir a pantalla de Pedidos"
                     onPress={() => navigation.navigate('OrderProductRelationListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Pedidos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.ProjectHomeButton}
+                    accessibilityLabel="Stock"
+                    accessibilityHint="Ir a pantalla de Stock"
                     onPress={() => navigation.navigate('StockListScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Stock</Text>
                 </TouchableOpacity>
@@ -57,6 +69,8 @@ const ProjectHomeScreen = (props) => {
 
             <View style={styles.itemContainer}>
                 <TouchableOpacity style={styles.GenerateCashFlux}
+                    accessibilityLabel="Generar Flujo de Caja"
+                    accessibilityHint="Genera un flujo de caja con la informacion del proyecto"
                     onPress={() => navigation.navigate('CashFluxScreen', { project_id: props.route.params.project_id })}>
                     <Text style={styles.ProjectHomeText}>Generar Flujo de Caja</Text>
                 </TouchableOpacity>

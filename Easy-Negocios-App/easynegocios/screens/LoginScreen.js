@@ -24,31 +24,42 @@ const LoginScreen = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                 <View>
-                    <Text style={{ width: 100, textAlign: 'center' }}> Iniciar Sesion </Text>
+                    <Text
+                        accessibilityLabel="Inicio de Sesion"
+                        style={{ width: 100, textAlign: 'center' }}> Iniciar Sesion </Text>
                 </View>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
             </View>
 
-            <View>
+            <View style={styles.inputView}>
                 <TextInput
-                    placeholder='Email'
+                    style={styles.inputText}
+                    accessibilityLabel="Email de la cuenta"
+                    placeholder='Email de Ingreso'
                     value={signInEmail}
                     onChangeText={(text) => setSignInEmail(text)} />
             </View>
 
-            <View>
+            <View style={styles.inputView}>
                 <TextInput
-                    placeholder='Password'
+                    style={styles.inputText}
+                    accessibilityLabel="Contraseña de la cuenta"
+                    placeholder='Contraseña de la cuenta'
                     value={signInPassword}
                     onChangeText={(text) => setSignInPassword(text)}
                     secureTextEntry />
             </View>
 
-            <TouchableOpacity onPress={() => loginWithEmailAndPassword(auth, signInEmail, signInPassword)} style={styles.ProjectHomeButton}>
+            <TouchableOpacity
+                accessibilityLabel="Iniciar Sesion"
+                accessibilityHint="Inicia la sesion con los datos entregados"
+                onPress={() => loginWithEmailAndPassword(auth, signInEmail, signInPassword)} style={styles.ProjectHomeButton}>
                 <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}> Ingresar </Text>
             </TouchableOpacity>
 
             {/** GOOGLE */}
+
+            {/** 
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
@@ -64,36 +75,47 @@ const LoginScreen = () => {
                 </TouchableOpacity>
             </View>
 
+            */}
+
             {/** REGISTER */}
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                 <View>
-                    <Text style={{ width: 80, textAlign: 'center' }}> Registro </Text>
+                    <Text
+                        accessibilityLabel="Registror"
+                        style={{ width: 80, textAlign: 'center' }}> Registro </Text>
                 </View>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
             </View>
 
-            <View>
+            <View style={styles.inputView}>
                 <TextInput
-                    placeholder='Email'
+                    style={styles.inputText}
+                    accessibilityLabel="Email para registrar"
+                    placeholder='Email de registro'
                     value={registerEmail}
                     onChangeText={(text) => setRegisterEmail(text)} />
             </View>
 
-            <View>
+            <View style={styles.inputView}>
                 <TextInput
-                    placeholder='Password'
+                    style={styles.inputText}
+                    accessibilityLabel="Contraseña para registrar"
+                    placeholder='Contraseña de registro'
                     value={registerPassword}
                     onChangeText={(text) => setRegisterPassword(text)}
                     secureTextEntry />
             </View>
 
-            <TouchableOpacity onPress={() => registerWithEmailAndPassword(auth, registerEmail, registerPassword)} style={styles.ProjectHomeButton}>
+            <TouchableOpacity
+                accessibilityLabel="Registrar"
+                accessibilityHint="Registra la cuenta con los datos entregados e inicia sesion"
+                onPress={() => registerWithEmailAndPassword(auth, registerEmail, registerPassword)} style={styles.ProjectHomeButton}>
                 <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}> Registrar </Text>
             </TouchableOpacity>
 
-            
+
 
             {/** ABOUT US */}
 
@@ -106,7 +128,9 @@ const LoginScreen = () => {
             </View>
 
             <View>
-                <Text style={styles.descriptionText}>Enviar sugerencias y feedback a: diegohurtadog98@gmail.com</Text>
+                <Text
+                    accessibilityLabel="Recibimos feedback al correo"
+                    style={styles.descriptionText}>Enviar sugerencias y feedback a: diegohurtadog98@gmail.com</Text>
             </View>
 
         </View>
@@ -125,12 +149,25 @@ const styles = StyleSheet.create({
     },
 
     descriptionText: {
-        width: '80%',
+        width: '90%',
         color: '#000000',
         alignContent: 'center',
         alignSelf: 'center',
         fontSize: 20,
-        padding: 30,
+        padding: 20,
+    },
+
+    inputText: {
+        width: '100%',
+        textAlign: 'center',
+    },
+
+    inputView: {
+        padding: 5,
+        backgroundColor: '#dddddd',
+        width: '90%',
+        alignSelf: 'center',
+        marginBottom: 5,
     }
 
 })

@@ -2,7 +2,7 @@
   "expo": {
     "name": "easynegocios",
     "slug": "easynegocios",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,15 +18,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "host.exp.exponent"
+      "bundleIdentifier": "com.easy.negocios"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "host.exp.exponent",
-      "versionCode": 1
+      "package": "com.easy.negocios",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
