@@ -130,7 +130,7 @@ const LoginScreen = () => {
             <View>
                 <Text
                     accessibilityLabel="Recibimos feedback al correo"
-                    style={styles.descriptionText}>Enviar sugerencias y feedback a: diegohurtadog98@gmail.com</Text>
+                    style={styles.descriptionText}>Enviar sugerencias y feedback a: easynegociosapp@gmail.com</Text>
             </View>
 
         </View>
