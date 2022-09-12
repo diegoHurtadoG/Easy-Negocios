@@ -1,17 +1,23 @@
 // THIS FILE IS FOR MYSQL2 LIBRARY (Name must be project.js to work)
-
+/*
 import { connect } from '../database'
+*/
+import mysql from 'mysql2/promise'
+import { config } from '../config';
 
+const pool = mysql.createPool(config);
 //#region projects
 
 /////////////////////////// PROJECTS ///////////////////////////
 
 export const getProjects = async (req, res) => {
+    /*
     const connection = await connect(function (err) {
         if (err) throw err;
         console.log("Connected!");
     });
-    const [results] = await connection.query('SELECT * FROM projects WHERE user_uid = ?',
+    */
+    const [results] = await pool.query('SELECT * FROM projects WHERE user_uid = ?',
         [
             req.params.user_id,
         ],
@@ -23,8 +29,8 @@ export const getProjects = async (req, res) => {
 }
 
 export const getProject = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query("SELECT * FROM projects WHERE id = ?",
+    //const connection = await connect();
+    const [results] = await pool.query("SELECT * FROM projects WHERE id = ?",
         [
             req.params.id,
         ],
@@ -36,8 +42,8 @@ export const getProject = async (req, res) => {
 }
 
 export const createProject = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO projects (project_name, project_description, user_uid) VALUES (?, ?, ?); \
         SET @last_project_id = LAST_INSERT_ID(); \
         INSERT INTO clients (project_id, client_name, client_description) \
@@ -57,8 +63,8 @@ export const createProject = async (req, res) => {
 }
 
 export const deleteProject = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "DELETE FROM order_product_relation WHERE project_id = ?;\
         DELETE FROM sales_product_relation WHERE project_id = ?;\
         DELETE FROM orders WHERE project_id = ?;\
@@ -85,8 +91,8 @@ export const deleteProject = async (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE projects SET ? WHERE id = ?",
         [
             req.body,
@@ -107,8 +113,8 @@ export const updateProject = async (req, res) => {
 /////////////////////////// PRODUCTS ///////////////////////////
 
 export const getProducts = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM products \
         WHERE project_id = ? \
         AND active = 1",
@@ -123,8 +129,8 @@ export const getProducts = async (req, res) => {
 }
 
 export const getProduct = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM products \
         WHERE project_id = ? \
         AND id = ?",
@@ -140,8 +146,8 @@ export const getProduct = async (req, res) => {
 }
 
 export const createProduct = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO products (project_id, product_name, category_id, \
             product_description, net_price, gross_price, stock, measure_unit) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -169,8 +175,8 @@ export const createProduct = async (req, res) => {
 }
 
 export const deleteProduct = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE products \
         SET active = 0 \
         WHERE project_id = ? \
@@ -185,8 +191,8 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const updateProduct = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE products SET active = 0 \
         WHERE project_id = ? \
         AND id = ?; \
@@ -222,8 +228,8 @@ export const updateProduct = async (req, res) => {
 /////////////////////////// INVESTMENTS ///////////////////////////
 
 export const getInvestments = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM investments \
         WHERE project_id = ? \
         AND active = 1",
@@ -238,8 +244,8 @@ export const getInvestments = async (req, res) => {
 }
 
 export const getInvestment = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM investments \
         WHERE project_id = ? \
         AND id = ?",
@@ -255,8 +261,8 @@ export const getInvestment = async (req, res) => {
 }
 
 export const createInvestment = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO investments (project_id, total_net_price, total_gross_price, \
             ticket, investment_description, investment_date, owned_product, cuantity) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -284,8 +290,8 @@ export const createInvestment = async (req, res) => {
 }
 
 export const deleteInvestment = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE investments \
         SET active = 0 \
         WHERE project_id = ? \
@@ -300,8 +306,8 @@ export const deleteInvestment = async (req, res) => {
 }
 
 export const updateInvestment = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE investments SET ? \
         WHERE project_id = ? \
         AND id = ?",
@@ -326,8 +332,8 @@ export const updateInvestment = async (req, res) => {
 /////////////////////////// CLIENTS ///////////////////////////
 
 export const getClients = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM clients \
         WHERE project_id = ? \
         AND active = 1",
@@ -342,8 +348,8 @@ export const getClients = async (req, res) => {
 }
 
 export const getClient = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM clients \
         WHERE project_id = ? \
         AND id = ?",
@@ -359,8 +365,8 @@ export const getClient = async (req, res) => {
 }
 
 export const createClient = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO clients (project_id, client_name, client_description) \
         VALUES (?, ?, ?)",
         [
@@ -382,8 +388,8 @@ export const createClient = async (req, res) => {
 }
 
 export const deleteClient = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE clients \
         SET active = 0 \
         WHERE project_id = ? \
@@ -398,8 +404,8 @@ export const deleteClient = async (req, res) => {
 }
 
 export const updateClient = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE clients SET ? \
         WHERE project_id = ? \
         AND id = ?",
@@ -418,8 +424,8 @@ export const updateClient = async (req, res) => {
 }
 
 export const getOrdersByClient = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM orders \
         WHERE project_id = ? \
         AND client_id = ? \
@@ -442,8 +448,8 @@ export const getOrdersByClient = async (req, res) => {
 /////////////////////////// CATEGORIES ///////////////////////////
 
 export const getCategories = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM categories \
         WHERE project_id = ? \
         AND active = 1",
@@ -458,8 +464,8 @@ export const getCategories = async (req, res) => {
 }
 
 export const getCategory = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM categories \
         WHERE project_id = ? \
         AND id = ?",
@@ -475,8 +481,8 @@ export const getCategory = async (req, res) => {
 }
 
 export const createCategory = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO categories (project_id, category_name, category_description) \
         VALUES (?, ?, ?)",
         [
@@ -498,8 +504,8 @@ export const createCategory = async (req, res) => {
 }
 
 export const deleteCategory = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE categories \
         SET active = 0 \
         WHERE project_id = ? \
@@ -514,8 +520,8 @@ export const deleteCategory = async (req, res) => {
 }
 
 export const updateCategory = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE categories SET ? \
         WHERE project_id = ? \
         AND id = ?",
@@ -540,8 +546,8 @@ export const updateCategory = async (req, res) => {
 /////////////////////////// ORDERS ///////////////////////////
 
 export const getOrders = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM orders \
         WHERE project_id = ? \
         AND active = 1",
@@ -556,8 +562,8 @@ export const getOrders = async (req, res) => {
 }
 
 export const getLastOrder = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT MAX( id ) AS id FROM orders",
         [
             req.params.project_id,
@@ -570,8 +576,8 @@ export const getLastOrder = async (req, res) => {
 }
 
 export const getOrder = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM orders \
         WHERE project_id = ? \
         AND id = ?",
@@ -587,8 +593,8 @@ export const getOrder = async (req, res) => {
 }
 
 export const createOrder = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO orders (project_id, client_id, delivery_date, order_description, address) \
         VALUES (?, ?, ?, ?, ?)",
         [
@@ -612,8 +618,8 @@ export const createOrder = async (req, res) => {
 }
 
 export const deleteOrder = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE orders \
         SET active = 0 \
         WHERE project_id = ? \
@@ -628,8 +634,8 @@ export const deleteOrder = async (req, res) => {
 }
 
 export const updateOrder = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE orders SET ? \
         WHERE project_id = ? \
         AND id = ?",
@@ -654,8 +660,8 @@ export const updateOrder = async (req, res) => {
 /////////////////////////// SALES ///////////////////////////
 
 export const getSales = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM sales \
         WHERE project_id = ? \
         AND active = 1",
@@ -670,8 +676,8 @@ export const getSales = async (req, res) => {
 }
 
 export const getSale = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT * FROM sales \
         WHERE project_id = ? \
         AND id = ?",
@@ -687,8 +693,8 @@ export const getSale = async (req, res) => {
 }
 
 export const createSale = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO sales (project_id, total_net_price, total_gross_price, \
             ticket, sale_description, sale_date) \
         VALUES (?, ?, ?, ?, ?, ?)",
@@ -714,8 +720,8 @@ export const createSale = async (req, res) => {
 }
 
 export const deleteSale = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE sales \
         SET active = 0 \
         WHERE project_id = ? \
@@ -730,8 +736,8 @@ export const deleteSale = async (req, res) => {
 }
 
 export const updateSale = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE sales SET ? \
         WHERE project_id = ? \
         AND id = ?",
@@ -756,8 +762,8 @@ export const updateSale = async (req, res) => {
 /////////////////////////// ORDER_PRODUCT /////////////////////////// 
 
 export const getOrdersList = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date, orders.address, clients.client_name, clients.client_description \
         FROM order_product_relation \
         INNER JOIN \
@@ -782,8 +788,8 @@ export const getOrdersList = async (req, res) => {
 }
 
 export const getOrderItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT order_product_relation.project_id, order_product_relation.id, products.product_name as productName, products.measure_unit, order_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, orders.order_description, orders.delivery_date as delivery_date, orders.address, clients.client_name, clients.client_description, clients.id as client_id, products.id as product_id \
         FROM order_product_relation \
         INNER JOIN \
@@ -810,8 +816,8 @@ export const getOrderItem = async (req, res) => {
 }
 
 export const createOrderItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO orders (project_id, client_id, delivery_date, order_description, address) \
         VALUES (?, ?, ?, ?, ?); \
         SET @last_order_id = LAST_INSERT_ID();\
@@ -841,8 +847,8 @@ export const createOrderItem = async (req, res) => {
 }
 
 export const deleteOrderItem = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE order_product_relation \
         SET active = 0 \
         WHERE project_id = ? \
@@ -863,8 +869,8 @@ export const deleteOrderItem = async (req, res) => {
 }
 
 export const updateOrderItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE order_product_relation \
         SET product_id = ?, \
         cuantity = ? \
@@ -904,8 +910,8 @@ export const updateOrderItem = async (req, res) => {
 /////////////////////////// SALES_PRODUCT /////////////////////////// 
 
 export const getSalesList = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price \
         FROM sales_product_relation \
         INNER JOIN \
@@ -927,8 +933,8 @@ export const getSalesList = async (req, res) => {
 }
 
 export const getSaleItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT sales_product_relation.project_id, sales_product_relation.id, products.product_name as productName, products.id as product_id, products.measure_unit, sales_product_relation.cuantity, products.net_price as productNetPrice, products.gross_price as productGrossPrice, sales.sale_description, sales.total_net_price, sales.total_gross_price, sales.ticket as ticket, sales.sale_date as sale_date \
         FROM sales_product_relation \
         INNER JOIN \
@@ -952,8 +958,8 @@ export const getSaleItem = async (req, res) => {
 }
 
 export const createSaleItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "INSERT INTO sales (project_id, total_net_price, total_gross_price, ticket, sale_description, sale_date) \
         VALUES (?, ?, ?, ?, ?, ?); \
         SET @last_order_id = LAST_INSERT_ID();\
@@ -984,8 +990,8 @@ export const createSaleItem = async (req, res) => {
 }
 
 export const deleteSaleItem = async (req, res) => {
-    const connection = await connect();
-    const results = await connection.query(
+    //const connection = await connect();
+    const results = await pool.query(
         "UPDATE sales_product_relation \
         SET active = 0 \
         WHERE project_id = ? \
@@ -1006,8 +1012,8 @@ export const deleteSaleItem = async (req, res) => {
 }
 
 export const updateSaleItem = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "UPDATE sales_product_relation \
         SET product_id = ?, \
         cuantity = ? \
@@ -1047,8 +1053,8 @@ export const updateSaleItem = async (req, res) => {
 //#region cash_flux
 
 export const getCashInfoInvestments = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT investments.id as id, investments.total_net_price as investment_total_net_price, investments.total_gross_price as investment_total_gross_price, investments.ticket as investment_ticket, investments.investment_date as investment_date \
         FROM investments \
         WHERE investments.project_id = ? \
@@ -1064,8 +1070,8 @@ export const getCashInfoInvestments = async (req, res) => {
 }
 
 export const getCashInfoOrders = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT order_product_relation.id as id, order_product_relation.product_id as order_product_id, products.net_price as product_net_price, products.gross_price as product_gross_price, order_product_relation.cuantity as order_cuantity, order_product_relation.order_id as order_id, orders.delivery_date as order_delivery_date  \
         FROM order_product_relation \
         INNER JOIN \
@@ -1087,8 +1093,8 @@ export const getCashInfoOrders = async (req, res) => {
 }
 
 export const getCashInfoSales = async (req, res) => {
-    const connection = await connect();
-    const [results] = await connection.query(
+    //const connection = await connect();
+    const [results] = await pool.query(
         "SELECT sales_product_relation.id as id, sales_product_relation.sales_id as sales_id, sales.total_net_price as sales_total_net_price, sales.total_gross_price as sales_total_gross_price, sales.ticket as sales_ticket, sales.sale_date as sale_date \
         FROM sales_product_relation \
         INNER JOIN \
